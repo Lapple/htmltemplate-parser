@@ -1,0 +1,214 @@
+[
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "b_object.b_key",
+                "value": null,
+                "position": {
+                    "line": 1,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 1,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n\n",
+        "position": {
+            "line": 1,
+            "column": 27
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "b_value",
+                "value": null,
+                "position": {
+                    "line": 3,
+                    "column": 11
+                }
+            },
+            {
+                "type": "PairAttribute",
+                "name": "b_attr",
+                "value": "b_attr_value",
+                "position": {
+                    "line": 4,
+                    "column": 5
+                }
+            },
+            {
+                "type": "PairAttribute",
+                "name": "b_expression_attr",
+                "value": {
+                    "type": "Expression",
+                    "value": "$b_expression_value",
+                    "position": {
+                        "line": 5,
+                        "column": 23
+                    }
+                },
+                "position": {
+                    "line": 5,
+                    "column": 5
+                }
+            }
+        ],
+        "position": {
+            "line": 3,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n\n",
+        "position": {
+            "line": 5,
+            "column": 49
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "value": "$b_condition && $b_value",
+                "position": {
+                    "line": 7,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 7,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n\n",
+        "position": {
+            "line": 7,
+            "column": 42
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_V",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "b_text",
+                "value": null,
+                "position": {
+                    "line": 9,
+                    "column": 9
+                }
+            }
+        ],
+        "position": {
+            "line": 9,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n\n",
+        "position": {
+            "line": 9,
+            "column": 16
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "value": "$b_multi .\n    $b_line .\n    $b_expression",
+                "position": {
+                    "line": 11,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 11,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n\n",
+        "position": {
+            "line": 15,
+            "column": 4
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "b_value",
+                "value": null,
+                "position": {
+                    "line": 17,
+                    "column": 11
+                }
+            },
+            {
+                "type": "PairAttribute",
+                "name": "b_escaped_attribute",
+                "value": "Don't break",
+                "position": {
+                    "line": 18,
+                    "column": 5
+                }
+            },
+            {
+                "type": "PairAttribute",
+                "name": "b_another_escaped_attribute",
+                "value": "Don\"t break",
+                "position": {
+                    "line": 19,
+                    "column": 5
+                }
+            },
+            {
+                "type": "PairAttribute",
+                "name": "b_plain_string_attribute",
+                "value": "String",
+                "position": {
+                    "line": 20,
+                    "column": 5
+                }
+            }
+        ],
+        "position": {
+            "line": 17,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 20,
+            "column": 39
+        }
+    }
+]

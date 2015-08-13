@@ -1,0 +1,319 @@
+[
+    {
+        "type": "Condition",
+        "name": "TMPL_IF",
+        "conditions": [
+            {
+                "type": "ConditionBranch",
+                "condition": {
+                    "type": "SingleAttribute",
+                    "name": "b_condition",
+                    "value": null,
+                    "position": {
+                        "line": 1,
+                        "column": 10
+                    }
+                },
+                "content": [
+                    {
+                        "type": "Text",
+                        "content": "\n    ",
+                        "position": {
+                            "line": 1,
+                            "column": 22
+                        }
+                    },
+                    {
+                        "type": "Tag",
+                        "name": "TMPL_VAR",
+                        "attributes": [
+                            {
+                                "type": "SingleAttribute",
+                                "name": "b_value",
+                                "value": null,
+                                "position": {
+                                    "line": 2,
+                                    "column": 15
+                                }
+                            }
+                        ],
+                        "position": {
+                            "line": 2,
+                            "column": 5
+                        }
+                    },
+                    {
+                        "type": "Text",
+                        "content": "\n",
+                        "position": {
+                            "line": 2,
+                            "column": 23
+                        }
+                    }
+                ],
+                "position": {
+                    "line": 1,
+                    "column": 1
+                }
+            }
+        ],
+        "otherwise": null,
+        "position": {
+            "line": 1,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n\n",
+        "position": {
+            "line": 3,
+            "column": 11
+        }
+    },
+    {
+        "type": "Comment",
+        "content": " No whitespace before condition expression is intentional.",
+        "position": {
+            "line": 5,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 5,
+            "column": 61
+        }
+    },
+    {
+        "type": "Condition",
+        "name": "TMPL_IF",
+        "conditions": [
+            {
+                "type": "ConditionBranch",
+                "condition": {
+                    "type": "Expression",
+                    "value": "$b_condition eq 'ok'",
+                    "position": {
+                        "line": 6,
+                        "column": 9
+                    }
+                },
+                "content": [
+                    {
+                        "type": "Text",
+                        "content": "\n    OK\n",
+                        "position": {
+                            "line": 6,
+                            "column": 36
+                        }
+                    }
+                ],
+                "position": {
+                    "line": 6,
+                    "column": 1
+                }
+            },
+            {
+                "type": "ConditionBranch",
+                "condition": {
+                    "type": "SingleAttribute",
+                    "name": "b_loading",
+                    "value": null,
+                    "position": {
+                        "line": 8,
+                        "column": 13
+                    }
+                },
+                "content": [
+                    {
+                        "type": "Text",
+                        "content": "\n    Loading\n",
+                        "position": {
+                            "line": 8,
+                            "column": 23
+                        }
+                    }
+                ],
+                "position": {
+                    "line": 8,
+                    "column": 1
+                }
+            }
+        ],
+        "otherwise": {
+            "type": "AlternateConditionBranch",
+            "content": [
+                {
+                    "type": "Text",
+                    "content": "\n    ...\n",
+                    "position": {
+                        "line": 10,
+                        "column": 12
+                    }
+                }
+            ],
+            "position": {
+                "line": 10,
+                "column": 1
+            }
+        },
+        "position": {
+            "line": 6,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n\n",
+        "position": {
+            "line": 12,
+            "column": 11
+        }
+    },
+    {
+        "type": "Condition",
+        "name": "TMPL_IF",
+        "conditions": [
+            {
+                "type": "ConditionBranch",
+                "condition": {
+                    "type": "SingleAttribute",
+                    "name": "b_empty_condition",
+                    "value": null,
+                    "position": {
+                        "line": 14,
+                        "column": 10
+                    }
+                },
+                "content": [],
+                "position": {
+                    "line": 14,
+                    "column": 1
+                }
+            }
+        ],
+        "otherwise": null,
+        "position": {
+            "line": 14,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n\n",
+        "position": {
+            "line": 14,
+            "column": 38
+        }
+    },
+    {
+        "type": "Condition",
+        "name": "TMPL_IF",
+        "conditions": [
+            {
+                "type": "ConditionBranch",
+                "condition": null,
+                "content": [
+                    {
+                        "type": "Text",
+                        "content": "\n    ",
+                        "position": {
+                            "line": 16,
+                            "column": 10
+                        }
+                    },
+                    {
+                        "type": "Tag",
+                        "name": "TMPL_VAR",
+                        "attributes": [
+                            {
+                                "type": "SingleAttribute",
+                                "name": "b_text",
+                                "value": null,
+                                "position": {
+                                    "line": 17,
+                                    "column": 15
+                                }
+                            }
+                        ],
+                        "position": {
+                            "line": 17,
+                            "column": 5
+                        }
+                    },
+                    {
+                        "type": "Text",
+                        "content": "\n",
+                        "position": {
+                            "line": 17,
+                            "column": 22
+                        }
+                    }
+                ],
+                "position": {
+                    "line": 16,
+                    "column": 1
+                }
+            }
+        ],
+        "otherwise": {
+            "type": "AlternateConditionBranch",
+            "content": [
+                {
+                    "type": "Text",
+                    "content": "\n    ",
+                    "position": {
+                        "line": 18,
+                        "column": 12
+                    }
+                },
+                {
+                    "type": "Tag",
+                    "name": "TMPL_VAR",
+                    "attributes": [
+                        {
+                            "type": "SingleAttribute",
+                            "name": "b_text2",
+                            "value": null,
+                            "position": {
+                                "line": 19,
+                                "column": 15
+                            }
+                        }
+                    ],
+                    "position": {
+                        "line": 19,
+                        "column": 5
+                    }
+                },
+                {
+                    "type": "Text",
+                    "content": "\n",
+                    "position": {
+                        "line": 19,
+                        "column": 23
+                    }
+                }
+            ],
+            "position": {
+                "line": 18,
+                "column": 1
+            }
+        },
+        "position": {
+            "line": 16,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 20,
+            "column": 11
+        }
+    }
+]

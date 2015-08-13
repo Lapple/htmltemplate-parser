@@ -1,0 +1,20 @@
+<TMPL_VAR b_object.b_key >
+
+<TMPL_VAR b_value
+    b_attr=b_attr_value
+    b_expression_attr=[% $b_expression_value %]>
+
+<TMPL_VAR [% $b_condition && $b_value %]>
+
+<TMPL_V b_text>
+
+<TMPL_VAR [%
+    $b_multi .
+    $b_line .
+    $b_expression
+%]>
+
+<TMPL_VAR b_value
+    b_escaped_attribute='Don\'t break'
+    b_another_escaped_attribute="Don\"t break"
+    b_plain_string_attribute="String">

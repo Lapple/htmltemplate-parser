@@ -1,0 +1,154 @@
+[
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "b_text",
+                "value": null,
+                "position": {
+                    "line": 1,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 1,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 1,
+            "column": 18
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_V",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "b_text",
+                "value": null,
+                "position": {
+                    "line": 2,
+                    "column": 9
+                }
+            }
+        ],
+        "position": {
+            "line": 2,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 2,
+            "column": 16
+        }
+    },
+    {
+        "type": "InvalidTag",
+        "name": "TMPL_ILUDE",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "inc/template.inc",
+                "value": null,
+                "position": {
+                    "line": 3,
+                    "column": 13
+                }
+            }
+        ],
+        "position": {
+            "line": 3,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 3,
+            "column": 30
+        }
+    },
+    {
+        "type": "InvalidTag",
+        "name": "TMPL_ID",
+        "attributes": [],
+        "position": {
+            "line": 4,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 4,
+            "column": 11
+        }
+    },
+    {
+        "type": "InvalidTag",
+        "name": "TMPL_VR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "b_text",
+                "value": null,
+                "position": {
+                    "line": 5,
+                    "column": 10
+                }
+            }
+        ],
+        "position": {
+            "line": 5,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 5,
+            "column": 17
+        }
+    },
+    {
+        "type": "InvalidTag",
+        "name": "TMPL_INLINE_BLOCK",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "b_text",
+                "value": null,
+                "position": {
+                    "line": 6,
+                    "column": 20
+                }
+            }
+        ],
+        "position": {
+            "line": 6,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 6,
+            "column": 27
+        }
+    }
+]

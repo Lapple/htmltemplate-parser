@@ -1,0 +1,188 @@
+[
+    {
+        "type": "Condition",
+        "name": "TMPL_UNLESS",
+        "conditions": [
+            {
+                "type": "ConditionBranch",
+                "condition": {
+                    "type": "SingleAttribute",
+                    "name": "b_condition",
+                    "value": null,
+                    "position": {
+                        "line": 1,
+                        "column": 14
+                    }
+                },
+                "content": [
+                    {
+                        "type": "Text",
+                        "content": "\n    ",
+                        "position": {
+                            "line": 1,
+                            "column": 26
+                        }
+                    },
+                    {
+                        "type": "Tag",
+                        "name": "TMPL_VAR",
+                        "attributes": [
+                            {
+                                "type": "SingleAttribute",
+                                "name": "b_value",
+                                "value": null,
+                                "position": {
+                                    "line": 2,
+                                    "column": 15
+                                }
+                            }
+                        ],
+                        "position": {
+                            "line": 2,
+                            "column": 5
+                        }
+                    },
+                    {
+                        "type": "Text",
+                        "content": "\n",
+                        "position": {
+                            "line": 2,
+                            "column": 23
+                        }
+                    }
+                ],
+                "position": {
+                    "line": 1,
+                    "column": 1
+                }
+            }
+        ],
+        "otherwise": null,
+        "position": {
+            "line": 1,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n\n",
+        "position": {
+            "line": 3,
+            "column": 15
+        }
+    },
+    {
+        "type": "Condition",
+        "name": "TMPL_UNLESS",
+        "conditions": [
+            {
+                "type": "ConditionBranch",
+                "condition": {
+                    "type": "Expression",
+                    "value": "$b_condition eq 'ok'",
+                    "position": {
+                        "line": 5,
+                        "column": 14
+                    }
+                },
+                "content": [
+                    {
+                        "type": "Text",
+                        "content": "\n    OK\n",
+                        "position": {
+                            "line": 5,
+                            "column": 41
+                        }
+                    }
+                ],
+                "position": {
+                    "line": 5,
+                    "column": 1
+                }
+            },
+            {
+                "type": "ConditionBranch",
+                "condition": {
+                    "type": "SingleAttribute",
+                    "name": "b_loading",
+                    "value": null,
+                    "position": {
+                        "line": 7,
+                        "column": 13
+                    }
+                },
+                "content": [
+                    {
+                        "type": "Text",
+                        "content": "\n    Loading\n",
+                        "position": {
+                            "line": 7,
+                            "column": 23
+                        }
+                    }
+                ],
+                "position": {
+                    "line": 7,
+                    "column": 1
+                }
+            }
+        ],
+        "otherwise": {
+            "type": "AlternateConditionBranch",
+            "content": [
+                {
+                    "type": "Text",
+                    "content": "\n    ...\n",
+                    "position": {
+                        "line": 9,
+                        "column": 12
+                    }
+                }
+            ],
+            "position": {
+                "line": 9,
+                "column": 1
+            }
+        },
+        "position": {
+            "line": 5,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n\n",
+        "position": {
+            "line": 11,
+            "column": 15
+        }
+    },
+    {
+        "type": "Condition",
+        "name": "TMPL_UNLESS",
+        "conditions": [
+            {
+                "type": "ConditionBranch",
+                "condition": {
+                    "type": "SingleAttribute",
+                    "name": "b_empty_condition",
+                    "value": null,
+                    "position": {
+                        "line": 13,
+                        "column": 14
+                    }
+                },
+                "content": [],
+                "position": {
+                    "line": 13,
+                    "column": 1
+                }
+            }
+        ],
+        "otherwise": null,
+        "position": {
+            "line": 13,
+            "column": 1
+        }
+    }
+]

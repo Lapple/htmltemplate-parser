@@ -1,0 +1,13 @@
+<TMPL_UNLESS b_condition>
+    <TMPL_VAR b_value>
+</TMPL_UNLESS>
+
+<TMPL_UNLESS [% $b_condition eq 'ok' %]>
+    OK
+<TMPL_ELSIF b_loading>
+    Loading
+<TMPL_ELSE>
+    ...
+</TMPL_UNLESS>
+
+<TMPL_UNLESS b_empty_condition></TMPL_UNLESS>

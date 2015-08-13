@@ -1,0 +1,3 @@
+{
+    "trackLineAndColumn": true
+}

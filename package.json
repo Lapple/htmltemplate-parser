@@ -1,0 +1,21 @@
+{
+  "name": "htmltemplate-parser",
+  "version": "0.0.9",
+  "description": "HTML::Template Parser",
+  "main": "parser.js",
+  "scripts": {
+    "generate": "pegjs --extra-options-file generator-options.json tmpl.pegjs parser.js",
+    "test": "mocha test/test.js",
+    "benchmark": "mocha test/test.js --benchmark"
+  },
+  "keywords": [
+    "htmltemplate",
+    "parser"
+  ],
+  "author": "Aziz Yuldoshev",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "2.2.5",
+    "pegjs": "0.8.0"
+  }
+}
