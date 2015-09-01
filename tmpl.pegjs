@@ -58,7 +58,7 @@
   }
 }
 
-Content = (Comment / ConditionalTag / BlockTag / SingleTag / InvalidTag / Text)*
+Content = (Comment / ConditionalTag / BlockTag / SingleTag / BlockHtmlTag / SingleHtmlTag / InvalidTag / Text)*
 
 Comment
   = CommentTag
@@ -66,6 +66,14 @@ Comment
   / SingleLineComment
 
 SingleTag = OpeningBracket name:$(SingleTagName !TagNameCharacter+) attributes:Attributes* ClosingBracket {
+  return token({
+    type: BLOCK_TYPES.TAG,
+    name: name,
+    attributes: attributes
+  }, line, column);
+}
+
+SingleHtmlTag = OpeningBracket name:$(HtmlTagName !TagNameCharacter+) attributes:Attributes* SelfClosingBracket {
   return token({
     type: BLOCK_TYPES.TAG,
     name: name,
@@ -140,6 +148,8 @@ NonText
   / ElseStartTag
   / ConditionEndTag
   / InvalidTag
+  / StartHtmlTag
+  / EndHtmlTag
 
 Text = text:$(!NonText SourceCharacter)+ {
   return token({
@@ -342,6 +352,12 @@ ClosingBracket
     throw syntaxError("Expected a closing bracket.", offset, line, column);
   }
 
+SelfClosingBracket
+  = WhiteSpace* WhiteSpaceControlEnd? "/>"
+  / !">" SourceCharacter+ {
+    throw syntaxError("Expected a closing bracket.", offset, line, column);
+  }
+
 PerlExpressionStart
   = "[%" WhiteSpace*
 
@@ -366,3 +382,27 @@ SingleEscapeCharacter
   / "r"  { return "\r"; }
   / "t"  { return "\t"; }
   / "v"  { return "\v"; }
+
+BlockHtmlTag = start:StartHtmlTag content:Content end:EndHtmlTag {
+  if (start.name != end) {
+    throw syntaxError("Expected a </" + start.name + "> but </" + end + "> found.", offset, line, column);
+  }
+
+  return token({
+    type: BLOCK_TYPES.TAG,
+    name: start.name,
+    attributes: start.attributes,
+    content: content
+  }, line, column);
+}
+
+StartHtmlTag = "<" name:HtmlTagName attributes:Attributes* ">" {
+  return {
+    name: name,
+    attributes: attributes
+  }
+}
+
+EndHtmlTag = "</" name:HtmlTagName ">" { return name; }
+
+HtmlTagName = chars:[a-zA-Z0-9]+ { return chars.join(""); }
