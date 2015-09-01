@@ -40,6 +40,7 @@
   var BLOCK_TYPES = {
     COMMENT: "Comment",
     TAG: "Tag",
+    HTML_TAG: "HTMLTag",
     TEXT: "Text",
     CONDITION: "Condition",
     CONDITION_BRANCH: "ConditionBranch",
@@ -58,7 +59,7 @@
   }
 }
 
-Content = (Comment / ConditionalTag / BlockTag / SingleTag / BlockHtmlTag / SingleHtmlTag / InvalidTag / Text)*
+Content = (Comment / ConditionalTag / BlockTag / BlockHTMLTag / SingleTag / SingleHTMLTag / InvalidTag / Text)*
 
 Comment
   = CommentTag
@@ -66,14 +67,6 @@ Comment
   / SingleLineComment
 
 SingleTag = OpeningBracket name:$(SingleTagName !TagNameCharacter+) attributes:Attributes* ClosingBracket {
-  return token({
-    type: BLOCK_TYPES.TAG,
-    name: name,
-    attributes: attributes
-  }, line, column);
-}
-
-SingleHtmlTag = OpeningBracket name:$(HtmlTagName !TagNameCharacter+) attributes:Attributes* SelfClosingBracket {
   return token({
     type: BLOCK_TYPES.TAG,
     name: name,
@@ -148,8 +141,9 @@ NonText
   / ElseStartTag
   / ConditionEndTag
   / InvalidTag
-  / StartHtmlTag
-  / EndHtmlTag
+  / SingleHTMLTag
+  / StartHTMLTag
+  / EndHTMLTag
 
 Text = text:$(!NonText SourceCharacter)+ {
   return token({
@@ -158,7 +152,7 @@ Text = text:$(!NonText SourceCharacter)+ {
   }, line, column);
 }
 
-StartTag = OpeningBracket name:BlockTagName attributes:Attributes* ClosingBracket {
+StartTag = OpeningBracket name:$(BlockTagName !TagNameCharacter+) attributes:Attributes* ClosingBracket {
   return {
     name: name,
     attributes: attributes
@@ -166,7 +160,7 @@ StartTag = OpeningBracket name:BlockTagName attributes:Attributes* ClosingBracke
 }
 
 // FIXME: Not capturing attributes on end tag for now.
-EndTag = OpeningEndBracket name:BlockTagName Attributes* ClosingBracket {
+EndTag = OpeningEndBracket name:$(BlockTagName !TagNameCharacter+) Attributes* ClosingBracket {
   return name;
 }
 
@@ -312,7 +306,7 @@ CommentTagEnd
   = OpeningEndBracket CommentTagName ClosingBracket
 
 TagNameCharacter
-  = [a-zA-Z_]
+  = [a-zA-Z_-]
 
 WhiteSpace "whitespace"
   = "\t"
@@ -352,12 +346,6 @@ ClosingBracket
     throw syntaxError("Expected a closing bracket.", offset, line, column);
   }
 
-SelfClosingBracket
-  = WhiteSpace* WhiteSpaceControlEnd? "/>"
-  / !">" SourceCharacter+ {
-    throw syntaxError("Expected a closing bracket.", offset, line, column);
-  }
-
 PerlExpressionStart
   = "[%" WhiteSpace*
 
@@ -383,26 +371,137 @@ SingleEscapeCharacter
   / "t"  { return "\t"; }
   / "v"  { return "\v"; }
 
-BlockHtmlTag = start:StartHtmlTag content:Content end:EndHtmlTag {
+// HTML Parsing
+
+BlockHTMLTag = start:StartHTMLTag content:Content end:EndHTMLTag {
   if (start.name != end) {
     throw syntaxError("Expected a </" + start.name + "> but </" + end + "> found.", offset, line, column);
   }
 
   return token({
-    type: BLOCK_TYPES.TAG,
+    type: BLOCK_TYPES.HTML_TAG,
     name: start.name,
     attributes: start.attributes,
     content: content
   }, line, column);
 }
 
-StartHtmlTag = "<" name:HtmlTagName attributes:Attributes* ">" {
+SingleHTMLTag = OpeningBracket name:$(HTMLSingleTagName !TagNameCharacter+) attributes:HTMLAttributes* SelfClosingHTMLBracket {
+  return token({
+    type: BLOCK_TYPES.HTML_TAG,
+    name: name,
+    attributes: attributes
+  }, line, column);
+}
+
+StartHTMLTag = OpeningBracket name:$(HTMLBlockTagName !TagNameCharacter+) attributes:HTMLAttributes* ClosingBracket {
   return {
     name: name,
     attributes: attributes
   }
 }
 
-EndHtmlTag = "</" name:HtmlTagName ">" { return name; }
+EndHTMLTag = OpeningEndBracket name:$(HTMLBlockTagName !TagNameCharacter+) ClosingBracket {
+  return name;
+}
 
-HtmlTagName = chars:[a-zA-Z0-9]+ { return chars.join(""); }
+HTMLBlockTagName =
+  'abbr'
+  / 'article'
+  / 'a'
+  / 'big'
+  / 'blockquote'
+  / 'body'
+  / 'button'
+  / 'b'
+  / 'code'
+  / 'colgroup'
+  / 'col'
+  / 'dd'
+  / 'div'
+  / 'em'
+  / 'figcaption'
+  / 'figure'
+  / 'footer'
+  / 'form'
+  / 'h1'
+  / 'h2'
+  / 'h3'
+  / 'h4'
+  / 'h5'
+  / 'h6'
+  / 'head'
+  / 'header'
+  / 'hgroup'
+  / 'html'
+  / 'i'
+  / 'label'
+  / 'legend'
+  / 'li'
+  / 'main'
+  / 'nav'
+  / 'ol'
+  / 'option'
+  / 'pre'
+  / 'p'
+  / 'q'
+  / 'section'
+  / 'select'
+  / 'small'
+  / 'span'
+  / 'strong'
+  / 'style'
+  / 'sub'
+  / 'sup'
+  / 'table'
+  / 'tbody'
+  / 'td'
+  / 'textarea'
+  / 'tfoot'
+  / 'th'
+  / 'thead'
+  / 'title'
+  / 'tr'
+  / 'ul'
+  / 'u'
+
+HTMLSingleTagName =
+  'base'
+  / 'br'
+  / 'dl'
+  / 'dt'
+  / 'hr'
+  / 'input'
+  / 'img'
+  / 'link'
+  / 'meta'
+
+HTMLAttributes
+  = WhiteSpace+ attrs:(HTMLAttributeWithValue / HTMLAttributeWithoutValue) { return attrs; }
+
+HTMLAttributeWithValue = name:HTMLAttributeToken "=" value:(HTMLAttributeToken / QuotedString) {
+  return token({
+    type: ATTRIBUTE_TYPES.PAIR,
+    name: name,
+    value: value
+  }, line, column);
+}
+
+HTMLAttributeWithoutValue = name:HTMLAttributeToken {
+  return token({
+    type: ATTRIBUTE_TYPES.SINGLE,
+    name: name,
+    value: null
+  }, line, column);
+}
+
+// FIXME: Check the spec regarding this regexp.
+HTMLAttributeToken = n:$[a-zA-Z0-9-]+ {
+  return n;
+}
+
+SelfClosingHTMLBracket
+  = WhiteSpace* (">" / "/>")
+  / !">" SourceCharacter+ {
+    throw syntaxError("Expected a closing bracket.", offset, line, column);
+  }
