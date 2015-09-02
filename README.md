@@ -8,7 +8,13 @@
 
     npm install htmltemplate-parser
 
-## Usage
+## CLI
+
+```bash
+./bin/parse --path test/html_tags/template.tmpl
+```
+
+## API
 
 ```js
 var fs = require('fs');
