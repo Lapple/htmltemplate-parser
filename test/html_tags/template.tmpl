@@ -26,3 +26,9 @@
     </TMPL_WS>'>
     Text
 </div>
+
+<TMPL_IF [% $condition %]><div class="wrapper"></TMPL_IF>
+    <div class="inner">
+        Content
+    </div>
+<TMPL_IF [% $condition %]></div></TMPL_IF>

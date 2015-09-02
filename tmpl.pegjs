@@ -40,7 +40,8 @@
     CONDITION: "Condition",
     CONDITION_BRANCH: "ConditionBranch",
     ALTERNATE_CONDITION_BRANCH: "AlternateConditionBranch",
-    INVALID_TAG: "InvalidTag"
+    INVALID_TAG: "InvalidTag",
+    CONDITIONAL_WRAPPER_TAG: "ConditionalWrapperTag"
   };
 
   var ATTRIBUTE_TYPES = {
@@ -64,7 +65,7 @@
   SyntaxError.prototype = Error.prototype;
 }
 
-Content = (Comment / ConditionalTag / BlockTag / SingleTag / InvalidTag / Text)*
+Content = (Comment / ConditionalWrapperTag / ConditionalTag / BlockTag / SingleTag / InvalidTag / Text)*
 
 Comment
   = CommentTag
@@ -159,6 +160,48 @@ Text = text:$(!NonText SourceCharacter)+ {
     content: text
   }, location);
 }
+
+ConditionalWrapperTag =
+  openCondition:ConditionStartTag
+  WhiteSpace*
+  openWrapper:StartTag
+  WhiteSpace*
+  ConditionEndTag
+  content:Content
+  closeCondition:ConditionStartTag
+  WhiteSpace*
+  closeWrapper: EndTag
+  WhiteSpace*
+  ConditionEndTag
+  & {
+    return (
+      openCondition.name === closeCondition.name &&
+      openCondition.condition.type === closeCondition.condition.type &&
+      openCondition.condition.name === closeCondition.condition.name &&
+      openCondition.condition.value === closeCondition.condition.value &&
+      openWrapper.name === closeWrapper
+    );
+  }
+  {
+    var condition = token({
+      type: BLOCK_TYPES.CONDITION_BRANCH,
+      condition: openCondition.condition,
+      content: [
+        token({
+          type: BLOCK_TYPES.HTML_TAG,
+          name: openWrapper.name,
+          attributes: openWrapper.attributes
+        }, location)
+      ]
+    }, location);
+
+    return token({
+      type: BLOCK_TYPES.CONDITIONAL_WRAPPER_TAG,
+      name: openCondition.name,
+      conditions: [condition],
+      content: content
+    }, location);
+  }
 
 StartTag =
   OpeningBracket

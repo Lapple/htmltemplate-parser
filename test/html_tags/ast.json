@@ -517,10 +517,111 @@
     },
     {
         "type": "Text",
-        "content": "\n",
+        "content": "\n\n",
         "position": {
             "line": 28,
             "column": 7
+        }
+    },
+    {
+        "type": "ConditionalWrapperTag",
+        "name": "TMPL_IF",
+        "conditions": [
+            {
+                "type": "ConditionBranch",
+                "condition": {
+                    "type": "Expression",
+                    "value": "$condition",
+                    "position": {
+                        "line": 30,
+                        "column": 10
+                    }
+                },
+                "content": [
+                    {
+                        "type": "HTMLTag",
+                        "name": "div",
+                        "attributes": [
+                            {
+                                "type": "PairAttribute",
+                                "name": "class",
+                                "value": "wrapper",
+                                "position": {
+                                    "line": 30,
+                                    "column": 32
+                                }
+                            }
+                        ],
+                        "position": {
+                            "line": 30,
+                            "column": 1
+                        }
+                    }
+                ],
+                "position": {
+                    "line": 30,
+                    "column": 1
+                }
+            }
+        ],
+        "content": [
+            {
+                "type": "Text",
+                "content": "\n    ",
+                "position": {
+                    "line": 30,
+                    "column": 58
+                }
+            },
+            {
+                "type": "HTMLTag",
+                "name": "div",
+                "attributes": [
+                    {
+                        "type": "PairAttribute",
+                        "name": "class",
+                        "value": "inner",
+                        "position": {
+                            "line": 31,
+                            "column": 10
+                        }
+                    }
+                ],
+                "content": [
+                    {
+                        "type": "Text",
+                        "content": "\n        Content\n    ",
+                        "position": {
+                            "line": 31,
+                            "column": 24
+                        }
+                    }
+                ],
+                "position": {
+                    "line": 31,
+                    "column": 5
+                }
+            },
+            {
+                "type": "Text",
+                "content": "\n",
+                "position": {
+                    "line": 33,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 30,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 34,
+            "column": 43
         }
     }
 ]
