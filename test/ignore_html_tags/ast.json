@@ -1,0 +1,76 @@
+[
+    {
+        "type": "Tag",
+        "name": "TMPL_SETVAR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "start",
+                "value": null,
+                "position": {
+                    "line": 1,
+                    "column": 14
+                }
+            }
+        ],
+        "content": [
+            {
+                "type": "Text",
+                "content": "<b>",
+                "position": {
+                    "line": 1,
+                    "column": 20
+                }
+            }
+        ],
+        "position": {
+            "line": 1,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 1,
+            "column": 37
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_SETVAR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "end",
+                "value": null,
+                "position": {
+                    "line": 2,
+                    "column": 14
+                }
+            }
+        ],
+        "content": [
+            {
+                "type": "Text",
+                "content": "</b>",
+                "position": {
+                    "line": 2,
+                    "column": 18
+                }
+            }
+        ],
+        "position": {
+            "line": 2,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 2,
+            "column": 36
+        }
+    }
+]

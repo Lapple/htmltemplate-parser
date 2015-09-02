@@ -74,7 +74,7 @@ Comment
 
 SingleTag =
   OpeningBracket
-  name:$((SingleTMPLTagName / SingleHTMLTagName) !TagNameCharacter+)
+  name:$((SingleTMPLTagName / SingleHTMLTagName ! { return options.ignoreHTMLTags; }) !TagNameCharacter+)
   // Matching either HTML attributes or TMPL attributes depending on tag name.
   attributes:(a:HTMLAttributes* ! { return isTemplateTag(name); } { return a; } / TMPLAttributes*)
   ClosingBracket
@@ -205,7 +205,7 @@ ConditionalWrapperTag =
 
 StartTag =
   OpeningBracket
-  name:$((BlockTMPLTagName / BlockHTMLTagName) !TagNameCharacter+)
+  name:$((BlockTMPLTagName / BlockHTMLTagName ! { return options.ignoreHTMLTags; }) !TagNameCharacter+)
   // Matching either HTML attributes or TMPL attributes depending on tag name.
   attributes:(a:HTMLAttributes* ! { return isTemplateTag(name); } { return a; } / TMPLAttributes*)
   ClosingBracket
@@ -219,7 +219,7 @@ StartTag =
 // FIXME: Not capturing attributes on end tag for now.
 EndTag =
   OpeningEndBracket
-  name:$((BlockTMPLTagName / BlockHTMLTagName) !TagNameCharacter+)
+  name:$((BlockTMPLTagName / BlockHTMLTagName ! { return options.ignoreHTMLTags; }) !TagNameCharacter+)
   // Matching either HTML attributes or TMPL attributes depending on tag name.
   (a:HTMLAttributes* ! { return isTemplateTag(name); } { return a; } / TMPLAttributes*)
   ClosingBracket

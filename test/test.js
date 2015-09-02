@@ -23,6 +23,7 @@ describe('parse: (String) => Object', function() {
 
             return (
                 name !== 'errors' &&
+                name !== 'ignore_html_tags' &&
                 name !== 'benchmark' &&
                 name.indexOf('.') === -1
             );
@@ -88,6 +89,25 @@ describe('error messages', function() {
             });
         });
 
+});
+
+describe('options', function() {
+    it('ignoreHTMLTags', function() {
+
+        var tmpl = fs.readFileSync(
+            path.join(__dirname, 'ignore_html_tags', 'template.tmpl'),
+            'utf8');
+
+        var expected = JSON.parse(
+            fs.readFileSync(
+                path.join(__dirname, 'ignore_html_tags', 'ast.json'),
+                'utf8'));
+
+        var actual = parser.parse(tmpl, { ignoreHTMLTags: true });
+
+        assert.deepEqual(actual, expected);
+
+    });
 });
 
 function errorAsObject(e) {
