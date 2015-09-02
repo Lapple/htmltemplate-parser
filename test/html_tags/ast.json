@@ -377,9 +377,149 @@
     },
     {
         "type": "Text",
-        "content": "\n",
+        "content": "\n\n",
         "position": {
             "line": 18,
+            "column": 7
+        }
+    },
+    {
+        "type": "HTMLTag",
+        "name": "div",
+        "attributes": [
+            {
+                "type": "PairAttribute",
+                "name": "class",
+                "value": null,
+                "content": [
+                    {
+                        "type": "Tag",
+                        "name": "TMPL_WS",
+                        "attributes": [
+                            {
+                                "type": "SingleAttribute",
+                                "name": "FOLDSPACE",
+                                "value": null,
+                                "position": {
+                                    "line": 20,
+                                    "column": 22
+                                }
+                            }
+                        ],
+                        "content": [
+                            {
+                                "type": "Text",
+                                "content": "\n        item\n        ",
+                                "position": {
+                                    "line": 20,
+                                    "column": 32
+                                }
+                            },
+                            {
+                                "type": "Condition",
+                                "name": "TMPL_IF",
+                                "conditions": [
+                                    {
+                                        "type": "ConditionBranch",
+                                        "condition": {
+                                            "type": "SingleAttribute",
+                                            "name": "condition",
+                                            "value": null,
+                                            "position": {
+                                                "line": 22,
+                                                "column": 18
+                                            }
+                                        },
+                                        "content": [
+                                            {
+                                                "type": "Text",
+                                                "content": "\n            item_",
+                                                "position": {
+                                                    "line": 22,
+                                                    "column": 28
+                                                }
+                                            },
+                                            {
+                                                "type": "Tag",
+                                                "name": "TMPL_VAR",
+                                                "attributes": [
+                                                    {
+                                                        "type": "SingleAttribute",
+                                                        "name": "type",
+                                                        "value": null,
+                                                        "position": {
+                                                            "line": 23,
+                                                            "column": 28
+                                                        }
+                                                    }
+                                                ],
+                                                "position": {
+                                                    "line": 23,
+                                                    "column": 18
+                                                }
+                                            },
+                                            {
+                                                "type": "Text",
+                                                "content": "\n        ",
+                                                "position": {
+                                                    "line": 23,
+                                                    "column": 33
+                                                }
+                                            }
+                                        ],
+                                        "position": {
+                                            "line": 22,
+                                            "column": 9
+                                        }
+                                    }
+                                ],
+                                "otherwise": null,
+                                "position": {
+                                    "line": 22,
+                                    "column": 9
+                                }
+                            },
+                            {
+                                "type": "Text",
+                                "content": "\n        js-item\n    ",
+                                "position": {
+                                    "line": 24,
+                                    "column": 19
+                                }
+                            }
+                        ],
+                        "position": {
+                            "line": 20,
+                            "column": 13
+                        }
+                    }
+                ],
+                "position": {
+                    "line": 20,
+                    "column": 6
+                }
+            }
+        ],
+        "content": [
+            {
+                "type": "Text",
+                "content": "\n    Text\n",
+                "position": {
+                    "line": 26,
+                    "column": 17
+                }
+            }
+        ],
+        "position": {
+            "line": 20,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 28,
             "column": 7
         }
     }
