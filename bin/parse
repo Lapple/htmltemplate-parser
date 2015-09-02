@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
 var fs = require('fs');
+var inspect = require('util').inspect;
 
 var parser = require('../parser');
 
 var argv = require('yargs')
-    .usage('Usage: parse-template.js --path tmpl.inc')
+    .usage('Usage: parse --path tmpl.inc')
     .demand(['path'])
     .argv;
 
@@ -13,4 +14,4 @@ var template = fs.readFileSync(argv.path).toString().trim();
 
 var ast = parser.parse(template);
 
-console.log(JSON.stringify(ast, null, 2));
+console.log(inspect(ast, { colors: true, depth: Infinity }));
