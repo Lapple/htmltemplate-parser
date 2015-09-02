@@ -71,13 +71,19 @@ Comment
   / FullLineComment
   / SingleLineComment
 
-SingleTag = OpeningBracket name:$((SingleTagName / HTMLSingleTagName) !TagNameCharacter+) attributes:(Attributes / HTMLAttributes)* ClosingBracket {
-  return token({
-    type: isTemplateTag(name) ? BLOCK_TYPES.TAG : BLOCK_TYPES.HTML_TAG,
-    name: name,
-    attributes: attributes
-  }, location);
-}
+SingleTag =
+  OpeningBracket
+  name:$((SingleTMPLTagName / SingleHTMLTagName) !TagNameCharacter+)
+  // Matching either HTML attributes or TMPL attributes depending on tag name.
+  attributes:(a:HTMLAttributes* ! { return isTemplateTag(name); } { return a; } / TMPLAttributes*)
+  ClosingBracket
+  {
+    return token({
+      type: isTemplateTag(name) ? BLOCK_TYPES.TAG : BLOCK_TYPES.HTML_TAG,
+      name: name,
+      attributes: attributes
+    }, location);
+  }
 
 BlockTag = start:StartTag content:Content end:EndTag {
   if (start.name != end) {
@@ -113,7 +119,7 @@ ConditionalTag = start:ConditionStartTag content:Content elsif:ElsIfTag* otherwi
   }, location);
 }
 
-InvalidTag = (OpeningEndBracket / OpeningBracket) name:UnknownTagName attributes:Attributes* ClosingBracket {
+InvalidTag = (OpeningEndBracket / OpeningBracket) name:UnknownTagName attributes:TMPLAttributes* ClosingBracket {
   return token({
     type: BLOCK_TYPES.INVALID_TAG,
     name: name,
@@ -154,26 +160,38 @@ Text = text:$(!NonText SourceCharacter)+ {
   }, location);
 }
 
-StartTag = OpeningBracket name:$((BlockTagName / HTMLBlockTagName) !TagNameCharacter+) attributes:(Attributes / HTMLAttributes)* ClosingBracket {
-  return {
-    name: name,
-    attributes: attributes
-  };
-}
+StartTag =
+  OpeningBracket
+  name:$((BlockTMPLTagName / BlockHTMLTagName) !TagNameCharacter+)
+  // Matching either HTML attributes or TMPL attributes depending on tag name.
+  attributes:(a:HTMLAttributes* ! { return isTemplateTag(name); } { return a; } / TMPLAttributes*)
+  ClosingBracket
+  {
+    return {
+      name: name,
+      attributes: attributes
+    };
+  }
 
 // FIXME: Not capturing attributes on end tag for now.
-EndTag = OpeningEndBracket name:$((BlockTagName / HTMLBlockTagName) !TagNameCharacter+) (Attributes / HTMLAttributes)* ClosingBracket {
-  return name;
-}
+EndTag =
+  OpeningEndBracket
+  name:$((BlockTMPLTagName / BlockHTMLTagName) !TagNameCharacter+)
+  // Matching either HTML attributes or TMPL attributes depending on tag name.
+  (a:HTMLAttributes* ! { return isTemplateTag(name); } { return a; } / TMPLAttributes*)
+  ClosingBracket
+  {
+    return name;
+  }
 
-ConditionStartTag = OpeningBracket name:ConditionalTagName condition:Attributes* ClosingBracket {
+ConditionStartTag = OpeningBracket name:ConditionalTagName condition:TMPLAttributes* ClosingBracket {
   return {
     name: name,
     condition: condition[0] || null
   };
 }
 
-ElsIfStartTag = OpeningBracket ElsIfTagName condition:Attributes* ClosingBracket {
+ElsIfStartTag = OpeningBracket ElsIfTagName condition:TMPLAttributes* ClosingBracket {
   return condition[0] || null;
 }
 
@@ -205,7 +223,7 @@ CommentTag = CommentTagStart content:$(!CommentTagEnd SourceCharacter)* CommentT
   }, location);
 }
 
-Attributes
+TMPLAttributes
   = WhiteSpace+ attrs:(AttributeWithValue / AttributeWithoutValue) { return attrs; }
   // Expressions don't require whitespace to be separated from tag names.
   / WhiteSpace* expression:PerlExpression { return expression; }
@@ -243,6 +261,73 @@ AttributeToken = n:$[a-zA-Z0-9\-_/:\.{}\$]+ {
   return n;
 }
 
+HTMLAttributes
+  = WhiteSpace+ attrs:(HTMLAttributeWithValue / HTMLAttributeWithoutValue) { return attrs; }
+
+HTMLAttributeWithValue = name:HTMLAttributeToken "=" value:(HTMLAttributeToken / QuotedContentString) {
+  if (typeof value === 'string') {
+    return token({
+      type: ATTRIBUTE_TYPES.PAIR,
+      name: name,
+      value: value
+    }, location);
+  } else {
+    return token({
+      type: ATTRIBUTE_TYPES.PAIR,
+      name: name,
+      value: null,
+      content: value
+    }, location);
+  }
+}
+
+HTMLAttributeWithoutValue = name:HTMLAttributeToken {
+  return token({
+    type: ATTRIBUTE_TYPES.SINGLE,
+    name: name,
+    value: null
+  }, location);
+}
+
+// FIXME: Check the spec regarding this regexp.
+HTMLAttributeToken = n:$[a-zA-Z0-9-]+ {
+  return n;
+}
+
+QuotedContentString
+  = SingleQuotedContentString
+  / DoubleQuotedContentString
+
+SingleQuotedContentString = "'" content:(Comment / ConditionalTag / BlockTag / SingleTag / InvalidTag / SingleQuotedText)* "'" {
+  if (content.length === 1 && content[0].type === BLOCK_TYPES.TEXT) {
+    return content[0].content;
+  }
+
+  return content;
+}
+
+SingleQuotedText = text:$(!NonText SingleStringCharacter)+ {
+  return token({
+    type: BLOCK_TYPES.TEXT,
+    content: text
+  }, location);
+}
+
+DoubleQuotedContentString = "\"" content:(Comment / ConditionalTag / BlockTag / SingleTag / InvalidTag / DoubleQuotedText)* "\"" {
+  if (content.length === 1 && content[0].type === BLOCK_TYPES.TEXT) {
+    return content[0].content;
+  }
+
+  return content;
+}
+
+DoubleQuotedText = text:$(!NonText DoubleStringCharacter)+ {
+  return token({
+    type: BLOCK_TYPES.TEXT,
+    content: text
+  }, location);
+}
+
 QuotedString
   = SingleQuotedString
   / DoubleQuotedString
@@ -256,7 +341,7 @@ DoubleQuotedString = "\"" chars:DoubleStringCharacter* "\"" {
 }
 
 KnownTagName
-  = BlockTagName
+  = BlockTMPLTagName
   / ConditionalTagName
   / ElsIfTagName
   / ElseTagName
@@ -264,13 +349,13 @@ KnownTagName
 UnknownTagName
   = $(!KnownTagName "TMPL_" TagNameCharacter+)
 
-SingleTagName
+SingleTMPLTagName
   // The order here is important, longer tag name goes first.
   = "TMPL_INCLUDE"
   / "TMPL_VAR"
   / "TMPL_V"
 
-BlockTagName
+BlockTMPLTagName
   = "TMPL_BLOCK"
   / "TMPL_FOR"
   / "TMPL_LOOP"
@@ -291,7 +376,7 @@ ElseTagName
 CommentTagName
   = "TMPL_COMMENT"
 
-HTMLBlockTagName =
+BlockHTMLTagName =
   'abbr'
   / 'article'
   / 'a'
@@ -351,7 +436,7 @@ HTMLBlockTagName =
   / 'ul'
   / 'u'
 
-HTMLSingleTagName =
+SingleHTMLTagName =
   'base'
   / 'br'
   / 'dl'
@@ -445,27 +530,3 @@ SingleEscapeCharacter
   / "r"  { return "\r"; }
   / "t"  { return "\t"; }
   / "v"  { return "\v"; }
-
-HTMLAttributes
-  = WhiteSpace+ attrs:(HTMLAttributeWithValue / HTMLAttributeWithoutValue) { return attrs; }
-
-HTMLAttributeWithValue = name:HTMLAttributeToken "=" value:(HTMLAttributeToken / QuotedString) {
-  return token({
-    type: ATTRIBUTE_TYPES.PAIR,
-    name: name,
-    value: value
-  }, location);
-}
-
-HTMLAttributeWithoutValue = name:HTMLAttributeToken {
-  return token({
-    type: ATTRIBUTE_TYPES.SINGLE,
-    name: name,
-    value: null
-  }, location);
-}
-
-// FIXME: Check the spec regarding this regexp.
-HTMLAttributeToken = n:$[a-zA-Z0-9-]+ {
-  return n;
-}

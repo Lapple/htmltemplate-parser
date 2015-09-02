@@ -274,9 +274,112 @@
     },
     {
         "type": "Text",
-        "content": "\n",
+        "content": "\n\n",
         "position": {
             "line": 14,
+            "column": 7
+        }
+    },
+    {
+        "type": "HTMLTag",
+        "name": "div",
+        "attributes": [
+            {
+                "type": "PairAttribute",
+                "name": "class",
+                "value": null,
+                "content": [
+                    {
+                        "type": "Text",
+                        "content": "item ",
+                        "position": {
+                            "line": 16,
+                            "column": 13
+                        }
+                    },
+                    {
+                        "type": "Condition",
+                        "name": "TMPL_IF",
+                        "conditions": [
+                            {
+                                "type": "ConditionBranch",
+                                "condition": {
+                                    "type": "SingleAttribute",
+                                    "name": "condition",
+                                    "value": null,
+                                    "position": {
+                                        "line": 16,
+                                        "column": 27
+                                    }
+                                },
+                                "content": [
+                                    {
+                                        "type": "Text",
+                                        "content": "item_",
+                                        "position": {
+                                            "line": 16,
+                                            "column": 37
+                                        }
+                                    },
+                                    {
+                                        "type": "Tag",
+                                        "name": "TMPL_VAR",
+                                        "attributes": [
+                                            {
+                                                "type": "SingleAttribute",
+                                                "name": "type",
+                                                "value": null,
+                                                "position": {
+                                                    "line": 16,
+                                                    "column": 52
+                                                }
+                                            }
+                                        ],
+                                        "position": {
+                                            "line": 16,
+                                            "column": 42
+                                        }
+                                    }
+                                ],
+                                "position": {
+                                    "line": 16,
+                                    "column": 18
+                                }
+                            }
+                        ],
+                        "otherwise": null,
+                        "position": {
+                            "line": 16,
+                            "column": 18
+                        }
+                    }
+                ],
+                "position": {
+                    "line": 16,
+                    "column": 6
+                }
+            }
+        ],
+        "content": [
+            {
+                "type": "Text",
+                "content": "\n    Text\n",
+                "position": {
+                    "line": 16,
+                    "column": 69
+                }
+            }
+        ],
+        "position": {
+            "line": 16,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 18,
             "column": 7
         }
     }
