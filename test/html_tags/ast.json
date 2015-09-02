@@ -693,10 +693,207 @@
     },
     {
         "type": "Text",
-        "content": "\n",
+        "content": "\n\n",
         "position": {
             "line": 45,
             "column": 5
+        }
+    },
+    {
+        "type": "HTMLTag",
+        "name": "div",
+        "attributes": [
+            {
+                "type": "ConditionalAttribute",
+                "name": "TMPL_IF",
+                "conditions": [
+                    {
+                        "type": "ConditionBranch",
+                        "condition": {
+                            "type": "SingleAttribute",
+                            "name": "condition",
+                            "value": null,
+                            "position": {
+                                "line": 48,
+                                "column": 14
+                            }
+                        },
+                        "content": [
+                            {
+                                "type": "PairAttribute",
+                                "name": "class",
+                                "value": null,
+                                "content": [
+                                    {
+                                        "type": "Tag",
+                                        "name": "TMPL_VAR",
+                                        "attributes": [
+                                            {
+                                                "type": "SingleAttribute",
+                                                "name": "hidden_class",
+                                                "value": null,
+                                                "position": {
+                                                    "line": 49,
+                                                    "column": 26
+                                                }
+                                            }
+                                        ],
+                                        "position": {
+                                            "line": 49,
+                                            "column": 16
+                                        }
+                                    }
+                                ],
+                                "position": {
+                                    "line": 49,
+                                    "column": 9
+                                }
+                            }
+                        ],
+                        "position": {
+                            "line": 48,
+                            "column": 5
+                        }
+                    },
+                    {
+                        "type": "ConditionBranch",
+                        "condition": {
+                            "type": "Expression",
+                            "value": "$another_condition",
+                            "position": {
+                                "line": 50,
+                                "column": 17
+                            }
+                        },
+                        "content": [
+                            {
+                                "type": "PairAttribute",
+                                "name": "class",
+                                "value": "hidden",
+                                "position": {
+                                    "line": 51,
+                                    "column": 9
+                                }
+                            }
+                        ],
+                        "position": {
+                            "line": 49,
+                            "column": 40
+                        }
+                    }
+                ],
+                "otherwise": [
+                    {
+                        "type": "PairAttribute",
+                        "name": "id",
+                        "value": "hide",
+                        "position": {
+                            "line": 53,
+                            "column": 9
+                        }
+                    }
+                ],
+                "position": {
+                    "line": 48,
+                    "column": 5
+                }
+            },
+            {
+                "type": "PairAttribute",
+                "name": "style",
+                "value": "background: red;",
+                "position": {
+                    "line": 55,
+                    "column": 5
+                }
+            }
+        ],
+        "content": [
+            {
+                "type": "Text",
+                "content": "\n    Content\n    ",
+                "position": {
+                    "line": 55,
+                    "column": 30
+                }
+            },
+            {
+                "type": "HTMLTag",
+                "name": "input",
+                "attributes": [
+                    {
+                        "type": "PairAttribute",
+                        "name": "type",
+                        "value": "checkbox",
+                        "position": {
+                            "line": 57,
+                            "column": 12
+                        }
+                    },
+                    {
+                        "type": "ConditionalAttribute",
+                        "name": "TMPL_UNLESS",
+                        "conditions": [
+                            {
+                                "type": "ConditionBranch",
+                                "condition": {
+                                    "type": "SingleAttribute",
+                                    "name": "uncheck",
+                                    "value": null,
+                                    "position": {
+                                        "line": 57,
+                                        "column": 41
+                                    }
+                                },
+                                "content": [
+                                    {
+                                        "type": "SingleAttribute",
+                                        "name": "checked",
+                                        "value": null,
+                                        "position": {
+                                            "line": 57,
+                                            "column": 49
+                                        }
+                                    }
+                                ],
+                                "position": {
+                                    "line": 57,
+                                    "column": 28
+                                }
+                            }
+                        ],
+                        "otherwise": null,
+                        "position": {
+                            "line": 57,
+                            "column": 28
+                        }
+                    }
+                ],
+                "position": {
+                    "line": 57,
+                    "column": 5
+                }
+            },
+            {
+                "type": "Text",
+                "content": "\n",
+                "position": {
+                    "line": 57,
+                    "column": 72
+                }
+            }
+        ],
+        "position": {
+            "line": 47,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 58,
+            "column": 7
         }
     }
 ]

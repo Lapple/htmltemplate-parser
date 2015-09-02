@@ -47,7 +47,8 @@
   var ATTRIBUTE_TYPES = {
     EXPRESSION: "Expression",
     PAIR: "PairAttribute",
-    SINGLE: "SingleAttribute"
+    SINGLE: "SingleAttribute",
+    CONDITIONAL: "ConditionalAttribute"
   };
 
   function SyntaxError(message, location) {
@@ -305,7 +306,11 @@ AttributeToken = n:$[a-zA-Z0-9\-_/:\.{}\$]+ {
 }
 
 HTMLAttributes
-  = WhiteSpace+ attrs:(HTMLAttributeWithValue / HTMLAttributeWithoutValue) { return attrs; }
+  = WhiteSpace+ attrs:(PlainHTMLAttributes / ConditionalHTMLAttributes) { return attrs; }
+
+PlainHTMLAttributes
+  = HTMLAttributeWithValue
+  / HTMLAttributeWithoutValue
 
 HTMLAttributeWithValue = name:HTMLAttributeToken "=" value:(HTMLAttributeToken / QuotedContentString) {
   if (typeof value === 'string') {
@@ -336,6 +341,52 @@ HTMLAttributeWithoutValue = name:HTMLAttributeToken {
 HTMLAttributeToken = n:$[a-zA-Z0-9-]+ {
   return n;
 }
+
+ConditionalHTMLAttributes =
+  start:ConditionStartTag
+  WhiteSpace*
+  attrs:PlainHTMLAttributes*
+  elsif:(
+    WhiteSpace*
+    condition:ElsIfStartTag
+    WhiteSpace*
+    attrs:PlainHTMLAttributes*
+    {
+      return token({
+        type: BLOCK_TYPES.CONDITION_BRANCH,
+        condition: condition,
+        content: attrs
+      }, location);
+    }
+  )*
+  otherwise:(
+    WhiteSpace*
+    ElseStartTag
+    WhiteSpace*
+    attrs:PlainHTMLAttributes*
+    { return attrs; }
+  )?
+  WhiteSpace*
+  end:ConditionEndTag
+  & {
+    return start.name === end;
+  }
+  {
+    var primaryCondition = token({
+      type: BLOCK_TYPES.CONDITION_BRANCH,
+      condition: start.condition,
+      content: attrs
+    }, location);
+
+    var conditions = [primaryCondition].concat(elsif);
+
+    return token({
+      type: ATTRIBUTE_TYPES.CONDITIONAL,
+      name: start.name,
+      conditions: conditions,
+      otherwise: otherwise
+    }, location);
+  }
 
 QuotedContentString
   = SingleQuotedContentString

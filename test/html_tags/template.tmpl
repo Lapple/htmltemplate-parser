@@ -43,3 +43,16 @@
     ">
     Text
 </p>
+
+<div
+    <TMPL_IF condition>
+        class="<TMPL_VAR hidden_class>"
+    <TMPL_ELSIF [% $another_condition %]>
+        class="hidden"
+    <TMPL_ELSE>
+        id="hide"
+    </TMPL_IF>
+    style="background: red;">
+    Content
+    <input type="checkbox" <TMPL_UNLESS uncheck>checked</TMPL_UNLESS>/>
+</div>
