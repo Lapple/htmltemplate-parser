@@ -479,6 +479,7 @@ BlockHTMLTagName =
   / 'body'
   / 'button'
   / 'b'
+  / 'caption'
   / 'code'
   / 'colgroup'
   / 'col'

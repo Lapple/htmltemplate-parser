@@ -6,6 +6,130 @@
 
 <input type="text" placeholder="Type something here"/>
 
+<table>
+    <caption align="top"> A more complex table-within-a table.  </caption>
+    <tbody>
+        <tr>
+            <th> Outer Table </th>
+            <td>
+                <table border="">
+                    <caption align="top"> An inner table showing a variety of headings and data items.  </caption>
+                    <tbody>
+                        <tr>
+                            <th colspan="5">
+                                Inner Table
+                            </th>
+                        </tr>
+                        <tr>
+                            <th rowspan="2" colspan="2">
+                                CORNER
+                            </th>
+                            <th colspan="3">
+                                Head1
+                            </th>
+                        </tr>
+                        <tr>
+                            <th rowspan="2">
+                                Head2
+                            </th>
+                            <th colspan="2">
+                                Head3
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                Head4
+                            </th>
+                            <th>
+                                Head5
+                            </th>
+                            <th>
+                                Head6
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                A
+                            </td>
+                            <td rowspan="2" valign="middle" bgcolor="yellow">
+                                Two Tall
+                            </td>
+                            <td bgcolor="green">
+                                <ul>
+                                    <li>
+                                        Lists can be table data
+                                    </li>
+                                    <li>
+                                        Images can be table data
+                                    </li>
+                                </ul>
+                            </td>
+                            <td colspan="2" align="center">
+                                Two Wide
+                            </td>
+                        </tr>
+                        <tr valign="middle">
+                            <td>
+                                <img src="../images/icon.gif" alt="HTML Station">
+                            </td>
+                            <td align="center">
+                                A <a href="form.html">Form</a> in a table: 
+                                <form method="POST" action="http://www.december.com/cgi-bin/formmail.secure.cgi">
+                                    <input type="hidden" name="recipient" value="nobody@december.com"><input type="hidden" name="subject" value="Table Example"> Your age: <input type="text" name="user-age" size="2"><br>
+                                    What is your favorite ice cream?<br>
+                                    <select name="favorite-icecream">
+                                        <option>
+                                            Vanilla
+                                        </option>
+                                        <option selected="">
+                                            Chocolate
+                                        </option>
+                                        <option>
+                                            Cherry Garcia
+                                        </option>
+                                        <option>
+                                            Pizza Pancake
+                                        </option>
+                                        <option>
+                                            None of the above!
+                                        </option>
+                                    </select>
+                                    <br>
+                                    <input type="submit" value="OK"> <input type="reset" value="Cancel">
+                                </form>
+                            </td>
+                            <td>
+                                <table>
+                                    <caption>
+                                        No border
+                                    </caption>
+                                    <tbody>
+                                        <tr>
+                                            <th>
+                                                Little
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Table
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>
+                                Multiple<br>
+                                line<br>
+                                item
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 <div class=input>
     <h5>Title</h5>
     <p>Introductory text</p>
