@@ -3,7 +3,7 @@
     return s.join("");
   }
 
-  function token(object, line, column) {
+  function token(object, location) {
     var preventPositionCalculation = (
       options.reducePositionLookups &&
       (
@@ -17,24 +17,15 @@
     );
 
     if (!preventPositionCalculation) {
+      var l = location().start;
+
       object.position = {
-        line: line(),
-        column: column()
+        line: l.line,
+        column: l.column
       };
     }
 
     return object;
-  }
-
-  function syntaxError(message, offset, line, column) {
-    return new SyntaxError(
-      message,
-      null,
-      null,
-      offset(),
-      line(),
-      column()
-    );
   }
 
   var BLOCK_TYPES = {
@@ -54,9 +45,19 @@
     SINGLE: "SingleAttribute"
   };
 
-  var COLUMN_ONE = function() {
-    return 1;
+  function SyntaxError(message, location) {
+    var l = location().start;
+
+    this.name = "SyntaxError";
+    this.message = message;
+    this.line = l.line;
+    this.column = l.column;
+    this.offset = l.offset;
+    this.expected = null;
+    this.found = null;
   }
+
+  SyntaxError.prototype = Error.prototype;
 }
 
 Content = (Comment / ConditionalTag / BlockTag / BlockHTMLTag / SingleTag / SingleHTMLTag / InvalidTag / Text)*
@@ -71,12 +72,12 @@ SingleTag = OpeningBracket name:$(SingleTagName !TagNameCharacter+) attributes:A
     type: BLOCK_TYPES.TAG,
     name: name,
     attributes: attributes
-  }, line, column);
+  }, location);
 }
 
 BlockTag = start:StartTag content:Content end:EndTag {
   if (start.name != end) {
-    throw syntaxError("Expected a </" + start.name + "> but </" + end + "> found.", offset, line, column);
+    throw new SyntaxError("Expected a </" + start.name + "> but </" + end + "> found.", location);
   }
 
   return token({
@@ -84,19 +85,19 @@ BlockTag = start:StartTag content:Content end:EndTag {
     name: start.name,
     attributes: start.attributes,
     content: content
-  }, line, column);
+  }, location);
 }
 
 ConditionalTag = start:ConditionStartTag content:Content elsif:ElsIfTag* otherwise:ElseTag? end:ConditionEndTag {
   if (start.name != end) {
-    throw syntaxError("Expected a </" + start.name + "> but </" + end + "> found.", offset, line, column);
+    throw new SyntaxError("Expected a </" + start.name + "> but </" + end + "> found.", location);
   }
 
   var primaryCondition = token({
     type: BLOCK_TYPES.CONDITION_BRANCH,
     condition: start.condition,
     content: content
-  }, line, column);
+  }, location);
 
   var conditions = [primaryCondition].concat(elsif);
 
@@ -105,7 +106,7 @@ ConditionalTag = start:ConditionStartTag content:Content elsif:ElsIfTag* otherwi
     name: start.name,
     conditions: conditions,
     otherwise: otherwise
-  }, line, column);
+  }, location);
 }
 
 InvalidTag = (OpeningEndBracket / OpeningBracket) name:UnknownTagName attributes:Attributes* ClosingBracket {
@@ -113,7 +114,7 @@ InvalidTag = (OpeningEndBracket / OpeningBracket) name:UnknownTagName attributes
     type: BLOCK_TYPES.INVALID_TAG,
     name: name,
     attributes: attributes
-  }, line, column);
+  }, location);
 }
 
 ElsIfTag = condition:ElsIfStartTag content:Content {
@@ -121,14 +122,14 @@ ElsIfTag = condition:ElsIfStartTag content:Content {
     type: BLOCK_TYPES.CONDITION_BRANCH,
     condition: condition,
     content: content
-  }, line, column);
+  }, location);
 }
 
 ElseTag = ElseStartTag content:Content {
   return token({
     type: BLOCK_TYPES.ALTERNATE_CONDITION_BRANCH,
     content: content
-  }, line, column);
+  }, location);
 }
 
 NonText
@@ -149,7 +150,7 @@ Text = text:$(!NonText SourceCharacter)+ {
   return token({
     type: BLOCK_TYPES.TEXT,
     content: text
-  }, line, column);
+  }, location);
 }
 
 StartTag = OpeningBracket name:$(BlockTagName !TagNameCharacter+) attributes:Attributes* ClosingBracket {
@@ -186,21 +187,21 @@ SingleLineComment = CommentStart c:$(!LineTerminator SourceCharacter)* {
   return token({
     type: BLOCK_TYPES.COMMENT,
     content: c
-  }, line, column);
+  }, location);
 }
 
 FullLineComment = FullLineCommentStart c:$(!LineTerminator SourceCharacter)* {
   return token({
     type: BLOCK_TYPES.COMMENT,
     content: c
-  }, line, COLUMN_ONE);
+  }, location);
 }
 
 CommentTag = CommentTagStart content:$(!CommentTagEnd SourceCharacter)* CommentTagEnd {
   return token({
     type: BLOCK_TYPES.COMMENT,
     content: content
-  }, line, column);
+  }, location);
 }
 
 Attributes
@@ -212,7 +213,7 @@ PerlExpression = PerlExpressionStart expression:$(!PerlExpressionEnd SourceChara
   return token({
     type: ATTRIBUTE_TYPES.EXPRESSION,
     value: expression
-  }, line, column);
+  }, location);
 }
 
 AttributeWithValue = name:AttributeToken "=" value:(AttributeToken / PerlExpression / QuotedString) {
@@ -220,7 +221,7 @@ AttributeWithValue = name:AttributeToken "=" value:(AttributeToken / PerlExpress
     type: ATTRIBUTE_TYPES.PAIR,
     name: name,
     value: value
-  }, line, column);
+  }, location);
 }
 
 AttributeWithoutValue = name:(AttributeToken / QuotedString) {
@@ -228,12 +229,12 @@ AttributeWithoutValue = name:(AttributeToken / QuotedString) {
     type: ATTRIBUTE_TYPES.SINGLE,
     name: name,
     value: null
-  }, line, column);
+  }, location);
 }
 
 AttributeToken = n:$[a-zA-Z0-9\-_/:\.{}\$]+ {
   if (n.indexOf("$") > 0) {
-    throw syntaxError("Unexpected $ in attribute name.", offset, line, column);
+    throw new SyntaxError("Unexpected $ in attribute name.", location);
   }
 
   return n;
@@ -343,7 +344,7 @@ OpeningEndBracket
 ClosingBracket
   = WhiteSpace* WhiteSpaceControlEnd? ">"
   / !">" SourceCharacter+ {
-    throw syntaxError("Expected a closing bracket.", offset, line, column);
+    throw new SyntaxError("Expected a closing bracket.", location);
   }
 
 PerlExpressionStart
@@ -375,7 +376,7 @@ SingleEscapeCharacter
 
 BlockHTMLTag = start:StartHTMLTag content:Content end:EndHTMLTag {
   if (start.name != end) {
-    throw syntaxError("Expected a </" + start.name + "> but </" + end + "> found.", offset, line, column);
+    throw new SyntaxError("Expected a </" + start.name + "> but </" + end + "> found.", location);
   }
 
   return token({
@@ -383,7 +384,7 @@ BlockHTMLTag = start:StartHTMLTag content:Content end:EndHTMLTag {
     name: start.name,
     attributes: start.attributes,
     content: content
-  }, line, column);
+  }, location);
 }
 
 SingleHTMLTag = OpeningBracket name:$(HTMLSingleTagName !TagNameCharacter+) attributes:HTMLAttributes* SelfClosingHTMLBracket {
@@ -391,7 +392,7 @@ SingleHTMLTag = OpeningBracket name:$(HTMLSingleTagName !TagNameCharacter+) attr
     type: BLOCK_TYPES.HTML_TAG,
     name: name,
     attributes: attributes
-  }, line, column);
+  }, location);
 }
 
 StartHTMLTag = OpeningBracket name:$(HTMLBlockTagName !TagNameCharacter+) attributes:HTMLAttributes* ClosingBracket {
@@ -484,7 +485,7 @@ HTMLAttributeWithValue = name:HTMLAttributeToken "=" value:(HTMLAttributeToken /
     type: ATTRIBUTE_TYPES.PAIR,
     name: name,
     value: value
-  }, line, column);
+  }, location);
 }
 
 HTMLAttributeWithoutValue = name:HTMLAttributeToken {
@@ -492,7 +493,7 @@ HTMLAttributeWithoutValue = name:HTMLAttributeToken {
     type: ATTRIBUTE_TYPES.SINGLE,
     name: name,
     value: null
-  }, line, column);
+  }, location);
 }
 
 // FIXME: Check the spec regarding this regexp.
@@ -503,5 +504,5 @@ HTMLAttributeToken = n:$[a-zA-Z0-9-]+ {
 SelfClosingHTMLBracket
   = WhiteSpace* (">" / "/>")
   / !">" SourceCharacter+ {
-    throw syntaxError("Expected a closing bracket.", offset, line, column);
+    throw new SyntaxError("Expected a closing bracket.", location);
   }
