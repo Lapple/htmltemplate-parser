@@ -28,6 +28,10 @@
     return object;
   }
 
+  function isTemplateTag(name) {
+    return name.indexOf('TMPL_') === 0;
+  }
+
   var BLOCK_TYPES = {
     COMMENT: "Comment",
     TAG: "Tag",
@@ -60,16 +64,16 @@
   SyntaxError.prototype = Error.prototype;
 }
 
-Content = (Comment / ConditionalTag / BlockTag / BlockHTMLTag / SingleTag / SingleHTMLTag / InvalidTag / Text)*
+Content = (Comment / ConditionalTag / BlockTag / SingleTag / InvalidTag / Text)*
 
 Comment
   = CommentTag
   / FullLineComment
   / SingleLineComment
 
-SingleTag = OpeningBracket name:$(SingleTagName !TagNameCharacter+) attributes:Attributes* ClosingBracket {
+SingleTag = OpeningBracket name:$((SingleTagName / HTMLSingleTagName) !TagNameCharacter+) attributes:(Attributes / HTMLAttributes)* ClosingBracket {
   return token({
-    type: BLOCK_TYPES.TAG,
+    type: isTemplateTag(name) ? BLOCK_TYPES.TAG : BLOCK_TYPES.HTML_TAG,
     name: name,
     attributes: attributes
   }, location);
@@ -81,7 +85,7 @@ BlockTag = start:StartTag content:Content end:EndTag {
   }
 
   return token({
-    type: BLOCK_TYPES.TAG,
+    type: isTemplateTag(start.name) ? BLOCK_TYPES.TAG : BLOCK_TYPES.HTML_TAG,
     name: start.name,
     attributes: start.attributes,
     content: content
@@ -142,9 +146,6 @@ NonText
   / ElseStartTag
   / ConditionEndTag
   / InvalidTag
-  / SingleHTMLTag
-  / StartHTMLTag
-  / EndHTMLTag
 
 Text = text:$(!NonText SourceCharacter)+ {
   return token({
@@ -153,7 +154,7 @@ Text = text:$(!NonText SourceCharacter)+ {
   }, location);
 }
 
-StartTag = OpeningBracket name:$(BlockTagName !TagNameCharacter+) attributes:Attributes* ClosingBracket {
+StartTag = OpeningBracket name:$((BlockTagName / HTMLBlockTagName) !TagNameCharacter+) attributes:(Attributes / HTMLAttributes)* ClosingBracket {
   return {
     name: name,
     attributes: attributes
@@ -161,7 +162,7 @@ StartTag = OpeningBracket name:$(BlockTagName !TagNameCharacter+) attributes:Att
 }
 
 // FIXME: Not capturing attributes on end tag for now.
-EndTag = OpeningEndBracket name:$(BlockTagName !TagNameCharacter+) Attributes* ClosingBracket {
+EndTag = OpeningEndBracket name:$((BlockTagName / HTMLBlockTagName) !TagNameCharacter+) (Attributes / HTMLAttributes)* ClosingBracket {
   return name;
 }
 
@@ -224,7 +225,9 @@ AttributeWithValue = name:AttributeToken "=" value:(AttributeToken / PerlExpress
   }, location);
 }
 
-AttributeWithoutValue = name:(AttributeToken / QuotedString) {
+// Predicate takes care of not matching self closing bracket in single HTML tags,
+// e.g. `<input type="text" />`.
+AttributeWithoutValue = name:(AttributeToken / QuotedString) & { return name !== '/'; } {
   return token({
     type: ATTRIBUTE_TYPES.SINGLE,
     name: name,
@@ -287,124 +290,6 @@ ElseTagName
 
 CommentTagName
   = "TMPL_COMMENT"
-
-WhiteSpaceControlStart "whitespace control character"
-  = "-"
-  / "~."
-  / "~|"
-  / "~"
-
-WhiteSpaceControlEnd "whitespace control character"
-  = "-"
-  / ".~"
-  / "|~"
-  / "~"
-
-CommentTagStart
-  = OpeningBracket CommentTagName ClosingBracket
-
-CommentTagEnd
-  = OpeningEndBracket CommentTagName ClosingBracket
-
-TagNameCharacter
-  = [a-zA-Z_-]
-
-WhiteSpace "whitespace"
-  = "\t"
-  / "\v"
-  / "\f"
-  / " "
-  / "\u00A0"
-  / "\uFEFF"
-  / [\u0020\u00A0\u1680\u2000-\u200A\u202F\u205F\u3000]
-  / LineTerminator
-
-FullLineCommentStart
-  = LineTerminator (!CommentStart "#")
-
-CommentStart
-  = "##"
-
-SourceCharacter
-  = .
-
-LineTerminator "end of line"
-  = "\n"
-  / "\r\n"
-  / "\r"
-  / "\u2028"
-  / "\u2029"
-
-OpeningBracket
-  = "<" (WhiteSpaceControlStart WhiteSpace*)?
-
-OpeningEndBracket
-  = "<" WhiteSpaceControlStart? "/"
-
-ClosingBracket
-  = WhiteSpace* WhiteSpaceControlEnd? ">"
-  / !">" SourceCharacter+ {
-    throw new SyntaxError("Expected a closing bracket.", location);
-  }
-
-PerlExpressionStart
-  = "[%" WhiteSpace*
-
-PerlExpressionEnd
-  = WhiteSpace* "%]"
-
-SingleStringCharacter
-  = !("'" / "\\" / LineTerminator) SourceCharacter { return text(); }
-  / "\\" esc:SingleEscapeCharacter { return esc; }
-
-DoubleStringCharacter
-  = !("\"" / "\\" / LineTerminator) SourceCharacter { return text(); }
-  / "\\" esc:SingleEscapeCharacter { return esc; }
-
-SingleEscapeCharacter
-  = "'"
-  / '"'
-  / "\\"
-  / "b"  { return "\b"; }
-  / "f"  { return "\f"; }
-  / "n"  { return "\n"; }
-  / "r"  { return "\r"; }
-  / "t"  { return "\t"; }
-  / "v"  { return "\v"; }
-
-// HTML Parsing
-
-BlockHTMLTag = start:StartHTMLTag content:Content end:EndHTMLTag {
-  if (start.name != end) {
-    throw new SyntaxError("Expected a </" + start.name + "> but </" + end + "> found.", location);
-  }
-
-  return token({
-    type: BLOCK_TYPES.HTML_TAG,
-    name: start.name,
-    attributes: start.attributes,
-    content: content
-  }, location);
-}
-
-SingleHTMLTag = OpeningBracket name:$(HTMLSingleTagName !TagNameCharacter+) attributes:HTMLAttributes* SelfClosingHTMLBracket {
-  return token({
-    type: BLOCK_TYPES.HTML_TAG,
-    name: name,
-    attributes: attributes
-  }, location);
-}
-
-StartHTMLTag = OpeningBracket name:$(HTMLBlockTagName !TagNameCharacter+) attributes:HTMLAttributes* ClosingBracket {
-  return {
-    name: name,
-    attributes: attributes
-  }
-}
-
-EndHTMLTag = OpeningEndBracket name:$(HTMLBlockTagName !TagNameCharacter+) ClosingBracket {
-  return name;
-}
 
 HTMLBlockTagName =
   'abbr'
@@ -477,6 +362,90 @@ HTMLSingleTagName =
   / 'link'
   / 'meta'
 
+WhiteSpaceControlStart "whitespace control character"
+  = "-"
+  / "~."
+  / "~|"
+  / "~"
+
+WhiteSpaceControlEnd "whitespace control character"
+  = "-"
+  / ".~"
+  / "|~"
+  / "~"
+
+CommentTagStart
+  = OpeningBracket CommentTagName ClosingBracket
+
+CommentTagEnd
+  = OpeningEndBracket CommentTagName ClosingBracket
+
+TagNameCharacter
+  = [a-zA-Z_-]
+
+WhiteSpace "whitespace"
+  = "\t"
+  / "\v"
+  / "\f"
+  / " "
+  / "\u00A0"
+  / "\uFEFF"
+  / [\u0020\u00A0\u1680\u2000-\u200A\u202F\u205F\u3000]
+  / LineTerminator
+
+FullLineCommentStart
+  = LineTerminator (!CommentStart "#")
+
+CommentStart
+  = "##"
+
+SourceCharacter
+  = .
+
+LineTerminator "end of line"
+  = "\n"
+  / "\r\n"
+  / "\r"
+  / "\u2028"
+  / "\u2029"
+
+OpeningBracket
+  = "<" (WhiteSpaceControlStart WhiteSpace*)?
+
+OpeningEndBracket
+  = "<" WhiteSpaceControlStart? "/"
+
+ClosingBracket
+  = WhiteSpace* WhiteSpaceControlEnd? ("/>" / ">")
+  / !">" SourceCharacter+ {
+    throw new SyntaxError("Expected a closing bracket.", location);
+  }
+
+PerlExpressionStart
+  = "[%" WhiteSpace*
+
+PerlExpressionEnd
+  = WhiteSpace* "%]"
+
+SingleStringCharacter
+  = !("'" / "\\" / LineTerminator) SourceCharacter { return text(); }
+  / "\\" esc:SingleEscapeCharacter { return esc; }
+
+DoubleStringCharacter
+  = !("\"" / "\\" / LineTerminator) SourceCharacter { return text(); }
+  / "\\" esc:SingleEscapeCharacter { return esc; }
+
+SingleEscapeCharacter
+  = "'"
+  / '"'
+  / "\\"
+  / "b"  { return "\b"; }
+  / "f"  { return "\f"; }
+  / "n"  { return "\n"; }
+  / "r"  { return "\r"; }
+  / "t"  { return "\t"; }
+  / "v"  { return "\v"; }
+
 HTMLAttributes
   = WhiteSpace+ attrs:(HTMLAttributeWithValue / HTMLAttributeWithoutValue) { return attrs; }
 
@@ -500,9 +469,3 @@ HTMLAttributeWithoutValue = name:HTMLAttributeToken {
 HTMLAttributeToken = n:$[a-zA-Z0-9-]+ {
   return n;
 }
-
-SelfClosingHTMLBracket
-  = WhiteSpace* (">" / "/>")
-  / !">" SourceCharacter+ {
-    throw new SyntaxError("Expected a closing bracket.", location);
-  }
