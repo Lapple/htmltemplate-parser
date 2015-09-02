@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "description": "HTML::Template Parser",
   "main": "parser.js",
+  "bin": "bin/parse",
   "scripts": {
     "generate": "pegjs --extra-options-file generator-options.json tmpl.pegjs parser.js",
     "test": "mocha test/test.js",
