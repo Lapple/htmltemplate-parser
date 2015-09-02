@@ -349,7 +349,7 @@ SingleQuotedContentString = "'" content:(Comment / ConditionalTag / BlockTag / S
   return content;
 }
 
-SingleQuotedText = text:$(!NonText SingleStringCharacter)+ {
+SingleQuotedText = text:$(!NonText (SingleStringCharacter / LineTerminator))+ {
   return token({
     type: BLOCK_TYPES.TEXT,
     content: text
@@ -364,7 +364,7 @@ DoubleQuotedContentString = "\"" content:(Comment / ConditionalTag / BlockTag / 
   return content;
 }
 
-DoubleQuotedText = text:$(!NonText DoubleStringCharacter)+ {
+DoubleQuotedText = text:$(!NonText (DoubleStringCharacter / LineTerminator))+ {
   return token({
     type: BLOCK_TYPES.TEXT,
     content: text

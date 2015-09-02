@@ -618,10 +618,85 @@
     },
     {
         "type": "Text",
-        "content": "\n",
+        "content": "\n\n",
         "position": {
             "line": 34,
             "column": 43
+        }
+    },
+    {
+        "type": "HTMLTag",
+        "name": "p",
+        "attributes": [
+            {
+                "type": "PairAttribute",
+                "name": "class",
+                "value": null,
+                "content": [
+                    {
+                        "type": "Text",
+                        "content": "\n        text\n        text_indented\n        ",
+                        "position": {
+                            "line": 37,
+                            "column": 12
+                        }
+                    },
+                    {
+                        "type": "Tag",
+                        "name": "TMPL_VAR",
+                        "attributes": [
+                            {
+                                "type": "SingleAttribute",
+                                "name": "modifier",
+                                "value": null,
+                                "position": {
+                                    "line": 40,
+                                    "column": 19
+                                }
+                            }
+                        ],
+                        "position": {
+                            "line": 40,
+                            "column": 9
+                        }
+                    }
+                ],
+                "position": {
+                    "line": 37,
+                    "column": 5
+                }
+            },
+            {
+                "type": "PairAttribute",
+                "name": "data-id",
+                "value": "\n        1\n    ",
+                "position": {
+                    "line": 41,
+                    "column": 5
+                }
+            }
+        ],
+        "content": [
+            {
+                "type": "Text",
+                "content": "\n    Text\n",
+                "position": {
+                    "line": 43,
+                    "column": 7
+                }
+            }
+        ],
+        "position": {
+            "line": 36,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 45,
+            "column": 5
         }
     }
 ]

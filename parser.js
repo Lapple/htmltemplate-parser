@@ -2377,6 +2377,9 @@ module.exports = (function() {
       }
       if (s4 !== peg$FAILED) {
         s5 = peg$parseSingleStringCharacter();
+        if (s5 === peg$FAILED) {
+          s5 = peg$parseLineTerminator();
+        }
         if (s5 !== peg$FAILED) {
           s4 = [s4, s5];
           s3 = s4;
@@ -2404,6 +2407,9 @@ module.exports = (function() {
           }
           if (s4 !== peg$FAILED) {
             s5 = peg$parseSingleStringCharacter();
+            if (s5 === peg$FAILED) {
+              s5 = peg$parseLineTerminator();
+            }
             if (s5 !== peg$FAILED) {
               s4 = [s4, s5];
               s3 = s4;
@@ -2528,6 +2534,9 @@ module.exports = (function() {
       }
       if (s4 !== peg$FAILED) {
         s5 = peg$parseDoubleStringCharacter();
+        if (s5 === peg$FAILED) {
+          s5 = peg$parseLineTerminator();
+        }
         if (s5 !== peg$FAILED) {
           s4 = [s4, s5];
           s3 = s4;
@@ -2555,6 +2564,9 @@ module.exports = (function() {
           }
           if (s4 !== peg$FAILED) {
             s5 = peg$parseDoubleStringCharacter();
+            if (s5 === peg$FAILED) {
+              s5 = peg$parseLineTerminator();
+            }
             if (s5 !== peg$FAILED) {
               s4 = [s4, s5];
               s3 = s4;
