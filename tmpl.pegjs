@@ -163,16 +163,12 @@ Text = text:$(!NonText SourceCharacter)+ {
 }
 
 ConditionalWrapperTag =
-  openCondition:ConditionStartTag
-  WhiteSpace*
-  openWrapper:StartTag
-  WhiteSpace*
+  openCondition:ConditionStartTag __
+  openWrapper:StartTag __
   ConditionEndTag
   content:Content
-  closeCondition:ConditionStartTag
-  WhiteSpace*
-  closeWrapper: EndTag
-  WhiteSpace*
+  closeCondition:ConditionStartTag __
+  closeWrapper: EndTag __
   ConditionEndTag
   & {
     return (
@@ -270,7 +266,7 @@ CommentTag = CommentTagStart content:$(!CommentTagEnd SourceCharacter)* CommentT
 TMPLAttributes
   = WhiteSpace+ attrs:(AttributeWithValue / AttributeWithoutValue) { return attrs; }
   // Expressions don't require whitespace to be separated from tag names.
-  / WhiteSpace* expression:PerlExpression { return expression; }
+  / __ expression:PerlExpression { return expression; }
 
 PerlExpression = PerlExpressionStart expression:$(!PerlExpressionEnd SourceCharacter)* PerlExpressionEnd {
   return token({
@@ -343,15 +339,10 @@ HTMLAttributeToken = n:$[a-zA-Z0-9-]+ {
 }
 
 ConditionalHTMLAttributes =
-  start:ConditionStartTag
-  WhiteSpace*
+  start:ConditionStartTag __
   attrs:PlainHTMLAttributes*
   elsif:(
-    WhiteSpace*
-    condition:ElsIfStartTag
-    WhiteSpace*
-    attrs:PlainHTMLAttributes*
-    {
+    __ condition:ElsIfStartTag __ attrs:PlainHTMLAttributes* {
       return token({
         type: BLOCK_TYPES.CONDITION_BRANCH,
         condition: condition,
@@ -360,14 +351,11 @@ ConditionalHTMLAttributes =
     }
   )*
   otherwise:(
-    WhiteSpace*
-    ElseStartTag
-    WhiteSpace*
-    attrs:PlainHTMLAttributes*
-    { return attrs; }
+    __ ElseStartTag __ attrs:PlainHTMLAttributes* {
+      return attrs;
+    }
   )?
-  WhiteSpace*
-  end:ConditionEndTag
+  __ end:ConditionEndTag
   & {
     return start.name === end;
   }
@@ -573,6 +561,8 @@ WhiteSpace "whitespace"
   / [\u0020\u00A0\u1680\u2000-\u200A\u202F\u205F\u3000]
   / LineTerminator
 
+__ = WhiteSpace*
+
 FullLineCommentStart
   = LineTerminator (!CommentStart "#")
 
@@ -590,22 +580,22 @@ LineTerminator "end of line"
   / "\u2029"
 
 OpeningBracket
-  = "<" (WhiteSpaceControlStart WhiteSpace*)?
+  = "<" WhiteSpaceControlStart? __
 
 OpeningEndBracket
   = "<" WhiteSpaceControlStart? "/"
 
 ClosingBracket
-  = WhiteSpace* WhiteSpaceControlEnd? ("/>" / ">")
+  = __ WhiteSpaceControlEnd? ("/>" / ">")
   / !">" SourceCharacter+ {
     throw new SyntaxError("Expected a closing bracket.", location);
   }
 
 PerlExpressionStart
-  = "[%" WhiteSpace*
+  = "[%" __
 
 PerlExpressionEnd
-  = WhiteSpace* "%]"
+  = __ "%]"
 
 SingleStringCharacter
   = !("'" / "\\" / LineTerminator) SourceCharacter { return text(); }
