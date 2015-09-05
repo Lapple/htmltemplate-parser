@@ -74,13 +74,14 @@
 
   var EXPRESSION_TOKENS = {
     IDENTIFIER: "Identifier",
-    LITERAL: "PerlLiteral"
+    LITERAL: "Literal"
   };
 
   var EXPRESSION_TYPES = {
     UNARY: "UnaryExpression",
-    BINARY: "BinaryExpression"
-  }
+    BINARY: "BinaryExpression",
+    TERNARY: "ConditionalExpression"
+  };
 
   function SyntaxError(message, location) {
     var l = location().start;
@@ -324,7 +325,7 @@ PerlExpressionLiteral =
     }, location);
   }
 
-AttributeWithValue = name:AttributeToken "=" value:(AttributeToken / PerlExpressionLiteral / QuotedString) {
+AttributeWithValue = name:AttributeToken "=" value:(AttributeToken / PerlExpressionLiteral / StringLiteral) {
   return token({
     type: ATTRIBUTE_TYPES.PAIR,
     name: name,
@@ -334,7 +335,7 @@ AttributeWithValue = name:AttributeToken "=" value:(AttributeToken / PerlExpress
 
 // Predicate takes care of not matching self closing bracket in single HTML tags,
 // e.g. `<input type="text" />`.
-AttributeWithoutValue = name:(AttributeToken / QuotedString) & { return name !== '/'; } {
+AttributeWithoutValue = name:(AttributeToken / StringLiteral) & { return name !== '/'; } {
   return token({
     type: ATTRIBUTE_TYPES.SINGLE,
     name: name,
@@ -459,18 +460,6 @@ DoubleQuotedText = text:$(!NonText (DoubleStringCharacter / LineTerminator))+ {
   }, location);
 }
 
-QuotedString
-  = SingleQuotedString
-  / DoubleQuotedString
-
-SingleQuotedString = "'" chars:SingleStringCharacter* "'" {
-  return join(chars);
-}
-
-DoubleQuotedString = "\"" chars:DoubleStringCharacter* "\"" {
-  return join(chars);
-}
-
 // Operator precedence:
 //  >  ! ~ + -
 //  <  * / %
@@ -483,7 +472,15 @@ DoubleQuotedString = "\"" chars:DoubleStringCharacter* "\"" {
 //  <  and
 //  <  or xor
 PerlExpression
-  = LogicalStringOrExpression
+  = test:LogicalStringOrExpression __ "?" __ consequent:PrimaryExpression __ ":" __ alternate:PrimaryExpression {
+    return {
+      type: EXPRESSION_TYPES.TERNARY,
+      test: test,
+      consequent: consequent,
+      alternate: alternate
+    };
+  }
+  / LogicalStringOrExpression
 
 LogicalStringOrExpression = first:LogicalStringAndExpression rest:(__ ("xor" / "or") __ LogicalStringAndExpression)* {
   return buildBinaryExpression(first, rest);
@@ -551,10 +548,10 @@ PerlIdentifier = "$" name:$PerlIdentifierCharacter+ {
   }, location);
 }
 
-PerlLiteral = value:$QuotedString {
+PerlLiteral = literal:(StringLiteral / NumericLiteral) {
   return token({
     type: EXPRESSION_TOKENS.LITERAL,
-    value: value
+    value: literal
   }, location);
 }
 
@@ -720,6 +717,48 @@ CommentTagEnd
 
 TagNameCharacter
   = [a-zA-Z_-]
+
+StringLiteral "string"
+  = SingleQuotedString
+  / DoubleQuotedString
+
+SingleQuotedString = "'" chars:SingleStringCharacter* "'" {
+  return join(chars);
+}
+
+DoubleQuotedString = "\"" chars:DoubleStringCharacter* "\"" {
+  return join(chars);
+}
+
+NumericLiteral "number"
+  = DecimalIntegerLiteral "." DecimalDigit* ExponentPart? {
+    return parseFloat(text());
+  }
+  / "." DecimalDigit+ ExponentPart? {
+    return parseFloat(text());
+  }
+  / DecimalIntegerLiteral ExponentPart? {
+    return parseFloat(text());
+  }
+
+DecimalIntegerLiteral
+  = "0"
+  / NonZeroDigit DecimalDigit*
+
+DecimalDigit
+  = [0-9]
+
+NonZeroDigit
+  = [1-9]
+
+ExponentPart
+  = ExponentIndicator SignedInteger
+
+ExponentIndicator
+  = "e"i
+
+SignedInteger
+  = [+-]? DecimalDigit+
 
 WhiteSpace "whitespace"
   = "\t"

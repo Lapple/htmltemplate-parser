@@ -106,12 +106,12 @@
                         },
                         "operator": "eq",
                         "right": {
+                            "type": "Literal",
+                            "value": "ok",
                             "position": {
                                 "column": 28,
                                 "line": 6
-                            },
-                            "type": "PerlLiteral",
-                            "value": "'ok'"
+                            }
                         },
                         "type": "BinaryExpression"
                     },

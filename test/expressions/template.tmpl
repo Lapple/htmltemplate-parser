@@ -6,3 +6,7 @@
 <TMPL_VAR [% $a / $b * $c % $d %]>
 <TMPL_VAR [% !$a && $b || + $c %]>
 <TMPL_VAR [% $a + $b - $c %]>
+<TMPL_VAR [% $a ? ($a + $b) : $c %]>
+<TMPL_VAR [% $a > 3 %]>
+<TMPL_VAR [% 5.5 * $a >= .3 %]>
+<TMPL_VAR [% $a ne 'ok' %]>
