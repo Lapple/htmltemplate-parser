@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+var EOL = require('os').EOL;
 var fs = require('fs');
 var inspect = require('util').inspect;
 
@@ -26,12 +27,40 @@ var argv = require('yargs')
 
 var template = fs.readFileSync(argv.path, 'utf8').trim();
 
-var ast = parser.parse(template, {
-    ignoreHTMLTags: argv.ignoreHtml
-});
+try {
+    var ast = parser.parse(template, {
+        ignoreHTMLTags: argv.ignoreHtml
+    });
 
-if (argv.pretty) {
-    console.log(inspect(ast, { colors: true, depth: Infinity }));
-} else {
-    console.log(JSON.stringify(ast, null, 4));
+    if (argv.pretty) {
+        console.log(inspect(ast, { colors: true, depth: Infinity }));
+    } else {
+        console.log(JSON.stringify(ast, null, 4));
+    }
+} catch(e) {
+    console.error(
+        formatFileError(argv.path, template, e)
+    );
+}
+
+function formatFileError(filepath, content, error) {
+    return (
+        filepath + ':' + error.line + ':' + error.column + EOL +
+        EOL +
+        findLine(content, error.offset) + EOL +
+        pointTo(error.column) + EOL +
+        EOL +
+        error.name + ': ' + error.message
+    );
+
+    function findLine(string, offset) {
+        var start = string.lastIndexOf('\n', offset);
+        var end = string.indexOf('\n', offset);
+
+        return string.slice(start + 1, end);
+    }
+
+    function pointTo(column) {
+        return (new Array(column)).join(' ') + '^';
+    }
 }
