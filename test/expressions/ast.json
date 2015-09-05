@@ -716,5 +716,217 @@
             "line": 12,
             "column": 28
         }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "BinaryExpression",
+                    "operator": "&&",
+                    "left": {
+                        "type": "BinaryExpression",
+                        "operator": "&&",
+                        "left": {
+                            "type": "MemberExpression",
+                            "object": {
+                                "type": "Identifier",
+                                "name": "a",
+                                "position": {
+                                    "line": 13,
+                                    "column": 14
+                                }
+                            },
+                            "property": {
+                                "type": "Identifier",
+                                "name": "prop",
+                                "position": {
+                                    "line": 13,
+                                    "column": 16
+                                }
+                            },
+                            "computed": false
+                        },
+                        "right": {
+                            "type": "MemberExpression",
+                            "object": {
+                                "type": "Identifier",
+                                "name": "b",
+                                "position": {
+                                    "line": 13,
+                                    "column": 28
+                                }
+                            },
+                            "property": {
+                                "type": "Identifier",
+                                "name": "prop",
+                                "position": {
+                                    "line": 13,
+                                    "column": 33
+                                }
+                            },
+                            "computed": true
+                        }
+                    },
+                    "right": {
+                        "type": "MemberExpression",
+                        "object": {
+                            "type": "MemberExpression",
+                            "object": {
+                                "type": "Identifier",
+                                "name": "a",
+                                "position": {
+                                    "line": 13,
+                                    "column": 43
+                                }
+                            },
+                            "property": {
+                                "type": "Identifier",
+                                "name": "b",
+                                "position": {
+                                    "line": 13,
+                                    "column": 45
+                                }
+                            },
+                            "computed": false
+                        },
+                        "property": {
+                            "type": "Identifier",
+                            "name": "c",
+                            "position": {
+                                "line": 13,
+                                "column": 50
+                            }
+                        },
+                        "computed": false
+                    }
+                },
+                "value": "$a->{prop} && $b->{$prop} && $a->{b}->{c}",
+                "position": {
+                    "line": 13,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 13,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 13,
+            "column": 59
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "BinaryExpression",
+                    "operator": "||",
+                    "left": {
+                        "type": "BinaryExpression",
+                        "operator": "||",
+                        "left": {
+                            "type": "BinaryExpression",
+                            "operator": "=~",
+                            "left": {
+                                "type": "Identifier",
+                                "name": "letter",
+                                "position": {
+                                    "line": 14,
+                                    "column": 14
+                                }
+                            },
+                            "right": {
+                                "type": "Literal",
+                                "regex": {
+                                    "pattern": "a|b|c|d",
+                                    "flags": "",
+                                    "operators": "m"
+                                },
+                                "position": {
+                                    "line": 14,
+                                    "column": 25
+                                }
+                            }
+                        },
+                        "right": {
+                            "type": "BinaryExpression",
+                            "operator": "=~",
+                            "left": {
+                                "type": "Identifier",
+                                "name": "digit",
+                                "position": {
+                                    "line": 14,
+                                    "column": 39
+                                }
+                            },
+                            "right": {
+                                "type": "Literal",
+                                "regex": {
+                                    "pattern": "[0-9]+",
+                                    "flags": "",
+                                    "operators": ""
+                                },
+                                "position": {
+                                    "line": 14,
+                                    "column": 49
+                                }
+                            }
+                        }
+                    },
+                    "right": {
+                        "type": "BinaryExpression",
+                        "operator": "!~",
+                        "left": {
+                            "type": "Identifier",
+                            "name": "text",
+                            "position": {
+                                "line": 14,
+                                "column": 61
+                            }
+                        },
+                        "right": {
+                            "type": "Literal",
+                            "regex": {
+                                "pattern": "^null$",
+                                "flags": "",
+                                "operators": ""
+                            },
+                            "position": {
+                                "line": 14,
+                                "column": 70
+                            }
+                        }
+                    }
+                },
+                "value": "$letter =~ m/a|b|c|d/ || $digit =~ /[0-9]+/ || $text !~ /^null$/",
+                "position": {
+                    "line": 14,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 14,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 14,
+            "column": 82
+        }
     }
 ]

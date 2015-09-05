@@ -10,3 +10,5 @@
 <TMPL_VAR [% $a > 3 %]>
 <TMPL_VAR [% 5.5 * $a >= .3 %]>
 <TMPL_VAR [% $a ne 'ok' %]>
+<TMPL_VAR [% $a->{prop} && $b->{$prop} && $a->{b}->{c} %]>
+<TMPL_VAR [% $letter =~ m/a|b|c|d/ || $digit =~ /[0-9]+/ || $text !~ /^null$/ %]>
