@@ -1,7 +1,7 @@
 <TMPL_VAR [% $a or $b or $c %]>
 <TMPL_VAR [% ($a or $b) and $c %]>
 <TMPL_VAR [% $a or $b || $c %]>
-<TMPL_VAR [% not $a and $b or $c %]>
+<TMPL_VAR [% not $a and $b or $c and not($c) %]>
 <TMPL_VAR [% $a < $c && $b >= $c %]>
 <TMPL_VAR [% $a / $b * $c % $d %]>
 <TMPL_VAR [% !$a && $b || + $c %]>
@@ -10,10 +10,14 @@
 <TMPL_VAR [% $a > 3 %]>
 <TMPL_VAR [% 5.5 * $a >= .3 %]>
 <TMPL_VAR [% $a ne 'ok' %]>
-<TMPL_VAR [% $a->{prop} && $b->{$prop} && $a->{b}->{c} && $a->{b}->[0]->[1] %]>
+<TMPL_VAR [% $a->{prop} && $b->{$prop} && $a->{b}->{c} && $a->{b}->[0]->[1] && $a[1] && $a->{b}[9] && $a->{3} %]>
+<TMPL_VAR [% $a->[$b] && $a[1][$b] && $a{b}{$c} %]>
 <TMPL_VAR [% $letter =~ m/a|b|c|d/ || $digit =~ /[0-9]+/ || $text !~ /^null$/ %]>
 <TMPL_VAR [% substr($string, 1, -1) %]>
 <TMPL_VAR [% lc $string . '!' . lc 'A' %]>
 <TMPL_VAR [% $a1 and $b2 and not ($c3 or $d4) and $e5 %]>
-<TMPL_VAR [% $identifier_with/slash %]>
+<TMPL_VAR [% $a/b && @$a && %$b %]>
 <TMPL_VAR [% fn($a, $b) >= 0 ? substr($c, fn($c, $b)) : "" %]>
+<TMPL_VAR [% __first__ && __last__ && __counter__ && $a %]>
+<TMPL_VAR [% $a ? $a : $b ? $b : $c . ' ' . fn($d) %]>
+<TMPL_VAR [% 'a/b/c\@/d' %]>

@@ -480,7 +480,7 @@ DoubleQuotedText = text:$(!NonText (DoubleStringCharacter / LineTerminator))+ {
 //  <  and
 //  <  or xor
 PerlExpression
-  = test:LogicalStringOrExpression __ "?" __ consequent:LogicalStringOrExpression __ ":" __ alternate:LogicalStringOrExpression {
+  = test:LogicalStringOrExpression __ "?" __ consequent:PerlExpression __ ":" __ alternate:PerlExpression {
       return {
         type: EXPRESSION_TYPES.TERNARY,
         test: test,
@@ -499,7 +499,7 @@ LogicalStringAndExpression = first:UnaryStringNotExpression rest:(__ "and" __ Un
 }
 
 UnaryStringNotExpression
-  = operator:"not" WhiteSpace+ argument:LogicalSymbolicOrExpression {
+  = operator:"not" __ argument:LogicalSymbolicOrExpression {
       return {
         type: EXPRESSION_TYPES.UNARY,
         operator: operator,
@@ -561,13 +561,19 @@ CallExpression
 MemberExpression
   = first:PrimaryExpression
     rest:(
-        __ "->{" __ property:PerlIdentifier __ "}" {
+        __ "->"? "{" __ property:PerlIdentifier __ "}" {
           return {
             property: property,
             computed: true
           };
         }
-      / __ "->{" __ value:PerlIdentifierName __ "}" {
+      / __ "->"? "[" __ property:PerlIdentifier __ "]" {
+          return {
+            property: property,
+            computed: true
+          };
+        }
+      / __ "->"? "{" __ value:(PerlIdentifierName / NumericLiteral) __ "}" {
           return {
             property: token({
               type: EXPRESSION_TOKENS.LITERAL,
@@ -576,7 +582,7 @@ MemberExpression
             computed: false
           };
         }
-      / __ "->[" __ value:NumericLiteral __ "]" {
+      / __ "->"? "[" __ value:NumericLiteral __ "]" {
           return {
             property: token({
               type: EXPRESSION_TOKENS.LITERAL,
@@ -602,12 +608,19 @@ PrimaryExpression
   / PerlLiteral
   / "(" __ e:PerlExpression __ ")" { return e; }
 
-PerlIdentifier = name:$("@"? "$" PerlIdentifierName) {
-  return token({
-    type: EXPRESSION_TOKENS.IDENTIFIER,
-    name: name
-  }, location);
-}
+PerlIdentifier
+  = name:$(
+      ("@" / "%")? "$" PerlIdentifierName
+    / "__first__"
+    / "__last__"
+    / "__counter__"
+  )
+  {
+    return token({
+      type: EXPRESSION_TOKENS.IDENTIFIER,
+      name: name
+    }, location);
+  }
 
 PerlFunctionIdentifier = name:PerlIdentifierName {
   return token({
@@ -947,11 +960,15 @@ PerlExpressionEnd
 
 SingleStringCharacter
   = !("'" / "\\" / LineTerminator) SourceCharacter { return text(); }
-  / "\\" esc:SingleEscapeCharacter { return esc; }
+  / "\\" esc:CharacterEscapeSequence { return esc; }
 
 DoubleStringCharacter
   = !("\"" / "\\" / LineTerminator) SourceCharacter { return text(); }
-  / "\\" esc:SingleEscapeCharacter { return esc; }
+  / "\\" esc:CharacterEscapeSequence { return esc; }
+
+CharacterEscapeSequence
+  = SingleEscapeCharacter
+  / NonEscapeCharacter
 
 SingleEscapeCharacter
   = "'"
@@ -963,3 +980,12 @@ SingleEscapeCharacter
   / "r"  { return "\r"; }
   / "t"  { return "\t"; }
   / "v"  { return "\v"; }
+
+NonEscapeCharacter
+  = !(EscapeCharacter / LineTerminator) SourceCharacter { return text(); }
+
+EscapeCharacter
+  = SingleEscapeCharacter
+  / DecimalDigit
+  / "x"
+  / "u"
