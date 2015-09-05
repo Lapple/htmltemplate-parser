@@ -12,3 +12,5 @@
 <TMPL_VAR [% $a ne 'ok' %]>
 <TMPL_VAR [% $a->{prop} && $b->{$prop} && $a->{b}->{c} %]>
 <TMPL_VAR [% $letter =~ m/a|b|c|d/ || $digit =~ /[0-9]+/ || $text !~ /^null$/ %]>
+<TMPL_VAR [% substr($string, 1, -1) %]>
+<TMPL_VAR [% lc $string . '!' . lc 'A' %]>

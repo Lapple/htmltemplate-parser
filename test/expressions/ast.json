@@ -928,5 +928,157 @@
             "line": 14,
             "column": 82
         }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "CallExpression",
+                    "callee": {
+                        "type": "FunctionIdentifier",
+                        "name": "substr",
+                        "position": {
+                            "line": 15,
+                            "column": 14
+                        }
+                    },
+                    "arguments": [
+                        {
+                            "type": "Identifier",
+                            "name": "string",
+                            "position": {
+                                "line": 15,
+                                "column": 21
+                            }
+                        },
+                        {
+                            "type": "Literal",
+                            "value": 1,
+                            "position": {
+                                "line": 15,
+                                "column": 30
+                            }
+                        },
+                        {
+                            "type": "UnaryExpression",
+                            "operator": "-",
+                            "argument": {
+                                "type": "Literal",
+                                "value": 1,
+                                "position": {
+                                    "line": 15,
+                                    "column": 34
+                                }
+                            },
+                            "prefix": true
+                        }
+                    ]
+                },
+                "value": "substr($string, 1, -1)",
+                "position": {
+                    "line": 15,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 15,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 15,
+            "column": 40
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "BinaryExpression",
+                    "operator": ".",
+                    "left": {
+                        "type": "BinaryExpression",
+                        "operator": ".",
+                        "left": {
+                            "type": "CallExpression",
+                            "callee": {
+                                "type": "FunctionIdentifier",
+                                "name": "lc",
+                                "position": {
+                                    "line": 16,
+                                    "column": 14
+                                }
+                            },
+                            "arguments": [
+                                {
+                                    "type": "Identifier",
+                                    "name": "string",
+                                    "position": {
+                                        "line": 16,
+                                        "column": 17
+                                    }
+                                }
+                            ]
+                        },
+                        "right": {
+                            "type": "Literal",
+                            "value": "!",
+                            "position": {
+                                "line": 16,
+                                "column": 27
+                            }
+                        }
+                    },
+                    "right": {
+                        "type": "CallExpression",
+                        "callee": {
+                            "type": "FunctionIdentifier",
+                            "name": "lc",
+                            "position": {
+                                "line": 16,
+                                "column": 33
+                            }
+                        },
+                        "arguments": [
+                            {
+                                "type": "Literal",
+                                "value": "A",
+                                "position": {
+                                    "line": 16,
+                                    "column": 36
+                                }
+                            }
+                        ]
+                    }
+                },
+                "value": "lc $string . '!' . lc 'A'",
+                "position": {
+                    "line": 16,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 16,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 16,
+            "column": 43
+        }
     }
 ]

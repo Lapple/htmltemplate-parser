@@ -53,6 +53,10 @@
     });
   }
 
+  function extractThird(list) {
+    return list[3];
+  }
+
   var BLOCK_TYPES = {
     COMMENT: "Comment",
     TAG: "Tag",
@@ -74,6 +78,7 @@
 
   var EXPRESSION_TOKENS = {
     IDENTIFIER: "Identifier",
+    FUNCTION_IDENTIFIER: "FunctionIdentifier",
     LITERAL: "Literal"
   };
 
@@ -81,7 +86,8 @@
     UNARY: "UnaryExpression",
     BINARY: "BinaryExpression",
     TERNARY: "ConditionalExpression",
-    MEMBER: "MemberExpression"
+    MEMBER: "MemberExpression",
+    CALL: "CallExpression"
   };
 
   function SyntaxError(message, location) {
@@ -532,12 +538,22 @@ MatchExpression = first:UnarySymbolicExpression rest:(__ MatchOperator __ UnaryS
 }
 
 UnarySymbolicExpression
-  = operator:UnarySymbolicOperator __ argument:MemberExpression {
+  = operator:UnarySymbolicOperator __ argument:CallExpression {
       return {
         type: EXPRESSION_TYPES.UNARY,
         operator: operator,
         argument: argument,
         prefix: true
+      };
+    }
+  / CallExpression
+
+CallExpression
+  = callee:PerlFunctionIdentifier __ args:Arguments {
+      return {
+        type: EXPRESSION_TYPES.CALL,
+        callee: callee,
+        arguments: args
       };
     }
   / MemberExpression
@@ -572,9 +588,6 @@ MemberExpression
       });
     }
 
-CallExpression
-  = PrimaryExpression
-
 PrimaryExpression
   = PerlIdentifier
   / PerlLiteral
@@ -587,17 +600,42 @@ PerlIdentifier = "$" name:PerlIdentifierName {
   }, location);
 }
 
+PerlFunctionIdentifier = name:PerlIdentifierName {
+  return token({
+    type: EXPRESSION_TOKENS.FUNCTION_IDENTIFIER,
+    name: name
+  }, location);
+}
+
 PerlIdentifierName
   = $[a-zA-Z_]+
 
 PerlLiteral
-  = literal:(StringLiteral / NumericLiteral) {
-      return token({
-        type: EXPRESSION_TOKENS.LITERAL,
-        value: literal
-      }, location);
-    }
+  = PrimitivePerlLiteral
   / RegularExpressionLiteral
+
+PrimitivePerlLiteral
+  = literal:(StringLiteral / NumericLiteral) {
+    return token({
+      type: EXPRESSION_TOKENS.LITERAL,
+      value: literal
+    }, location);
+  }
+
+Arguments
+  = single:(PerlIdentifier / PrimitivePerlLiteral) {
+      return [single];
+    }
+  / "(" __ args:(ArgumentList __)? ")" {
+      return (args && args[0]) ? args[0] : [];
+    }
+
+ArgumentList
+  = first:PerlExpression rest:(__ "," __ PerlExpression)* {
+      return [first].concat(
+        rest.map(extractThird)
+      );
+    }
 
 UnarySymbolicOperator
   = $("+" !"=")
