@@ -79,6 +79,26 @@
                 "type": "ConditionBranch",
                 "condition": {
                     "type": "Expression",
+                    "content": {
+                        "left": {
+                            "name": "b_condition",
+                            "position": {
+                                "column": 17,
+                                "line": 5
+                            },
+                            "type": "PerlIdentifier"
+                        },
+                        "operator": "eq",
+                        "right": {
+                            "position": {
+                                "column": 33,
+                                "line": 5
+                            },
+                            "type": "PerlLiteral",
+                            "value": "'ok'"
+                        },
+                        "type": "BinaryExpression"
+                    },
                     "value": "$b_condition eq 'ok'",
                     "position": {
                         "line": 5,

@@ -53,6 +53,14 @@
                 "name": "b_expression_attr",
                 "value": {
                     "type": "Expression",
+                    "content": {
+                        "type": "PerlIdentifier",
+                        "name": "b_expression_value",
+                        "position": {
+                            "line": 5,
+                            "column": 26
+                        }
+                    },
                     "value": "$b_expression_value",
                     "position": {
                         "line": 5,
@@ -84,6 +92,26 @@
         "attributes": [
             {
                 "type": "Expression",
+                "content": {
+                    "type": "BinaryExpression",
+                    "operator": "&&",
+                    "left": {
+                        "type": "PerlIdentifier",
+                        "name": "b_condition",
+                        "position": {
+                            "line": 7,
+                            "column": 14
+                        }
+                    },
+                    "right": {
+                        "type": "PerlIdentifier",
+                        "name": "b_value",
+                        "position": {
+                            "line": 7,
+                            "column": 30
+                        }
+                    }
+                },
                 "value": "$b_condition && $b_value",
                 "position": {
                     "line": 7,
@@ -137,6 +165,38 @@
         "attributes": [
             {
                 "type": "Expression",
+                "content": {
+                    "type": "BinaryExpression",
+                    "operator": ".",
+                    "left": {
+                        "type": "BinaryExpression",
+                        "operator": ".",
+                        "left": {
+                            "type": "PerlIdentifier",
+                            "name": "b_multi",
+                            "position": {
+                                "line": 12,
+                                "column": 5
+                            }
+                        },
+                        "right": {
+                            "type": "PerlIdentifier",
+                            "name": "b_line",
+                            "position": {
+                                "line": 13,
+                                "column": 5
+                            }
+                        }
+                    },
+                    "right": {
+                        "type": "PerlIdentifier",
+                        "name": "b_expression",
+                        "position": {
+                            "line": 14,
+                            "column": 5
+                        }
+                    }
+                },
                 "value": "$b_multi .\n    $b_line .\n    $b_expression",
                 "position": {
                     "line": 11,

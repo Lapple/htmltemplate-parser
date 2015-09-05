@@ -2383,6 +2383,14 @@
                 "type": "ConditionBranch",
                 "condition": {
                     "type": "Expression",
+                    "content": {
+                        "type": "PerlIdentifier",
+                        "name": "condition",
+                        "position": {
+                            "line": 154,
+                            "column": 13
+                        }
+                    },
                     "value": "$condition",
                     "position": {
                         "line": 154,
@@ -2611,6 +2619,14 @@
                         "type": "ConditionBranch",
                         "condition": {
                             "type": "Expression",
+                            "content": {
+                                "type": "PerlIdentifier",
+                                "name": "another_condition",
+                                "position": {
+                                    "line": 174,
+                                    "column": 20
+                                }
+                            },
                             "value": "$another_condition",
                             "position": {
                                 "line": 174,

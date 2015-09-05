@@ -32,6 +32,27 @@
     return name.indexOf('TMPL_') === 0;
   }
 
+  function buildTree(first, rest, builder) {
+    var result = first, i;
+
+    for (i = 0; i < rest.length; i++) {
+      result = builder(result, rest[i]);
+    }
+
+    return result;
+  }
+
+  function buildBinaryExpression(first, rest) {
+    return buildTree(first, rest, function(result, element) {
+      return {
+        type: EXPRESSION_TYPES.BINARY,
+        operator: element[1],
+        left: result,
+        right: element[3]
+      };
+    });
+  }
+
   var BLOCK_TYPES = {
     COMMENT: "Comment",
     TAG: "Tag",
@@ -50,6 +71,16 @@
     SINGLE: "SingleAttribute",
     CONDITIONAL: "ConditionalAttribute"
   };
+
+  var EXPRESSION_TOKENS = {
+    IDENTIFIER: "PerlIdentifier",
+    LITERAL: "PerlLiteral"
+  };
+
+  var EXPRESSION_TYPES = {
+    UNARY: "UnaryExpression",
+    BINARY: "BinaryExpression"
+  }
 
   function SyntaxError(message, location) {
     var l = location().start;
@@ -171,11 +202,17 @@ ConditionalWrapperTag =
   closeWrapper: EndTag __
   ConditionEndTag
   & {
+    var areConditionValuesEqual = (
+      typeof openCondition.condition.value === 'string' ?
+        openCondition.condition.value === closeCondition.condition.value :
+        openCondition.condition.value.raw === openCondition.condition.value.raw
+    );
+
     return (
       openCondition.name === closeCondition.name &&
       openCondition.condition.type === closeCondition.condition.type &&
       openCondition.condition.name === closeCondition.condition.name &&
-      openCondition.condition.value === closeCondition.condition.value &&
+      areConditionValuesEqual &&
       openWrapper.name === closeWrapper
     );
   }
@@ -266,16 +303,28 @@ CommentTag = CommentTagStart content:$(!CommentTagEnd SourceCharacter)* CommentT
 TMPLAttributes
   = WhiteSpace+ attrs:(AttributeWithValue / AttributeWithoutValue) { return attrs; }
   // Expressions don't require whitespace to be separated from tag names.
-  / __ expression:PerlExpression { return expression; }
+  / __ expression:PerlExpressionLiteral { return expression; }
 
-PerlExpression = PerlExpressionStart expression:$(!PerlExpressionEnd SourceCharacter)* PerlExpressionEnd {
-  return token({
-    type: ATTRIBUTE_TYPES.EXPRESSION,
-    value: expression
-  }, location);
-}
+PerlExpressionLiteral =
+  PerlExpressionStart
+  e:(
+    expression:PerlExpression {
+      return {
+        expression: expression,
+        text: text()
+      };
+    }
+  )
+  PerlExpressionEnd
+  {
+    return token({
+      type: ATTRIBUTE_TYPES.EXPRESSION,
+      content: e.expression,
+      value: e.text
+    }, location);
+  }
 
-AttributeWithValue = name:AttributeToken "=" value:(AttributeToken / PerlExpression / QuotedString) {
+AttributeWithValue = name:AttributeToken "=" value:(AttributeToken / PerlExpressionLiteral / QuotedString) {
   return token({
     type: ATTRIBUTE_TYPES.PAIR,
     name: name,
@@ -421,6 +470,125 @@ SingleQuotedString = "'" chars:SingleStringCharacter* "'" {
 DoubleQuotedString = "\"" chars:DoubleStringCharacter* "\"" {
   return join(chars);
 }
+
+// Operator precedence:
+//  >  ! ~ + -
+//  <  * / %
+//  <  + - .
+//  -  < > <= >= lt gt le ge
+//  -  == != <=> eq ne ~~
+//  <  &&
+//  <  ||
+//  >  not
+//  <  and
+//  <  or xor
+PerlExpression
+  = LogicalStringOrExpression
+
+LogicalStringOrExpression = first:LogicalStringAndExpression rest:(__ ("xor" / "or") __ LogicalStringAndExpression)* {
+  return buildBinaryExpression(first, rest);
+}
+
+LogicalStringAndExpression = first:UnaryStringNotExpression rest:(__ "and" __ UnaryStringNotExpression)* {
+  return buildBinaryExpression(first, rest);
+}
+
+UnaryStringNotExpression
+  = operator:"not" WhiteSpace+ right:LogicalSymbolicOrExpression {
+    return {
+      type: EXPRESSION_TYPES.UNARY,
+      operator: operator,
+      right: right
+    };
+  }
+  / LogicalSymbolicOrExpression
+
+LogicalSymbolicOrExpression = first:LogicalSymbolicAndExpression rest:(__ "||" __ LogicalSymbolicAndExpression)* {
+  return buildBinaryExpression(first, rest);
+}
+
+LogicalSymbolicAndExpression = first:EqualityExpression rest:(__ "&&" __ EqualityExpression)* {
+  return buildBinaryExpression(first, rest);
+}
+
+EqualityExpression = first:ComparisonExpression rest:(__ EqualityOperator __ ComparisonExpression)* {
+  return buildBinaryExpression(first, rest);
+}
+
+ComparisonExpression = first:AdditiveExpression rest:(__ ComparisonOperator __ AdditiveExpression)* {
+  return buildBinaryExpression(first, rest);
+}
+
+AdditiveExpression = first:MultiplicativeExpression rest:(__ AdditiveOperator __ MultiplicativeExpression)* {
+  return buildBinaryExpression(first, rest);
+}
+
+MultiplicativeExpression = first:UnarySymbolicExpression rest:(__ MultiplicativeOperator __ UnarySymbolicExpression)* {
+  return buildBinaryExpression(first, rest);
+}
+
+UnarySymbolicExpression
+  = operator:UnarySymbolicOperator __ right:PrimaryExpression {
+    return {
+      type: EXPRESSION_TYPES.UNARY,
+      operator: operator,
+      right: right
+    };
+  }
+  / PrimaryExpression
+
+PrimaryExpression
+  = PerlIdentifier
+  / PerlLiteral
+  / "(" __ e:PerlExpression __ ")" { return e; }
+
+PerlIdentifier = "$" name:$PerlIdentifierCharacter+ {
+  return token({
+    type: EXPRESSION_TOKENS.IDENTIFIER,
+    name: name
+  }, location);
+}
+
+PerlLiteral = value:$QuotedString {
+  return token({
+    type: EXPRESSION_TOKENS.LITERAL,
+    value: value
+  }, location);
+}
+
+UnarySymbolicOperator
+  = $("+" !"=")
+  / $("-" !"=")
+  / "~"
+  / "!"
+
+MultiplicativeOperator
+  = $("*" !"=")
+  / $("/" !"=")
+  / $("%" !"=")
+
+AdditiveOperator
+  = $("+" ![+=])
+  / $("-" ![-=])
+  / $("." !"=")
+
+ComparisonOperator
+  = ">="
+  / ">"
+  / "<="
+  / "<"
+  / "lt"
+  / "gt"
+  / "le"
+  / "ge"
+
+EqualityOperator
+  = "=="
+  / "!="
+  / "<=>"
+  / "eq"
+  / "ne"
+  / "~~"
 
 KnownTagName
   = BlockTMPLTagName
@@ -571,6 +739,9 @@ CommentStart
 
 SourceCharacter
   = .
+
+PerlIdentifierCharacter
+  = [a-zA-Z_]
 
 LineTerminator "end of line"
   = "\n"

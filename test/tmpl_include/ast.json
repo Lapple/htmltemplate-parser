@@ -53,6 +53,14 @@
                 "name": "b_expression_attr",
                 "value": {
                     "type": "Expression",
+                    "content": {
+                        "type": "PerlIdentifier",
+                        "name": "b_expression_value",
+                        "position": {
+                            "line": 5,
+                            "column": 26
+                        }
+                    },
                     "value": "$b_expression_value",
                     "position": {
                         "line": 5,

@@ -1,0 +1,502 @@
+[
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "BinaryExpression",
+                    "operator": "or",
+                    "left": {
+                        "type": "BinaryExpression",
+                        "operator": "or",
+                        "left": {
+                            "type": "PerlIdentifier",
+                            "name": "a",
+                            "position": {
+                                "line": 1,
+                                "column": 14
+                            }
+                        },
+                        "right": {
+                            "type": "PerlIdentifier",
+                            "name": "b",
+                            "position": {
+                                "line": 1,
+                                "column": 20
+                            }
+                        }
+                    },
+                    "right": {
+                        "type": "PerlIdentifier",
+                        "name": "c",
+                        "position": {
+                            "line": 1,
+                            "column": 26
+                        }
+                    }
+                },
+                "value": "$a or $b or $c",
+                "position": {
+                    "line": 1,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 1,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 1,
+            "column": 32
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "BinaryExpression",
+                    "operator": "and",
+                    "left": {
+                        "type": "BinaryExpression",
+                        "operator": "or",
+                        "left": {
+                            "type": "PerlIdentifier",
+                            "name": "a",
+                            "position": {
+                                "line": 2,
+                                "column": 15
+                            }
+                        },
+                        "right": {
+                            "type": "PerlIdentifier",
+                            "name": "b",
+                            "position": {
+                                "line": 2,
+                                "column": 21
+                            }
+                        }
+                    },
+                    "right": {
+                        "type": "PerlIdentifier",
+                        "name": "c",
+                        "position": {
+                            "line": 2,
+                            "column": 29
+                        }
+                    }
+                },
+                "value": "($a or $b) and $c",
+                "position": {
+                    "line": 2,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 2,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 2,
+            "column": 35
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "BinaryExpression",
+                    "operator": "or",
+                    "left": {
+                        "type": "PerlIdentifier",
+                        "name": "a",
+                        "position": {
+                            "line": 3,
+                            "column": 14
+                        }
+                    },
+                    "right": {
+                        "type": "BinaryExpression",
+                        "operator": "||",
+                        "left": {
+                            "type": "PerlIdentifier",
+                            "name": "b",
+                            "position": {
+                                "line": 3,
+                                "column": 20
+                            }
+                        },
+                        "right": {
+                            "type": "PerlIdentifier",
+                            "name": "c",
+                            "position": {
+                                "line": 3,
+                                "column": 26
+                            }
+                        }
+                    }
+                },
+                "value": "$a or $b || $c",
+                "position": {
+                    "line": 3,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 3,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 3,
+            "column": 32
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "BinaryExpression",
+                    "operator": "or",
+                    "left": {
+                        "type": "BinaryExpression",
+                        "operator": "and",
+                        "left": {
+                            "type": "UnaryExpression",
+                            "operator": "not",
+                            "right": {
+                                "type": "PerlIdentifier",
+                                "name": "a",
+                                "position": {
+                                    "line": 4,
+                                    "column": 18
+                                }
+                            }
+                        },
+                        "right": {
+                            "type": "PerlIdentifier",
+                            "name": "b",
+                            "position": {
+                                "line": 4,
+                                "column": 25
+                            }
+                        }
+                    },
+                    "right": {
+                        "type": "PerlIdentifier",
+                        "name": "c",
+                        "position": {
+                            "line": 4,
+                            "column": 31
+                        }
+                    }
+                },
+                "value": "not $a and $b or $c",
+                "position": {
+                    "line": 4,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 4,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 4,
+            "column": 37
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "BinaryExpression",
+                    "operator": "&&",
+                    "left": {
+                        "type": "BinaryExpression",
+                        "operator": "<",
+                        "left": {
+                            "type": "PerlIdentifier",
+                            "name": "a",
+                            "position": {
+                                "line": 5,
+                                "column": 14
+                            }
+                        },
+                        "right": {
+                            "type": "PerlIdentifier",
+                            "name": "c",
+                            "position": {
+                                "line": 5,
+                                "column": 19
+                            }
+                        }
+                    },
+                    "right": {
+                        "type": "BinaryExpression",
+                        "operator": ">=",
+                        "left": {
+                            "type": "PerlIdentifier",
+                            "name": "b",
+                            "position": {
+                                "line": 5,
+                                "column": 25
+                            }
+                        },
+                        "right": {
+                            "type": "PerlIdentifier",
+                            "name": "c",
+                            "position": {
+                                "line": 5,
+                                "column": 31
+                            }
+                        }
+                    }
+                },
+                "value": "$a < $c && $b >= $c",
+                "position": {
+                    "line": 5,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 5,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 5,
+            "column": 37
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "BinaryExpression",
+                    "operator": "%",
+                    "left": {
+                        "type": "BinaryExpression",
+                        "operator": "*",
+                        "left": {
+                            "type": "BinaryExpression",
+                            "operator": "/",
+                            "left": {
+                                "type": "PerlIdentifier",
+                                "name": "a",
+                                "position": {
+                                    "line": 6,
+                                    "column": 14
+                                }
+                            },
+                            "right": {
+                                "type": "PerlIdentifier",
+                                "name": "b",
+                                "position": {
+                                    "line": 6,
+                                    "column": 19
+                                }
+                            }
+                        },
+                        "right": {
+                            "type": "PerlIdentifier",
+                            "name": "c",
+                            "position": {
+                                "line": 6,
+                                "column": 24
+                            }
+                        }
+                    },
+                    "right": {
+                        "type": "PerlIdentifier",
+                        "name": "d",
+                        "position": {
+                            "line": 6,
+                            "column": 29
+                        }
+                    }
+                },
+                "value": "$a / $b * $c % $d",
+                "position": {
+                    "line": 6,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 6,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 6,
+            "column": 35
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "BinaryExpression",
+                    "operator": "||",
+                    "left": {
+                        "type": "BinaryExpression",
+                        "operator": "&&",
+                        "left": {
+                            "type": "UnaryExpression",
+                            "operator": "!",
+                            "right": {
+                                "type": "PerlIdentifier",
+                                "name": "a",
+                                "position": {
+                                    "line": 7,
+                                    "column": 15
+                                }
+                            }
+                        },
+                        "right": {
+                            "type": "PerlIdentifier",
+                            "name": "b",
+                            "position": {
+                                "line": 7,
+                                "column": 21
+                            }
+                        }
+                    },
+                    "right": {
+                        "type": "UnaryExpression",
+                        "operator": "+",
+                        "right": {
+                            "type": "PerlIdentifier",
+                            "name": "c",
+                            "position": {
+                                "line": 7,
+                                "column": 29
+                            }
+                        }
+                    }
+                },
+                "value": "!$a && $b || + $c",
+                "position": {
+                    "line": 7,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 7,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 7,
+            "column": 35
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "BinaryExpression",
+                    "operator": "-",
+                    "left": {
+                        "type": "BinaryExpression",
+                        "operator": "+",
+                        "left": {
+                            "type": "PerlIdentifier",
+                            "name": "a",
+                            "position": {
+                                "line": 8,
+                                "column": 14
+                            }
+                        },
+                        "right": {
+                            "type": "PerlIdentifier",
+                            "name": "b",
+                            "position": {
+                                "line": 8,
+                                "column": 19
+                            }
+                        }
+                    },
+                    "right": {
+                        "type": "PerlIdentifier",
+                        "name": "c",
+                        "position": {
+                            "line": 8,
+                            "column": 24
+                        }
+                    }
+                },
+                "value": "$a + $b - $c",
+                "position": {
+                    "line": 8,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 8,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 8,
+            "column": 30
+        }
+    }
+]
