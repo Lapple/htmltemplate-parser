@@ -12,7 +12,7 @@
                         "type": "BinaryExpression",
                         "operator": "or",
                         "left": {
-                            "type": "PerlIdentifier",
+                            "type": "Identifier",
                             "name": "a",
                             "position": {
                                 "line": 1,
@@ -20,7 +20,7 @@
                             }
                         },
                         "right": {
-                            "type": "PerlIdentifier",
+                            "type": "Identifier",
                             "name": "b",
                             "position": {
                                 "line": 1,
@@ -29,7 +29,7 @@
                         }
                     },
                     "right": {
-                        "type": "PerlIdentifier",
+                        "type": "Identifier",
                         "name": "c",
                         "position": {
                             "line": 1,
@@ -70,7 +70,7 @@
                         "type": "BinaryExpression",
                         "operator": "or",
                         "left": {
-                            "type": "PerlIdentifier",
+                            "type": "Identifier",
                             "name": "a",
                             "position": {
                                 "line": 2,
@@ -78,7 +78,7 @@
                             }
                         },
                         "right": {
-                            "type": "PerlIdentifier",
+                            "type": "Identifier",
                             "name": "b",
                             "position": {
                                 "line": 2,
@@ -87,7 +87,7 @@
                         }
                     },
                     "right": {
-                        "type": "PerlIdentifier",
+                        "type": "Identifier",
                         "name": "c",
                         "position": {
                             "line": 2,
@@ -125,7 +125,7 @@
                     "type": "BinaryExpression",
                     "operator": "or",
                     "left": {
-                        "type": "PerlIdentifier",
+                        "type": "Identifier",
                         "name": "a",
                         "position": {
                             "line": 3,
@@ -136,7 +136,7 @@
                         "type": "BinaryExpression",
                         "operator": "||",
                         "left": {
-                            "type": "PerlIdentifier",
+                            "type": "Identifier",
                             "name": "b",
                             "position": {
                                 "line": 3,
@@ -144,7 +144,7 @@
                             }
                         },
                         "right": {
-                            "type": "PerlIdentifier",
+                            "type": "Identifier",
                             "name": "c",
                             "position": {
                                 "line": 3,
@@ -188,17 +188,18 @@
                         "left": {
                             "type": "UnaryExpression",
                             "operator": "not",
-                            "right": {
-                                "type": "PerlIdentifier",
+                            "argument": {
+                                "type": "Identifier",
                                 "name": "a",
                                 "position": {
                                     "line": 4,
                                     "column": 18
                                 }
-                            }
+                            },
+                            "prefix": true
                         },
                         "right": {
-                            "type": "PerlIdentifier",
+                            "type": "Identifier",
                             "name": "b",
                             "position": {
                                 "line": 4,
@@ -207,7 +208,7 @@
                         }
                     },
                     "right": {
-                        "type": "PerlIdentifier",
+                        "type": "Identifier",
                         "name": "c",
                         "position": {
                             "line": 4,
@@ -248,7 +249,7 @@
                         "type": "BinaryExpression",
                         "operator": "<",
                         "left": {
-                            "type": "PerlIdentifier",
+                            "type": "Identifier",
                             "name": "a",
                             "position": {
                                 "line": 5,
@@ -256,7 +257,7 @@
                             }
                         },
                         "right": {
-                            "type": "PerlIdentifier",
+                            "type": "Identifier",
                             "name": "c",
                             "position": {
                                 "line": 5,
@@ -268,7 +269,7 @@
                         "type": "BinaryExpression",
                         "operator": ">=",
                         "left": {
-                            "type": "PerlIdentifier",
+                            "type": "Identifier",
                             "name": "b",
                             "position": {
                                 "line": 5,
@@ -276,7 +277,7 @@
                             }
                         },
                         "right": {
-                            "type": "PerlIdentifier",
+                            "type": "Identifier",
                             "name": "c",
                             "position": {
                                 "line": 5,
@@ -321,7 +322,7 @@
                             "type": "BinaryExpression",
                             "operator": "/",
                             "left": {
-                                "type": "PerlIdentifier",
+                                "type": "Identifier",
                                 "name": "a",
                                 "position": {
                                     "line": 6,
@@ -329,7 +330,7 @@
                                 }
                             },
                             "right": {
-                                "type": "PerlIdentifier",
+                                "type": "Identifier",
                                 "name": "b",
                                 "position": {
                                     "line": 6,
@@ -338,7 +339,7 @@
                             }
                         },
                         "right": {
-                            "type": "PerlIdentifier",
+                            "type": "Identifier",
                             "name": "c",
                             "position": {
                                 "line": 6,
@@ -347,7 +348,7 @@
                         }
                     },
                     "right": {
-                        "type": "PerlIdentifier",
+                        "type": "Identifier",
                         "name": "d",
                         "position": {
                             "line": 6,
@@ -390,17 +391,18 @@
                         "left": {
                             "type": "UnaryExpression",
                             "operator": "!",
-                            "right": {
-                                "type": "PerlIdentifier",
+                            "argument": {
+                                "type": "Identifier",
                                 "name": "a",
                                 "position": {
                                     "line": 7,
                                     "column": 15
                                 }
-                            }
+                            },
+                            "prefix": true
                         },
                         "right": {
-                            "type": "PerlIdentifier",
+                            "type": "Identifier",
                             "name": "b",
                             "position": {
                                 "line": 7,
@@ -411,14 +413,15 @@
                     "right": {
                         "type": "UnaryExpression",
                         "operator": "+",
-                        "right": {
-                            "type": "PerlIdentifier",
+                        "argument": {
+                            "type": "Identifier",
                             "name": "c",
                             "position": {
                                 "line": 7,
                                 "column": 29
                             }
-                        }
+                        },
+                        "prefix": true
                     }
                 },
                 "value": "!$a && $b || + $c",
@@ -454,7 +457,7 @@
                         "type": "BinaryExpression",
                         "operator": "+",
                         "left": {
-                            "type": "PerlIdentifier",
+                            "type": "Identifier",
                             "name": "a",
                             "position": {
                                 "line": 8,
@@ -462,7 +465,7 @@
                             }
                         },
                         "right": {
-                            "type": "PerlIdentifier",
+                            "type": "Identifier",
                             "name": "b",
                             "position": {
                                 "line": 8,
@@ -471,7 +474,7 @@
                         }
                     },
                     "right": {
-                        "type": "PerlIdentifier",
+                        "type": "Identifier",
                         "name": "c",
                         "position": {
                             "line": 8,

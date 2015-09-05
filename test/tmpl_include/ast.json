@@ -54,7 +54,7 @@
                 "value": {
                     "type": "Expression",
                     "content": {
-                        "type": "PerlIdentifier",
+                        "type": "Identifier",
                         "name": "b_expression_value",
                         "position": {
                             "line": 5,

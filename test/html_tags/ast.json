@@ -2384,7 +2384,7 @@
                 "condition": {
                     "type": "Expression",
                     "content": {
-                        "type": "PerlIdentifier",
+                        "type": "Identifier",
                         "name": "condition",
                         "position": {
                             "line": 154,
@@ -2620,7 +2620,7 @@
                         "condition": {
                             "type": "Expression",
                             "content": {
-                                "type": "PerlIdentifier",
+                                "type": "Identifier",
                                 "name": "another_condition",
                                 "position": {
                                     "line": 174,

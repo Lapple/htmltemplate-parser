@@ -102,7 +102,7 @@
                                 "column": 12,
                                 "line": 6
                             },
-                            "type": "PerlIdentifier"
+                            "type": "Identifier"
                         },
                         "operator": "eq",
                         "right": {

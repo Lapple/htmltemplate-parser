@@ -288,11 +288,12 @@ module.exports = (function() {
         peg$c51 = { type: "literal", value: "and", description: "\"and\"" },
         peg$c52 = "not",
         peg$c53 = { type: "literal", value: "not", description: "\"not\"" },
-        peg$c54 = function(operator, right) {
+        peg$c54 = function(operator, argument) {
             return {
               type: EXPRESSION_TYPES.UNARY,
               operator: operator,
-              right: right
+              argument: argument,
+              prefix: true
             };
           },
         peg$c55 = "||",
@@ -6187,7 +6188,7 @@ module.exports = (function() {
       };
 
       var EXPRESSION_TOKENS = {
-        IDENTIFIER: "PerlIdentifier",
+        IDENTIFIER: "Identifier",
         LITERAL: "PerlLiteral"
       };
 

@@ -54,7 +54,7 @@
                 "value": {
                     "type": "Expression",
                     "content": {
-                        "type": "PerlIdentifier",
+                        "type": "Identifier",
                         "name": "b_expression_value",
                         "position": {
                             "line": 5,
@@ -96,7 +96,7 @@
                     "type": "BinaryExpression",
                     "operator": "&&",
                     "left": {
-                        "type": "PerlIdentifier",
+                        "type": "Identifier",
                         "name": "b_condition",
                         "position": {
                             "line": 7,
@@ -104,7 +104,7 @@
                         }
                     },
                     "right": {
-                        "type": "PerlIdentifier",
+                        "type": "Identifier",
                         "name": "b_value",
                         "position": {
                             "line": 7,
@@ -172,7 +172,7 @@
                         "type": "BinaryExpression",
                         "operator": ".",
                         "left": {
-                            "type": "PerlIdentifier",
+                            "type": "Identifier",
                             "name": "b_multi",
                             "position": {
                                 "line": 12,
@@ -180,7 +180,7 @@
                             }
                         },
                         "right": {
-                            "type": "PerlIdentifier",
+                            "type": "Identifier",
                             "name": "b_line",
                             "position": {
                                 "line": 13,
@@ -189,7 +189,7 @@
                         }
                     },
                     "right": {
-                        "type": "PerlIdentifier",
+                        "type": "Identifier",
                         "name": "b_expression",
                         "position": {
                             "line": 14,

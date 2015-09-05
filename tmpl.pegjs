@@ -73,7 +73,7 @@
   };
 
   var EXPRESSION_TOKENS = {
-    IDENTIFIER: "PerlIdentifier",
+    IDENTIFIER: "Identifier",
     LITERAL: "PerlLiteral"
   };
 
@@ -494,11 +494,12 @@ LogicalStringAndExpression = first:UnaryStringNotExpression rest:(__ "and" __ Un
 }
 
 UnaryStringNotExpression
-  = operator:"not" WhiteSpace+ right:LogicalSymbolicOrExpression {
+  = operator:"not" WhiteSpace+ argument:LogicalSymbolicOrExpression {
     return {
       type: EXPRESSION_TYPES.UNARY,
       operator: operator,
-      right: right
+      argument: argument,
+      prefix: true
     };
   }
   / LogicalSymbolicOrExpression
@@ -528,11 +529,12 @@ MultiplicativeExpression = first:UnarySymbolicExpression rest:(__ Multiplicative
 }
 
 UnarySymbolicExpression
-  = operator:UnarySymbolicOperator __ right:PrimaryExpression {
+  = operator:UnarySymbolicOperator __ argument:PrimaryExpression {
     return {
       type: EXPRESSION_TYPES.UNARY,
       operator: operator,
-      right: right
+      argument: argument,
+      prefix: true
     };
   }
   / PrimaryExpression
