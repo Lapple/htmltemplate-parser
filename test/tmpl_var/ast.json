@@ -55,7 +55,7 @@
                     "type": "Expression",
                     "content": {
                         "type": "Identifier",
-                        "name": "b_expression_value",
+                        "name": "$b_expression_value",
                         "position": {
                             "line": 5,
                             "column": 26
@@ -97,7 +97,7 @@
                     "operator": "&&",
                     "left": {
                         "type": "Identifier",
-                        "name": "b_condition",
+                        "name": "$b_condition",
                         "position": {
                             "line": 7,
                             "column": 14
@@ -105,7 +105,7 @@
                     },
                     "right": {
                         "type": "Identifier",
-                        "name": "b_value",
+                        "name": "$b_value",
                         "position": {
                             "line": 7,
                             "column": 30
@@ -173,7 +173,7 @@
                         "operator": ".",
                         "left": {
                             "type": "Identifier",
-                            "name": "b_multi",
+                            "name": "$b_multi",
                             "position": {
                                 "line": 12,
                                 "column": 5
@@ -181,7 +181,7 @@
                         },
                         "right": {
                             "type": "Identifier",
-                            "name": "b_line",
+                            "name": "$b_line",
                             "position": {
                                 "line": 13,
                                 "column": 5
@@ -190,7 +190,7 @@
                     },
                     "right": {
                         "type": "Identifier",
-                        "name": "b_expression",
+                        "name": "$b_expression",
                         "position": {
                             "line": 14,
                             "column": 5

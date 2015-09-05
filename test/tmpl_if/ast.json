@@ -97,7 +97,7 @@
                     "type": "Expression",
                     "content": {
                         "left": {
-                            "name": "b_condition",
+                            "name": "$b_condition",
                             "position": {
                                 "column": 12,
                                 "line": 6

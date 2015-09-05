@@ -55,7 +55,7 @@
                     "type": "Expression",
                     "content": {
                         "type": "Identifier",
-                        "name": "b_expression_value",
+                        "name": "$b_expression_value",
                         "position": {
                             "line": 5,
                             "column": 26

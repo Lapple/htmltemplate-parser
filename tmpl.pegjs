@@ -480,7 +480,7 @@ DoubleQuotedText = text:$(!NonText (DoubleStringCharacter / LineTerminator))+ {
 //  <  and
 //  <  or xor
 PerlExpression
-  = test:LogicalStringOrExpression __ "?" __ consequent:PrimaryExpression __ ":" __ alternate:PrimaryExpression {
+  = test:LogicalStringOrExpression __ "?" __ consequent:LogicalStringOrExpression __ ":" __ alternate:LogicalStringOrExpression {
       return {
         type: EXPRESSION_TYPES.TERNARY,
         test: test,
@@ -567,11 +567,20 @@ MemberExpression
             computed: true
           };
         }
-      / __ "->{" __ name:PerlIdentifierName __ "}" {
+      / __ "->{" __ value:PerlIdentifierName __ "}" {
           return {
             property: token({
-              type: EXPRESSION_TOKENS.IDENTIFIER,
-              name: name
+              type: EXPRESSION_TOKENS.LITERAL,
+              value: value
+            }, location),
+            computed: false
+          };
+        }
+      / __ "->[" __ value:NumericLiteral __ "]" {
+          return {
+            property: token({
+              type: EXPRESSION_TOKENS.LITERAL,
+              value: value
             }, location),
             computed: false
           };
@@ -593,7 +602,7 @@ PrimaryExpression
   / PerlLiteral
   / "(" __ e:PerlExpression __ ")" { return e; }
 
-PerlIdentifier = "$" name:PerlIdentifierName {
+PerlIdentifier = name:$("@"? "$" PerlIdentifierName) {
   return token({
     type: EXPRESSION_TOKENS.IDENTIFIER,
     name: name
@@ -608,7 +617,7 @@ PerlFunctionIdentifier = name:PerlIdentifierName {
 }
 
 PerlIdentifierName
-  = $[a-zA-Z_]+
+  = $([a-zA-Z_]+ [a-zA-Z0-9_/]*)
 
 PerlLiteral
   = PrimitivePerlLiteral

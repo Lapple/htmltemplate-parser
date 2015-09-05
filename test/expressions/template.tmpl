@@ -10,7 +10,10 @@
 <TMPL_VAR [% $a > 3 %]>
 <TMPL_VAR [% 5.5 * $a >= .3 %]>
 <TMPL_VAR [% $a ne 'ok' %]>
-<TMPL_VAR [% $a->{prop} && $b->{$prop} && $a->{b}->{c} %]>
+<TMPL_VAR [% $a->{prop} && $b->{$prop} && $a->{b}->{c} && $a->{b}->[0]->[1] %]>
 <TMPL_VAR [% $letter =~ m/a|b|c|d/ || $digit =~ /[0-9]+/ || $text !~ /^null$/ %]>
 <TMPL_VAR [% substr($string, 1, -1) %]>
 <TMPL_VAR [% lc $string . '!' . lc 'A' %]>
+<TMPL_VAR [% $a1 and $b2 and not ($c3 or $d4) and $e5 %]>
+<TMPL_VAR [% $identifier_with/slash %]>
+<TMPL_VAR [% fn($a, $b) >= 0 ? substr($c, fn($c, $b)) : "" %]>

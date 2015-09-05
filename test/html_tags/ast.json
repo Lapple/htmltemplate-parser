@@ -2385,7 +2385,7 @@
                     "type": "Expression",
                     "content": {
                         "type": "Identifier",
-                        "name": "condition",
+                        "name": "$condition",
                         "position": {
                             "line": 154,
                             "column": 13
@@ -2621,7 +2621,7 @@
                             "type": "Expression",
                             "content": {
                                 "type": "Identifier",
-                                "name": "another_condition",
+                                "name": "$another_condition",
                                 "position": {
                                     "line": 174,
                                     "column": 20
