@@ -421,10 +421,11 @@ ConditionalHTMLAttributes =
     }
   )?
   __ end:ConditionEndTag
-  & {
-    return start.name === end;
-  }
   {
+    if (start.name != end) {
+      throw new SyntaxError("Expected a </" + start.name + "> but </" + end + "> found.", location);
+    }
+
     var primaryCondition = token({
       type: BLOCK_TYPES.CONDITION_BRANCH,
       condition: start.condition,

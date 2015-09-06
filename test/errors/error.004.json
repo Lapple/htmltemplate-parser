@@ -1,0 +1,9 @@
+{
+    "name": "SyntaxError",
+    "message": "Expected a </TMPL_UNLESS> but </TMPL_IF> found.",
+    "line": 2,
+    "column": 5,
+    "offset": 9,
+    "expected": null,
+    "found": null
+}
