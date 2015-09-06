@@ -985,68 +985,105 @@
                         "type": "BinaryExpression",
                         "operator": "&&",
                         "left": {
-                            "type": "MemberExpression",
-                            "object": {
-                                "type": "Identifier",
-                                "name": "$a",
-                                "position": {
-                                    "line": 14,
-                                    "column": 14
+                            "type": "BinaryExpression",
+                            "operator": "&&",
+                            "left": {
+                                "type": "BinaryExpression",
+                                "operator": "&&",
+                                "left": {
+                                    "type": "MemberExpression",
+                                    "object": {
+                                        "type": "Identifier",
+                                        "name": "$a",
+                                        "position": {
+                                            "line": 14,
+                                            "column": 14
+                                        }
+                                    },
+                                    "property": {
+                                        "type": "Identifier",
+                                        "name": "$b",
+                                        "position": {
+                                            "line": 14,
+                                            "column": 19
+                                        }
+                                    },
+                                    "computed": true
+                                },
+                                "right": {
+                                    "type": "MemberExpression",
+                                    "object": {
+                                        "type": "MemberExpression",
+                                        "object": {
+                                            "type": "Identifier",
+                                            "name": "$a",
+                                            "position": {
+                                                "line": 14,
+                                                "column": 26
+                                            }
+                                        },
+                                        "property": {
+                                            "type": "Literal",
+                                            "value": 1,
+                                            "position": {
+                                                "line": 14,
+                                                "column": 28
+                                            }
+                                        },
+                                        "computed": false
+                                    },
+                                    "property": {
+                                        "type": "Identifier",
+                                        "name": "$b",
+                                        "position": {
+                                            "line": 14,
+                                            "column": 32
+                                        }
+                                    },
+                                    "computed": true
                                 }
                             },
-                            "property": {
-                                "type": "Identifier",
-                                "name": "$b",
-                                "position": {
-                                    "line": 14,
-                                    "column": 19
-                                }
-                            },
-                            "computed": true
+                            "right": {
+                                "type": "MemberExpression",
+                                "object": {
+                                    "type": "MemberExpression",
+                                    "object": {
+                                        "type": "Identifier",
+                                        "name": "$a",
+                                        "position": {
+                                            "line": 14,
+                                            "column": 39
+                                        }
+                                    },
+                                    "property": {
+                                        "type": "Literal",
+                                        "value": "b",
+                                        "position": {
+                                            "line": 14,
+                                            "column": 41
+                                        }
+                                    },
+                                    "computed": false
+                                },
+                                "property": {
+                                    "type": "Identifier",
+                                    "name": "$c",
+                                    "position": {
+                                        "line": 14,
+                                        "column": 45
+                                    }
+                                },
+                                "computed": true
+                            }
                         },
                         "right": {
                             "type": "MemberExpression",
                             "object": {
-                                "type": "MemberExpression",
-                                "object": {
-                                    "type": "Identifier",
-                                    "name": "$a",
-                                    "position": {
-                                        "line": 14,
-                                        "column": 26
-                                    }
-                                },
-                                "property": {
-                                    "type": "Literal",
-                                    "value": 1,
-                                    "position": {
-                                        "line": 14,
-                                        "column": 28
-                                    }
-                                },
-                                "computed": false
-                            },
-                            "property": {
-                                "type": "Identifier",
-                                "name": "$b",
-                                "position": {
-                                    "line": 14,
-                                    "column": 32
-                                }
-                            },
-                            "computed": true
-                        }
-                    },
-                    "right": {
-                        "type": "MemberExpression",
-                        "object": {
-                            "type": "MemberExpression",
-                            "object": {
                                 "type": "Identifier",
                                 "name": "$a",
                                 "position": {
                                     "line": 14,
-                                    "column": 39
+                                    "column": 52
                                 }
                             },
                             "property": {
@@ -1054,23 +1091,34 @@
                                 "value": "b",
                                 "position": {
                                     "line": 14,
-                                    "column": 41
+                                    "column": 54
                                 }
                             },
                             "computed": false
-                        },
-                        "property": {
+                        }
+                    },
+                    "right": {
+                        "type": "MemberExpression",
+                        "object": {
                             "type": "Identifier",
-                            "name": "$c",
+                            "name": "$a",
                             "position": {
                                 "line": 14,
-                                "column": 45
+                                "column": 61
                             }
                         },
-                        "computed": true
+                        "property": {
+                            "type": "Literal",
+                            "value": "1x1",
+                            "position": {
+                                "line": 14,
+                                "column": 63
+                            }
+                        },
+                        "computed": false
                     }
                 },
-                "value": "$a->[$b] && $a[1][$b] && $a{b}{$c}",
+                "value": "$a->[$b] && $a[1][$b] && $a{b}{$c} && $a->b && $a->{1x1}",
                 "position": {
                     "line": 14,
                     "column": 11
@@ -1087,7 +1135,125 @@
         "content": "\n",
         "position": {
             "line": 14,
-            "column": 52
+            "column": 74
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "BinaryExpression",
+                    "operator": "&&",
+                    "left": {
+                        "type": "BinaryExpression",
+                        "operator": "&&",
+                        "left": {
+                            "type": "MemberExpression",
+                            "object": {
+                                "type": "Identifier",
+                                "name": "$a",
+                                "position": {
+                                    "line": 15,
+                                    "column": 14
+                                }
+                            },
+                            "property": {
+                                "type": "BinaryExpression",
+                                "operator": "-",
+                                "left": {
+                                    "type": "Identifier",
+                                    "name": "$b",
+                                    "position": {
+                                        "line": 15,
+                                        "column": 19
+                                    }
+                                },
+                                "right": {
+                                    "type": "Literal",
+                                    "value": 1,
+                                    "position": {
+                                        "line": 15,
+                                        "column": 22
+                                    }
+                                }
+                            },
+                            "computed": true
+                        },
+                        "right": {
+                            "type": "MemberExpression",
+                            "object": {
+                                "type": "Identifier",
+                                "name": "$a",
+                                "position": {
+                                    "line": 15,
+                                    "column": 28
+                                }
+                            },
+                            "property": {
+                                "type": "BinaryExpression",
+                                "operator": "%",
+                                "left": {
+                                    "type": "Identifier",
+                                    "name": "@$b",
+                                    "position": {
+                                        "line": 15,
+                                        "column": 33
+                                    }
+                                },
+                                "right": {
+                                    "type": "Literal",
+                                    "value": 3,
+                                    "position": {
+                                        "line": 15,
+                                        "column": 39
+                                    }
+                                }
+                            },
+                            "computed": true
+                        }
+                    },
+                    "right": {
+                        "type": "MemberExpression",
+                        "object": {
+                            "type": "Identifier",
+                            "name": "$a",
+                            "position": {
+                                "line": 15,
+                                "column": 45
+                            }
+                        },
+                        "property": {
+                            "type": "Literal",
+                            "value": 0,
+                            "position": {
+                                "line": 15,
+                                "column": 47
+                            }
+                        },
+                        "computed": false
+                    }
+                },
+                "value": "$a->[$b-1] && $a->{@$b % 3} && $a -> [ 0 ]",
+                "position": {
+                    "line": 15,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 15,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 15,
+            "column": 60
         }
     },
     {
@@ -1109,7 +1275,7 @@
                                 "type": "Identifier",
                                 "name": "$letter",
                                 "position": {
-                                    "line": 15,
+                                    "line": 16,
                                     "column": 14
                                 }
                             },
@@ -1121,7 +1287,7 @@
                                     "operators": "m"
                                 },
                                 "position": {
-                                    "line": 15,
+                                    "line": 16,
                                     "column": 25
                                 }
                             }
@@ -1133,7 +1299,7 @@
                                 "type": "Identifier",
                                 "name": "$digit",
                                 "position": {
-                                    "line": 15,
+                                    "line": 16,
                                     "column": 39
                                 }
                             },
@@ -1145,7 +1311,7 @@
                                     "operators": ""
                                 },
                                 "position": {
-                                    "line": 15,
+                                    "line": 16,
                                     "column": 49
                                 }
                             }
@@ -1158,7 +1324,7 @@
                             "type": "Identifier",
                             "name": "$text",
                             "position": {
-                                "line": 15,
+                                "line": 16,
                                 "column": 61
                             }
                         },
@@ -1170,81 +1336,13 @@
                                 "operators": ""
                             },
                             "position": {
-                                "line": 15,
+                                "line": 16,
                                 "column": 70
                             }
                         }
                     }
                 },
                 "value": "$letter =~ m/a|b|c|d/ || $digit =~ /[0-9]+/ || $text !~ /^null$/",
-                "position": {
-                    "line": 15,
-                    "column": 11
-                }
-            }
-        ],
-        "position": {
-            "line": 15,
-            "column": 1
-        }
-    },
-    {
-        "type": "Text",
-        "content": "\n",
-        "position": {
-            "line": 15,
-            "column": 82
-        }
-    },
-    {
-        "type": "Tag",
-        "name": "TMPL_VAR",
-        "attributes": [
-            {
-                "type": "Expression",
-                "content": {
-                    "type": "CallExpression",
-                    "callee": {
-                        "type": "FunctionIdentifier",
-                        "name": "substr",
-                        "position": {
-                            "line": 16,
-                            "column": 14
-                        }
-                    },
-                    "arguments": [
-                        {
-                            "type": "Identifier",
-                            "name": "$string",
-                            "position": {
-                                "line": 16,
-                                "column": 21
-                            }
-                        },
-                        {
-                            "type": "Literal",
-                            "value": 1,
-                            "position": {
-                                "line": 16,
-                                "column": 30
-                            }
-                        },
-                        {
-                            "type": "UnaryExpression",
-                            "operator": "-",
-                            "argument": {
-                                "type": "Literal",
-                                "value": 1,
-                                "position": {
-                                    "line": 16,
-                                    "column": 34
-                                }
-                            },
-                            "prefix": true
-                        }
-                    ]
-                },
-                "value": "substr($string, 1, -1)",
                 "position": {
                     "line": 16,
                     "column": 11
@@ -1261,7 +1359,7 @@
         "content": "\n",
         "position": {
             "line": 16,
-            "column": 40
+            "column": 82
         }
     },
     {
@@ -1271,64 +1369,48 @@
             {
                 "type": "Expression",
                 "content": {
-                    "type": "BinaryExpression",
-                    "operator": ".",
-                    "left": {
-                        "type": "BinaryExpression",
-                        "operator": ".",
-                        "left": {
-                            "type": "CallExpression",
-                            "callee": {
-                                "type": "FunctionIdentifier",
-                                "name": "lc",
-                                "position": {
-                                    "line": 17,
-                                    "column": 14
-                                }
-                            },
-                            "arguments": [
-                                {
-                                    "type": "Identifier",
-                                    "name": "$string",
-                                    "position": {
-                                        "line": 17,
-                                        "column": 17
-                                    }
-                                }
-                            ]
-                        },
-                        "right": {
-                            "type": "Literal",
-                            "value": "!",
-                            "position": {
-                                "line": 17,
-                                "column": 27
-                            }
+                    "type": "CallExpression",
+                    "callee": {
+                        "type": "FunctionIdentifier",
+                        "name": "substr",
+                        "position": {
+                            "line": 17,
+                            "column": 14
                         }
                     },
-                    "right": {
-                        "type": "CallExpression",
-                        "callee": {
-                            "type": "FunctionIdentifier",
-                            "name": "lc",
+                    "arguments": [
+                        {
+                            "type": "Identifier",
+                            "name": "$string",
                             "position": {
                                 "line": 17,
-                                "column": 33
+                                "column": 21
                             }
                         },
-                        "arguments": [
-                            {
+                        {
+                            "type": "Literal",
+                            "value": 1,
+                            "position": {
+                                "line": 17,
+                                "column": 30
+                            }
+                        },
+                        {
+                            "type": "UnaryExpression",
+                            "operator": "-",
+                            "argument": {
                                 "type": "Literal",
-                                "value": "A",
+                                "value": 1,
                                 "position": {
                                     "line": 17,
-                                    "column": 36
+                                    "column": 34
                                 }
-                            }
-                        ]
-                    }
+                            },
+                            "prefix": true
+                        }
+                    ]
                 },
-                "value": "lc $string . '!' . lc 'A'",
+                "value": "substr($string, 1, -1)",
                 "position": {
                     "line": 17,
                     "column": 11
@@ -1345,7 +1427,187 @@
         "content": "\n",
         "position": {
             "line": 17,
-            "column": 43
+            "column": 40
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "BinaryExpression",
+                    "operator": ".",
+                    "left": {
+                        "type": "BinaryExpression",
+                        "operator": ".",
+                        "left": {
+                            "type": "BinaryExpression",
+                            "operator": ".",
+                            "left": {
+                                "type": "BinaryExpression",
+                                "operator": ".",
+                                "left": {
+                                    "type": "CallExpression",
+                                    "callee": {
+                                        "type": "FunctionIdentifier",
+                                        "name": "lc",
+                                        "position": {
+                                            "line": 18,
+                                            "column": 14
+                                        }
+                                    },
+                                    "arguments": [
+                                        {
+                                            "type": "Identifier",
+                                            "name": "$string",
+                                            "position": {
+                                                "line": 18,
+                                                "column": 17
+                                            }
+                                        }
+                                    ]
+                                },
+                                "right": {
+                                    "type": "Literal",
+                                    "value": "!",
+                                    "position": {
+                                        "line": 18,
+                                        "column": 27
+                                    }
+                                }
+                            },
+                            "right": {
+                                "type": "CallExpression",
+                                "callee": {
+                                    "type": "FunctionIdentifier",
+                                    "name": "lc",
+                                    "position": {
+                                        "line": 18,
+                                        "column": 33
+                                    }
+                                },
+                                "arguments": [
+                                    {
+                                        "type": "Literal",
+                                        "value": "A",
+                                        "position": {
+                                            "line": 18,
+                                            "column": 36
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "right": {
+                            "type": "CallExpression",
+                            "callee": {
+                                "type": "FunctionIdentifier",
+                                "name": "lc",
+                                "position": {
+                                    "line": 18,
+                                    "column": 42
+                                }
+                            },
+                            "arguments": [
+                                {
+                                    "type": "MemberExpression",
+                                    "object": {
+                                        "type": "Identifier",
+                                        "name": "$string",
+                                        "position": {
+                                            "line": 18,
+                                            "column": 45
+                                        }
+                                    },
+                                    "property": {
+                                        "type": "Literal",
+                                        "value": 0,
+                                        "position": {
+                                            "line": 18,
+                                            "column": 52
+                                        }
+                                    },
+                                    "computed": false
+                                }
+                            ]
+                        }
+                    },
+                    "right": {
+                        "type": "CallExpression",
+                        "callee": {
+                            "type": "FunctionIdentifier",
+                            "name": "lc",
+                            "position": {
+                                "line": 18,
+                                "column": 60
+                            }
+                        },
+                        "arguments": [
+                            {
+                                "type": "CallExpression",
+                                "callee": {
+                                    "type": "FunctionIdentifier",
+                                    "name": "substr",
+                                    "position": {
+                                        "line": 18,
+                                        "column": 63
+                                    }
+                                },
+                                "arguments": [
+                                    {
+                                        "type": "Identifier",
+                                        "name": "$string",
+                                        "position": {
+                                            "line": 18,
+                                            "column": 70
+                                        }
+                                    },
+                                    {
+                                        "type": "Literal",
+                                        "value": 1,
+                                        "position": {
+                                            "line": 18,
+                                            "column": 79
+                                        }
+                                    },
+                                    {
+                                        "type": "UnaryExpression",
+                                        "operator": "-",
+                                        "argument": {
+                                            "type": "Literal",
+                                            "value": 1,
+                                            "position": {
+                                                "line": 18,
+                                                "column": 83
+                                            }
+                                        },
+                                        "prefix": true
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "value": "lc $string . '!' . lc 'A' . lc $string->[0] . lc substr($string, 1, -1)",
+                "position": {
+                    "line": 18,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 18,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 18,
+            "column": 89
         }
     },
     {
@@ -1367,7 +1629,7 @@
                                 "type": "Identifier",
                                 "name": "$a1",
                                 "position": {
-                                    "line": 18,
+                                    "line": 19,
                                     "column": 14
                                 }
                             },
@@ -1375,7 +1637,7 @@
                                 "type": "Identifier",
                                 "name": "$b2",
                                 "position": {
-                                    "line": 18,
+                                    "line": 19,
                                     "column": 22
                                 }
                             }
@@ -1390,7 +1652,7 @@
                                     "type": "Identifier",
                                     "name": "$c3",
                                     "position": {
-                                        "line": 18,
+                                        "line": 19,
                                         "column": 35
                                     }
                                 },
@@ -1398,7 +1660,7 @@
                                     "type": "Identifier",
                                     "name": "$d4",
                                     "position": {
-                                        "line": 18,
+                                        "line": 19,
                                         "column": 42
                                     }
                                 }
@@ -1410,20 +1672,20 @@
                         "type": "Identifier",
                         "name": "$e5",
                         "position": {
-                            "line": 18,
+                            "line": 19,
                             "column": 51
                         }
                     }
                 },
                 "value": "$a1 and $b2 and not ($c3 or $d4) and $e5",
                 "position": {
-                    "line": 18,
+                    "line": 19,
                     "column": 11
                 }
             }
         ],
         "position": {
-            "line": 18,
+            "line": 19,
             "column": 1
         }
     },
@@ -1431,7 +1693,7 @@
         "type": "Text",
         "content": "\n",
         "position": {
-            "line": 18,
+            "line": 19,
             "column": 58
         }
     },
@@ -1451,7 +1713,7 @@
                             "type": "Identifier",
                             "name": "$a/b",
                             "position": {
-                                "line": 19,
+                                "line": 20,
                                 "column": 14
                             }
                         },
@@ -1459,7 +1721,7 @@
                             "type": "Identifier",
                             "name": "@$a",
                             "position": {
-                                "line": 19,
+                                "line": 20,
                                 "column": 22
                             }
                         }
@@ -1468,20 +1730,20 @@
                         "type": "Identifier",
                         "name": "%$b",
                         "position": {
-                            "line": 19,
+                            "line": 20,
                             "column": 29
                         }
                     }
                 },
                 "value": "$a/b && @$a && %$b",
                 "position": {
-                    "line": 19,
+                    "line": 20,
                     "column": 11
                 }
             }
         ],
         "position": {
-            "line": 19,
+            "line": 20,
             "column": 1
         }
     },
@@ -1489,7 +1751,7 @@
         "type": "Text",
         "content": "\n",
         "position": {
-            "line": 19,
+            "line": 20,
             "column": 36
         }
     },
@@ -1510,7 +1772,7 @@
                                 "type": "FunctionIdentifier",
                                 "name": "fn",
                                 "position": {
-                                    "line": 20,
+                                    "line": 21,
                                     "column": 14
                                 }
                             },
@@ -1519,7 +1781,7 @@
                                     "type": "Identifier",
                                     "name": "$a",
                                     "position": {
-                                        "line": 20,
+                                        "line": 21,
                                         "column": 17
                                     }
                                 },
@@ -1527,7 +1789,7 @@
                                     "type": "Identifier",
                                     "name": "$b",
                                     "position": {
-                                        "line": 20,
+                                        "line": 21,
                                         "column": 21
                                     }
                                 }
@@ -1537,7 +1799,7 @@
                             "type": "Literal",
                             "value": 0,
                             "position": {
-                                "line": 20,
+                                "line": 21,
                                 "column": 28
                             }
                         }
@@ -1548,7 +1810,7 @@
                             "type": "FunctionIdentifier",
                             "name": "substr",
                             "position": {
-                                "line": 20,
+                                "line": 21,
                                 "column": 32
                             }
                         },
@@ -1557,7 +1819,7 @@
                                 "type": "Identifier",
                                 "name": "$c",
                                 "position": {
-                                    "line": 20,
+                                    "line": 21,
                                     "column": 39
                                 }
                             },
@@ -1567,7 +1829,7 @@
                                     "type": "FunctionIdentifier",
                                     "name": "fn",
                                     "position": {
-                                        "line": 20,
+                                        "line": 21,
                                         "column": 43
                                     }
                                 },
@@ -1576,7 +1838,7 @@
                                         "type": "Identifier",
                                         "name": "$c",
                                         "position": {
-                                            "line": 20,
+                                            "line": 21,
                                             "column": 46
                                         }
                                     },
@@ -1584,7 +1846,7 @@
                                         "type": "Identifier",
                                         "name": "$b",
                                         "position": {
-                                            "line": 20,
+                                            "line": 21,
                                             "column": 50
                                         }
                                     }
@@ -1596,20 +1858,20 @@
                         "type": "Literal",
                         "value": "",
                         "position": {
-                            "line": 20,
+                            "line": 21,
                             "column": 57
                         }
                     }
                 },
                 "value": "fn($a, $b) >= 0 ? substr($c, fn($c, $b)) : \"\"",
                 "position": {
-                    "line": 20,
+                    "line": 21,
                     "column": 11
                 }
             }
         ],
         "position": {
-            "line": 20,
+            "line": 21,
             "column": 1
         }
     },
@@ -1617,7 +1879,7 @@
         "type": "Text",
         "content": "\n",
         "position": {
-            "line": 20,
+            "line": 21,
             "column": 63
         }
     },
@@ -1640,7 +1902,7 @@
                                 "type": "Identifier",
                                 "name": "__first__",
                                 "position": {
-                                    "line": 21,
+                                    "line": 22,
                                     "column": 14
                                 }
                             },
@@ -1648,7 +1910,7 @@
                                 "type": "Identifier",
                                 "name": "__last__",
                                 "position": {
-                                    "line": 21,
+                                    "line": 22,
                                     "column": 27
                                 }
                             }
@@ -1657,7 +1919,7 @@
                             "type": "Identifier",
                             "name": "__counter__",
                             "position": {
-                                "line": 21,
+                                "line": 22,
                                 "column": 39
                             }
                         }
@@ -1666,121 +1928,12 @@
                         "type": "Identifier",
                         "name": "$a",
                         "position": {
-                            "line": 21,
+                            "line": 22,
                             "column": 54
                         }
                     }
                 },
                 "value": "__first__ && __last__ && __counter__ && $a",
-                "position": {
-                    "line": 21,
-                    "column": 11
-                }
-            }
-        ],
-        "position": {
-            "line": 21,
-            "column": 1
-        }
-    },
-    {
-        "type": "Text",
-        "content": "\n",
-        "position": {
-            "line": 21,
-            "column": 60
-        }
-    },
-    {
-        "type": "Tag",
-        "name": "TMPL_VAR",
-        "attributes": [
-            {
-                "type": "Expression",
-                "content": {
-                    "type": "ConditionalExpression",
-                    "test": {
-                        "type": "Identifier",
-                        "name": "$a",
-                        "position": {
-                            "line": 22,
-                            "column": 14
-                        }
-                    },
-                    "consequent": {
-                        "type": "Identifier",
-                        "name": "$a",
-                        "position": {
-                            "line": 22,
-                            "column": 19
-                        }
-                    },
-                    "alternate": {
-                        "type": "ConditionalExpression",
-                        "test": {
-                            "type": "Identifier",
-                            "name": "$b",
-                            "position": {
-                                "line": 22,
-                                "column": 24
-                            }
-                        },
-                        "consequent": {
-                            "type": "Identifier",
-                            "name": "$b",
-                            "position": {
-                                "line": 22,
-                                "column": 29
-                            }
-                        },
-                        "alternate": {
-                            "type": "BinaryExpression",
-                            "operator": ".",
-                            "left": {
-                                "type": "BinaryExpression",
-                                "operator": ".",
-                                "left": {
-                                    "type": "Identifier",
-                                    "name": "$c",
-                                    "position": {
-                                        "line": 22,
-                                        "column": 34
-                                    }
-                                },
-                                "right": {
-                                    "type": "Literal",
-                                    "value": " ",
-                                    "position": {
-                                        "line": 22,
-                                        "column": 39
-                                    }
-                                }
-                            },
-                            "right": {
-                                "type": "CallExpression",
-                                "callee": {
-                                    "type": "FunctionIdentifier",
-                                    "name": "fn",
-                                    "position": {
-                                        "line": 22,
-                                        "column": 45
-                                    }
-                                },
-                                "arguments": [
-                                    {
-                                        "type": "Identifier",
-                                        "name": "$d",
-                                        "position": {
-                                            "line": 22,
-                                            "column": 48
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "value": "$a ? $a : $b ? $b : $c . ' ' . fn($d)",
                 "position": {
                     "line": 22,
                     "column": 11
@@ -1797,7 +1950,7 @@
         "content": "\n",
         "position": {
             "line": 22,
-            "column": 55
+            "column": 60
         }
     },
     {
@@ -1807,14 +1960,89 @@
             {
                 "type": "Expression",
                 "content": {
-                    "type": "Literal",
-                    "value": "a/b/c@/d",
-                    "position": {
-                        "line": 23,
-                        "column": 14
+                    "type": "ConditionalExpression",
+                    "test": {
+                        "type": "Identifier",
+                        "name": "$a",
+                        "position": {
+                            "line": 23,
+                            "column": 14
+                        }
+                    },
+                    "consequent": {
+                        "type": "Identifier",
+                        "name": "$a",
+                        "position": {
+                            "line": 23,
+                            "column": 19
+                        }
+                    },
+                    "alternate": {
+                        "type": "ConditionalExpression",
+                        "test": {
+                            "type": "Identifier",
+                            "name": "$b",
+                            "position": {
+                                "line": 23,
+                                "column": 24
+                            }
+                        },
+                        "consequent": {
+                            "type": "Identifier",
+                            "name": "$b",
+                            "position": {
+                                "line": 23,
+                                "column": 29
+                            }
+                        },
+                        "alternate": {
+                            "type": "BinaryExpression",
+                            "operator": ".",
+                            "left": {
+                                "type": "BinaryExpression",
+                                "operator": ".",
+                                "left": {
+                                    "type": "Identifier",
+                                    "name": "$c",
+                                    "position": {
+                                        "line": 23,
+                                        "column": 34
+                                    }
+                                },
+                                "right": {
+                                    "type": "Literal",
+                                    "value": " ",
+                                    "position": {
+                                        "line": 23,
+                                        "column": 39
+                                    }
+                                }
+                            },
+                            "right": {
+                                "type": "CallExpression",
+                                "callee": {
+                                    "type": "FunctionIdentifier",
+                                    "name": "fn",
+                                    "position": {
+                                        "line": 23,
+                                        "column": 45
+                                    }
+                                },
+                                "arguments": [
+                                    {
+                                        "type": "Identifier",
+                                        "name": "$d",
+                                        "position": {
+                                            "line": 23,
+                                            "column": 48
+                                        }
+                                    }
+                                ]
+                            }
+                        }
                     }
                 },
-                "value": "'a/b/c\\@/d'",
+                "value": "$a ? $a : $b ? $b : $c . ' ' . fn($d)",
                 "position": {
                     "line": 23,
                     "column": 11
@@ -1831,7 +2059,271 @@
         "content": "\n",
         "position": {
             "line": 23,
+            "column": 55
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "Literal",
+                    "value": "a/b/c@/d",
+                    "position": {
+                        "line": 24,
+                        "column": 14
+                    }
+                },
+                "value": "'a/b/c\\@/d'",
+                "position": {
+                    "line": 24,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 24,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 24,
             "column": 29
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "BinaryExpression",
+                    "operator": "and",
+                    "left": {
+                        "type": "Identifier",
+                        "name": "$a",
+                        "position": {
+                            "line": 25,
+                            "column": 14
+                        }
+                    },
+                    "right": {
+                        "type": "BinaryExpression",
+                        "operator": "&&",
+                        "left": {
+                            "type": "Identifier",
+                            "name": "last",
+                            "position": {
+                                "line": 25,
+                                "column": 21
+                            }
+                        },
+                        "right": {
+                            "type": "Identifier",
+                            "name": "next",
+                            "position": {
+                                "line": 25,
+                                "column": 29
+                            }
+                        }
+                    }
+                },
+                "value": "$a and last && next",
+                "position": {
+                    "line": 25,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 25,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 25,
+            "column": 37
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "BinaryExpression",
+                    "operator": "&&",
+                    "left": {
+                        "type": "BinaryExpression",
+                        "operator": "&&",
+                        "left": {
+                            "type": "BinaryExpression",
+                            "operator": "&&",
+                            "left": {
+                                "type": "Identifier",
+                                "name": "@$a",
+                                "position": {
+                                    "line": 26,
+                                    "column": 14
+                                }
+                            },
+                            "right": {
+                                "type": "Identifier",
+                                "name": "%$a",
+                                "position": {
+                                    "line": 26,
+                                    "column": 21
+                                }
+                            }
+                        },
+                        "right": {
+                            "type": "Identifier",
+                            "name": "%a",
+                            "position": {
+                                "line": 26,
+                                "column": 28
+                            }
+                        }
+                    },
+                    "right": {
+                        "type": "Identifier",
+                        "name": "@a",
+                        "position": {
+                            "line": 26,
+                            "column": 34
+                        }
+                    }
+                },
+                "value": "@$a && %$a && %a && @a",
+                "position": {
+                    "line": 26,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 26,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 26,
+            "column": 40
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "BinaryExpression",
+                    "operator": ".",
+                    "left": {
+                        "type": "BinaryExpression",
+                        "operator": "//",
+                        "left": {
+                            "type": "Identifier",
+                            "name": "$c",
+                            "position": {
+                                "line": 27,
+                                "column": 15
+                            }
+                        },
+                        "right": {
+                            "type": "Literal",
+                            "value": 1,
+                            "position": {
+                                "line": 27,
+                                "column": 21
+                            }
+                        }
+                    },
+                    "right": {
+                        "type": "Literal",
+                        "value": "x",
+                        "position": {
+                            "line": 27,
+                            "column": 26
+                        }
+                    }
+                },
+                "value": "($c // 1) . 'x'",
+                "position": {
+                    "line": 27,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 27,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 27,
+            "column": 33
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "Expression",
+                "content": {
+                    "type": "UnaryExpression",
+                    "operator": "!",
+                    "argument": {
+                        "type": "UnaryExpression",
+                        "operator": "!",
+                        "argument": {
+                            "type": "Identifier",
+                            "name": "$a",
+                            "position": {
+                                "line": 28,
+                                "column": 16
+                            }
+                        },
+                        "prefix": true
+                    },
+                    "prefix": true
+                },
+                "value": "!!$a",
+                "position": {
+                    "line": 28,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 28,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 28,
+            "column": 22
         }
     }
 ]

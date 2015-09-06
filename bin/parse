@@ -25,23 +25,27 @@ var argv = require('yargs')
     })
     .argv;
 
-var template = fs.readFileSync(argv.path, 'utf8').trim();
-
-try {
-    var ast = parser.parse(template, {
-        ignoreHTMLTags: argv.ignoreHtml
-    });
-
-    if (argv.pretty) {
-        console.log(inspect(ast, { colors: true, depth: Infinity }));
-    } else {
-        console.log(JSON.stringify(ast, null, 4));
+fs.readFile(argv.path, 'utf8', function(err, template) {
+    if (err) {
+        throw err;
     }
-} catch(e) {
-    console.error(
-        formatFileError(argv.path, template, e)
-    );
-}
+
+    try {
+        var ast = parser.parse(template, {
+            ignoreHTMLTags: argv.ignoreHtml
+        });
+
+        if (argv.pretty) {
+            console.log(inspect(ast, { colors: true, depth: Infinity }));
+        } else {
+            console.log(JSON.stringify(ast, null, 4));
+        }
+    } catch(e) {
+        console.error(
+            formatFileError(argv.path, template, e)
+        );
+    }
+});
 
 function formatFileError(filepath, content, error) {
     return (
@@ -50,7 +54,9 @@ function formatFileError(filepath, content, error) {
         findLine(content, error.offset) + EOL +
         pointTo(error.column) + EOL +
         EOL +
-        error.name + ': ' + error.message
+        (error.stack ?
+            error.stack :
+            error.name + ': ' + error.message)
     );
 
     function findLine(string, offset) {
