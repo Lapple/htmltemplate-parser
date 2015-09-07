@@ -349,7 +349,7 @@ module.exports = (function() {
                       type: EXPRESSION_TOKENS.LITERAL,
                       value: isNaN(number) ? value : number
                     }, location),
-                    computed: false
+                    computed: true
                   };
                 },
         peg$c77 = function(first, value) {
@@ -358,7 +358,7 @@ module.exports = (function() {
                       type: EXPRESSION_TOKENS.LITERAL,
                       value: value
                     }, location),
-                    computed: false
+                    computed: true
                   };
                 },
         peg$c78 = function(first, rest) {

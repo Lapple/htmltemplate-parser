@@ -776,7 +776,7 @@
                                                     "column": 16
                                                 }
                                             },
-                                            "computed": false
+                                            "computed": true
                                         },
                                         "right": {
                                             "type": "MemberExpression",
@@ -819,7 +819,7 @@
                                                     "column": 45
                                                 }
                                             },
-                                            "computed": false
+                                            "computed": true
                                         },
                                         "property": {
                                             "type": "Literal",
@@ -829,7 +829,7 @@
                                                 "column": 50
                                             }
                                         },
-                                        "computed": false
+                                        "computed": true
                                     }
                                 },
                                 "right": {
@@ -854,7 +854,7 @@
                                                     "column": 61
                                                 }
                                             },
-                                            "computed": false
+                                            "computed": true
                                         },
                                         "property": {
                                             "type": "Literal",
@@ -864,7 +864,7 @@
                                                 "column": 66
                                             }
                                         },
-                                        "computed": false
+                                        "computed": true
                                     },
                                     "property": {
                                         "type": "Literal",
@@ -874,7 +874,7 @@
                                             "column": 71
                                         }
                                     },
-                                    "computed": false
+                                    "computed": true
                                 }
                             },
                             "right": {
@@ -895,7 +895,7 @@
                                         "column": 82
                                     }
                                 },
-                                "computed": false
+                                "computed": true
                             }
                         },
                         "right": {
@@ -918,7 +918,7 @@
                                         "column": 91
                                     }
                                 },
-                                "computed": false
+                                "computed": true
                             },
                             "property": {
                                 "type": "Literal",
@@ -928,7 +928,7 @@
                                     "column": 96
                                 }
                             },
-                            "computed": false
+                            "computed": true
                         }
                     },
                     "right": {
@@ -949,7 +949,7 @@
                                 "column": 105
                             }
                         },
-                        "computed": false
+                        "computed": true
                     }
                 },
                 "value": "$a->{prop} && $b->{$prop} && $a->{b}->{c} && $a->{b}->[0]->[1] && $a[1] && $a->{b}[9] && $a->{3}",
@@ -1030,7 +1030,7 @@
                                                 "column": 28
                                             }
                                         },
-                                        "computed": false
+                                        "computed": true
                                     },
                                     "property": {
                                         "type": "Identifier",
@@ -1063,7 +1063,7 @@
                                             "column": 41
                                         }
                                     },
-                                    "computed": false
+                                    "computed": true
                                 },
                                 "property": {
                                     "type": "Identifier",
@@ -1094,7 +1094,7 @@
                                     "column": 54
                                 }
                             },
-                            "computed": false
+                            "computed": true
                         }
                     },
                     "right": {
@@ -1115,7 +1115,7 @@
                                 "column": 63
                             }
                         },
-                        "computed": false
+                        "computed": true
                     }
                 },
                 "value": "$a->[$b] && $a[1][$b] && $a{b}{$c} && $a->b && $a->{1x1}",
@@ -1233,7 +1233,7 @@
                                 "column": 47
                             }
                         },
-                        "computed": false
+                        "computed": true
                     }
                 },
                 "value": "$a->[$b-1] && $a->{@$b % 3} && $a -> [ 0 ]",
@@ -1529,7 +1529,7 @@
                                             "column": 52
                                         }
                                     },
-                                    "computed": false
+                                    "computed": true
                                 }
                             ]
                         }
