@@ -1,0 +1,270 @@
+[
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "PairAttribute",
+                "name": "EXPR",
+                "value": {
+                    "type": "Expression",
+                    "content": {
+                        "type": "BinaryExpression",
+                        "operator": "or",
+                        "left": {
+                            "type": "BinaryExpression",
+                            "operator": "or",
+                            "left": {
+                                "type": "Identifier",
+                                "name": "$a",
+                                "position": {
+                                    "line": 1,
+                                    "column": 17
+                                }
+                            },
+                            "right": {
+                                "type": "Identifier",
+                                "name": "$b",
+                                "position": {
+                                    "line": 1,
+                                    "column": 23
+                                }
+                            }
+                        },
+                        "right": {
+                            "type": "Identifier",
+                            "name": "$c",
+                            "position": {
+                                "line": 1,
+                                "column": 29
+                            }
+                        }
+                    },
+                    "value": "\"$a or $b or $c\"",
+                    "position": {
+                        "line": 1,
+                        "column": 16
+                    }
+                },
+                "position": {
+                    "line": 1,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 1,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 1,
+            "column": 33
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "PairAttribute",
+                "name": "EXPR",
+                "value": {
+                    "type": "Expression",
+                    "content": {
+                        "type": "ConditionalExpression",
+                        "test": {
+                            "type": "BinaryExpression",
+                            "operator": ">=",
+                            "left": {
+                                "type": "CallExpression",
+                                "callee": {
+                                    "type": "FunctionIdentifier",
+                                    "name": "fn",
+                                    "position": {
+                                        "line": 2,
+                                        "column": 17
+                                    }
+                                },
+                                "arguments": [
+                                    {
+                                        "type": "Identifier",
+                                        "name": "$a",
+                                        "position": {
+                                            "line": 2,
+                                            "column": 20
+                                        }
+                                    },
+                                    {
+                                        "type": "Identifier",
+                                        "name": "$b",
+                                        "position": {
+                                            "line": 2,
+                                            "column": 24
+                                        }
+                                    }
+                                ]
+                            },
+                            "right": {
+                                "type": "Literal",
+                                "value": 0,
+                                "position": {
+                                    "line": 2,
+                                    "column": 31
+                                }
+                            }
+                        },
+                        "consequent": {
+                            "type": "CallExpression",
+                            "callee": {
+                                "type": "FunctionIdentifier",
+                                "name": "substr",
+                                "position": {
+                                    "line": 2,
+                                    "column": 35
+                                }
+                            },
+                            "arguments": [
+                                {
+                                    "type": "Identifier",
+                                    "name": "$c",
+                                    "position": {
+                                        "line": 2,
+                                        "column": 42
+                                    }
+                                },
+                                {
+                                    "type": "CallExpression",
+                                    "callee": {
+                                        "type": "FunctionIdentifier",
+                                        "name": "fn",
+                                        "position": {
+                                            "line": 2,
+                                            "column": 46
+                                        }
+                                    },
+                                    "arguments": [
+                                        {
+                                            "type": "Identifier",
+                                            "name": "$c",
+                                            "position": {
+                                                "line": 2,
+                                                "column": 49
+                                            }
+                                        },
+                                        {
+                                            "type": "Identifier",
+                                            "name": "$b",
+                                            "position": {
+                                                "line": 2,
+                                                "column": 53
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "alternate": {
+                            "type": "Literal",
+                            "value": "",
+                            "position": {
+                                "line": 2,
+                                "column": 60
+                            }
+                        }
+                    },
+                    "value": "\"fn($a, $b) >= 0 ? substr($c, fn($c, $b)) : ''\"",
+                    "position": {
+                        "line": 2,
+                        "column": 16
+                    }
+                },
+                "position": {
+                    "line": 2,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 2,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 2,
+            "column": 64
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "PairAttribute",
+                "name": "EXPR",
+                "value": {
+                    "type": "Expression",
+                    "content": {
+                        "type": "BinaryExpression",
+                        "operator": ".",
+                        "left": {
+                            "type": "BinaryExpression",
+                            "operator": "//",
+                            "left": {
+                                "type": "Identifier",
+                                "name": "$c",
+                                "position": {
+                                    "line": 3,
+                                    "column": 19
+                                }
+                            },
+                            "right": {
+                                "type": "Literal",
+                                "value": 1,
+                                "position": {
+                                    "line": 3,
+                                    "column": 25
+                                }
+                            }
+                        },
+                        "right": {
+                            "type": "Literal",
+                            "value": "x",
+                            "position": {
+                                "line": 3,
+                                "column": 30
+                            }
+                        }
+                    },
+                    "value": "' ($c // 1) . \"x\" '",
+                    "position": {
+                        "line": 3,
+                        "column": 16
+                    }
+                },
+                "position": {
+                    "line": 3,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 3,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 3,
+            "column": 36
+        }
+    }
+]

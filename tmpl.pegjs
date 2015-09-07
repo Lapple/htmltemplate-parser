@@ -340,13 +340,37 @@ PerlExpressionLiteral =
     }, location);
   }
 
-AttributeWithValue = name:AttributeToken "=" value:(AttributeToken / PerlExpressionLiteral / StringLiteral) {
-  return token({
-    type: ATTRIBUTE_TYPES.PAIR,
-    name: name,
-    value: value
-  }, location);
-}
+// FIXME: Quote character escaping inside of an expression does not work at the
+// moment.
+PerlExpressionString
+  = e:(
+      "\"" __ expression:(!"\"" PerlExpression) __ "\"" { return { expression: expression[1], text: text() }; }
+    / "'" __ expression:(!"'" PerlExpression) __ "'" { return { expression: expression[1], text: text() }; }
+    )
+    {
+      return token({
+        type: ATTRIBUTE_TYPES.EXPRESSION,
+        content: e.expression,
+        value: e.text
+      }, location);
+    }
+
+AttributeWithValue =
+  name:AttributeToken "="
+  value:(
+      AttributeToken
+    // See PR #6, need to support `<TMPL_VAR EXPR="...">` syntax.
+    / e:PerlExpressionString & { return name === "EXPR"; } { return e; }
+    / PerlExpressionLiteral
+    / StringLiteral
+  )
+  {
+    return token({
+      type: ATTRIBUTE_TYPES.PAIR,
+      name: name,
+      value: value
+    }, location);
+  }
 
 // Predicate takes care of not matching self closing bracket in single HTML tags,
 // e.g. `<input type="text" />`.
