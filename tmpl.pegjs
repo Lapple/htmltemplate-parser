@@ -319,7 +319,7 @@ CommentTag = CommentTagStart content:$(!CommentTagEnd SourceCharacter)* CommentT
 TMPLAttributes
   = WhiteSpace+ attrs:(AttributeWithValue / AttributeWithoutValue) { return attrs; }
   // Expressions don't require whitespace to be separated from tag names.
-  / __ expression:PerlExpressionLiteral { return expression; }
+  / __ expression:(PerlExpressionLiteral / InvalidPerlExpressionLiteral) { return expression; }
 
 PerlExpressionLiteral =
   PerlExpressionStart
@@ -339,6 +339,10 @@ PerlExpressionLiteral =
       value: e.text
     }, location);
   }
+
+InvalidPerlExpressionLiteral = PerlExpressionStart (!PerlExpressionEnd SourceCharacter)* PerlExpressionEnd {
+  throw new SyntaxError('Illegal expression.', location);
+}
 
 // FIXME: Quote character escaping inside of an expression does not work at the
 // moment.
