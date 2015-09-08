@@ -652,9 +652,19 @@ MemberExpression
     }
 
 PrimaryExpression
-  = PerlIdentifier
+  = PerlIdentifierWithComments
   / PerlLiteral
   / "(" __ e:PerlExpression __ ")" { return e; }
+
+// This is done to support single-line comments inside of an expression,
+// for now just stripping them away.
+PerlIdentifierWithComments
+  = (__ SingleLineComment LineTerminator __)*
+    e:PerlIdentifier
+    (__ SingleLineComment LineTerminator __)*
+    {
+      return e;
+    }
 
 PerlIdentifier
   = name:$(
