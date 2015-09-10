@@ -43,6 +43,14 @@
                 "type": "PairAttribute",
                 "name": "b_attr",
                 "value": "b_attr_value",
+                "content": {
+                    "type": "Identifier",
+                    "name": "b_attr_value",
+                    "position": {
+                        "line": 4,
+                        "column": 12
+                    }
+                },
                 "position": {
                     "line": 4,
                     "column": 5
@@ -234,6 +242,14 @@
                 "type": "PairAttribute",
                 "name": "b_escaped_attribute",
                 "value": "Don't break",
+                "content": {
+                    "type": "Literal",
+                    "value": "Don't break",
+                    "position": {
+                        "line": 18,
+                        "column": 25
+                    }
+                },
                 "position": {
                     "line": 18,
                     "column": 5
@@ -243,6 +259,14 @@
                 "type": "PairAttribute",
                 "name": "b_another_escaped_attribute",
                 "value": "Don\"t break",
+                "content": {
+                    "type": "Literal",
+                    "value": "Don\"t break",
+                    "position": {
+                        "line": 19,
+                        "column": 33
+                    }
+                },
                 "position": {
                     "line": 19,
                     "column": 5
@@ -252,6 +276,14 @@
                 "type": "PairAttribute",
                 "name": "b_plain_string_attribute",
                 "value": "String",
+                "content": {
+                    "type": "Literal",
+                    "value": "String",
+                    "position": {
+                        "line": 20,
+                        "column": 30
+                    }
+                },
                 "position": {
                     "line": 20,
                     "column": 5

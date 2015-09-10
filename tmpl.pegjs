@@ -221,7 +221,7 @@ ConditionalWrapperTag =
     var areConditionValuesEqual = (
       typeof openCondition.condition.value === 'string' ?
         openCondition.condition.value === closeCondition.condition.value :
-        openCondition.condition.value.raw === openCondition.condition.value.raw
+        openCondition.condition.value.value === openCondition.condition.value.value
     );
 
     return (
@@ -362,18 +362,47 @@ PerlExpressionString
 AttributeWithValue =
   name:AttributeToken "="
   value:(
-      AttributeToken
+      t:AttributeToken {
+        return {
+          value: token({
+            type: EXPRESSION_TOKENS.IDENTIFIER,
+            name: t
+          }, location),
+          text: text()
+        };
+      }
     // See PR #6, need to support `<TMPL_VAR EXPR="...">` syntax.
     / e:PerlExpressionString & { return name === "EXPR"; } { return e; }
     / PerlExpressionLiteral
-    / StringLiteral
+    / string:StringLiteral {
+        return {
+          value: token({
+            type: EXPRESSION_TOKENS.LITERAL,
+            value: string
+          }, location),
+          // NOTE: Returning non-quoted value to keep backwards compatibility,
+          // this will be removed on next major release.
+          text: string
+        };
+      }
   )
   {
-    return token({
+    var node = {
       type: ATTRIBUTE_TYPES.PAIR,
       name: name,
       value: value
-    }, location);
+    };
+
+    // FIXME (NEXT_MAJOR): Instead of returning plain text `value` here, remove
+    // `content` field and return object in `value`. This was done to keep
+    // backwards compatibility, however, needs to be batched with other AST
+    // improvements in next major release.
+    if (typeof value.text === 'string') {
+      node.value = value.text;
+      node.content = value.value;
+    }
+
+    return token(node, location);
   }
 
 // Predicate takes care of not matching self closing bracket in single HTML tags,

@@ -1,0 +1,205 @@
+[
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "value",
+                "value": null,
+                "position": {
+                    "line": 1,
+                    "column": 11
+                }
+            }
+        ],
+        "position": {
+            "line": 1,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 1,
+            "column": 17
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "value",
+                "value": null,
+                "position": {
+                    "line": 2,
+                    "column": 11
+                }
+            },
+            {
+                "type": "PairAttribute",
+                "name": "attribute",
+                "value": "identifier",
+                "content": {
+                    "type": "Identifier",
+                    "name": "identifier",
+                    "position": {
+                        "line": 2,
+                        "column": 27
+                    }
+                },
+                "position": {
+                    "line": 2,
+                    "column": 17
+                }
+            }
+        ],
+        "position": {
+            "line": 2,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 2,
+            "column": 38
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "value",
+                "value": null,
+                "position": {
+                    "line": 3,
+                    "column": 11
+                }
+            },
+            {
+                "type": "PairAttribute",
+                "name": "attribute",
+                "value": "string",
+                "content": {
+                    "type": "Literal",
+                    "value": "string",
+                    "position": {
+                        "line": 3,
+                        "column": 27
+                    }
+                },
+                "position": {
+                    "line": 3,
+                    "column": 17
+                }
+            }
+        ],
+        "position": {
+            "line": 3,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 3,
+            "column": 36
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "value",
+                "value": null,
+                "position": {
+                    "line": 4,
+                    "column": 11
+                }
+            },
+            {
+                "type": "PairAttribute",
+                "name": "attribute",
+                "value": "property.access",
+                "content": {
+                    "type": "Identifier",
+                    "name": "property.access",
+                    "position": {
+                        "line": 4,
+                        "column": 27
+                    }
+                },
+                "position": {
+                    "line": 4,
+                    "column": 17
+                }
+            }
+        ],
+        "position": {
+            "line": 4,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 4,
+            "column": 43
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "value",
+                "value": null,
+                "position": {
+                    "line": 5,
+                    "column": 11
+                }
+            },
+            {
+                "type": "PairAttribute",
+                "name": "attribute",
+                "value": "dotted.string",
+                "content": {
+                    "type": "Literal",
+                    "value": "dotted.string",
+                    "position": {
+                        "line": 5,
+                        "column": 27
+                    }
+                },
+                "position": {
+                    "line": 5,
+                    "column": 17
+                }
+            }
+        ],
+        "position": {
+            "line": 5,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 5,
+            "column": 43
+        }
+    }
+]

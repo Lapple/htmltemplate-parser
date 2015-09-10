@@ -16,6 +16,14 @@
                 "type": "PairAttribute",
                 "name": "IN",
                 "value": "b_object.b_items",
+                "content": {
+                    "type": "Identifier",
+                    "name": "b_object.b_items",
+                    "position": {
+                        "line": 1,
+                        "column": 21
+                    }
+                },
                 "position": {
                     "line": 1,
                     "column": 18
