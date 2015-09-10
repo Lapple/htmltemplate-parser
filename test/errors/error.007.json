@@ -1,0 +1,9 @@
+{
+    "name": "SyntaxError",
+    "message": "Illegal expression.",
+    "line": 2,
+    "column": 11,
+    "offset": 44,
+    "expected": null,
+    "found": null
+}

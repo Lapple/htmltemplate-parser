@@ -713,12 +713,14 @@ PerlIdentifier
     }, location);
   }
 
-PerlFunctionIdentifier = name:PerlIdentifierName {
-  return token({
-    type: EXPRESSION_TOKENS.FUNCTION_IDENTIFIER,
-    name: name
-  }, location);
-}
+PerlFunctionIdentifier =
+  !ReservedOperatorName name:PerlIdentifierName
+  {
+    return token({
+      type: EXPRESSION_TOKENS.FUNCTION_IDENTIFIER,
+      name: name
+    }, location);
+  }
 
 PerlIdentifierName
   = $([a-zA-Z_]+ [a-zA-Z0-9_/]*)
@@ -794,6 +796,17 @@ EqualityOperator
 LogicalSymbolicOperator
   = "||"
   / "//"
+
+// These operator names cannot be used as function identifiers.
+ReservedOperatorName
+  = "and"
+  / "eq"
+  / "ge"
+  / "gt"
+  / "le"
+  / "lt"
+  / "ne"
+  / "or"
 
 KnownTagName
   = BlockTMPLTagName
