@@ -534,6 +534,7 @@ DoubleQuotedText = text:$(!NonText (DoubleStringCharacter / LineTerminator))+ {
 }
 
 // Operator precedence:
+//  > **
 //  >  ! ~ + -
 //  >  =~ !~
 //  <  * / %
@@ -610,6 +611,17 @@ UnarySymbolicExpression
         operator: operator,
         argument: argument,
         prefix: true
+      };
+    }
+  / ExponentiationExpression
+
+ExponentiationExpression
+  = left:CallExpression __ operator:"**" __ right:ExponentiationExpression {
+      return {
+        type: EXPRESSION_TYPES.BINARY,
+        operator: operator,
+        left: left,
+        right: right
       };
     }
   / CallExpression
@@ -766,8 +778,8 @@ MatchOperator
   / "!~"
 
 MultiplicativeOperator
-  = $("*" !"=")
-  / $("/" !"=")
+  = $("*" ![*=])
+  / $("/" ![/=])
   / $("%" !"=")
 
 AdditiveOperator
