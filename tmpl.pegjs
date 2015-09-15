@@ -98,6 +98,17 @@
     CALL: "CallExpression"
   };
 
+  var RESERVED_OPERATOR_NAMES = [
+    "and",
+    "eq",
+    "ge",
+    "gt",
+    "le",
+    "lt",
+    "ne",
+    "or"
+  ];
+
   function SyntaxError(message, location) {
     var l = location().start;
 
@@ -726,7 +737,10 @@ PerlIdentifier
   }
 
 PerlFunctionIdentifier =
-  !ReservedOperatorName name:PerlIdentifierName
+  name:PerlIdentifierName
+  & {
+    return RESERVED_OPERATOR_NAMES.indexOf(name) === -1;
+  }
   {
     return token({
       type: EXPRESSION_TOKENS.FUNCTION_IDENTIFIER,
@@ -808,17 +822,6 @@ EqualityOperator
 LogicalSymbolicOperator
   = "||"
   / "//"
-
-// These operator names cannot be used as function identifiers.
-ReservedOperatorName
-  = "and"
-  / "eq"
-  / "ge"
-  / "gt"
-  / "le"
-  / "lt"
-  / "ne"
-  / "or"
 
 KnownTagName
   = BlockTMPLTagName
