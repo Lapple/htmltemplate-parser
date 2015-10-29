@@ -160,11 +160,11 @@ module.exports = (function() {
         peg$c16 = function(name) {
           return name;
         },
-        peg$c17 = function(c) {
-          return token({
+        peg$c17 = function(char, c) {
+          return token(withEntities({
             type: BLOCK_TYPES.COMMENT,
             content: c
-          }, location);
+          }, { char: char }), location);
         },
         peg$c18 = function(content) {
           return token({
@@ -174,18 +174,24 @@ module.exports = (function() {
         },
         peg$c19 = function(attrs) { return attrs; },
         peg$c20 = function(expression) { return expression; },
-        peg$c21 = function(expression) {
+        peg$c21 = function(before, expression) {
               return {
                 expression: expression,
                 text: text()
               };
             },
-        peg$c22 = function(e) {
-            return token({
-              type: ATTRIBUTE_TYPES.EXPRESSION,
-              content: e.expression,
-              value: e.text
-            }, location);
+        peg$c22 = function(before, e, after) {
+            return token(
+              withEntities({
+                type: ATTRIBUTE_TYPES.EXPRESSION,
+                content: e.expression,
+                value: e.text
+              }, {
+                before: before,
+                after: after
+              }),
+              location
+            );
           },
         peg$c23 = function() {
           throw new SyntaxError('Illegal expression.', location);
@@ -342,13 +348,15 @@ module.exports = (function() {
         peg$c61 = { type: "literal", value: "and", description: "\"and\"" },
         peg$c62 = "not",
         peg$c63 = { type: "literal", value: "not", description: "\"not\"" },
-        peg$c64 = function(operator, argument) {
-              return {
+        peg$c64 = function(operator, whitespace, argument) {
+              return withEntities({
                 type: EXPRESSION_TYPES.UNARY,
                 operator: operator,
                 argument: argument,
                 prefix: true
-              };
+              }, {
+                whitespace: whitespace
+              });
             },
         peg$c65 = "&&",
         peg$c66 = { type: "literal", value: "&&", description: "\"&&\"" },
@@ -2020,7 +2028,7 @@ module.exports = (function() {
         }
         if (s2 !== peg$FAILED) {
           peg$savedPos = s0;
-          s1 = peg$c17(s2);
+          s1 = peg$c17(s1, s2);
           s0 = s1;
         } else {
           peg$currPos = s0;
@@ -2100,7 +2108,7 @@ module.exports = (function() {
         }
         if (s2 !== peg$FAILED) {
           peg$savedPos = s0;
-          s1 = peg$c17(s2);
+          s1 = peg$c17(s1, s2);
           s0 = s1;
         } else {
           peg$currPos = s0;
@@ -2266,14 +2274,14 @@ module.exports = (function() {
         s3 = peg$parsePerlExpression();
         if (s3 !== peg$FAILED) {
           peg$savedPos = s2;
-          s3 = peg$c21(s3);
+          s3 = peg$c21(s1, s3);
         }
         s2 = s3;
         if (s2 !== peg$FAILED) {
           s3 = peg$parsePerlExpressionEnd();
           if (s3 !== peg$FAILED) {
             peg$savedPos = s0;
-            s1 = peg$c22(s2);
+            s1 = peg$c22(s1, s2, s3);
             s0 = s1;
           } else {
             peg$currPos = s0;
@@ -3611,7 +3619,7 @@ module.exports = (function() {
           s3 = peg$parseUnaryStringNotExpression();
           if (s3 !== peg$FAILED) {
             peg$savedPos = s0;
-            s1 = peg$c64(s1, s3);
+            s1 = peg$c64(s1, s2, s3);
             s0 = s1;
           } else {
             peg$currPos = s0;
@@ -4215,7 +4223,7 @@ module.exports = (function() {
           s3 = peg$parseUnarySymbolicExpression();
           if (s3 !== peg$FAILED) {
             peg$savedPos = s0;
-            s1 = peg$c64(s1, s3);
+            s1 = peg$c64(s1, s2, s3);
             s0 = s1;
           } else {
             peg$currPos = s0;
@@ -8236,64 +8244,76 @@ module.exports = (function() {
     }
 
     function peg$parse__() {
-      var s0, s1;
+      var s0, s1, s2;
 
-      s0 = [];
-      s1 = peg$parseWhiteSpace();
-      while (s1 !== peg$FAILED) {
-        s0.push(s1);
-        s1 = peg$parseWhiteSpace();
+      s0 = peg$currPos;
+      s1 = [];
+      s2 = peg$parseWhiteSpace();
+      while (s2 !== peg$FAILED) {
+        s1.push(s2);
+        s2 = peg$parseWhiteSpace();
+      }
+      if (s1 !== peg$FAILED) {
+        s0 = input.substring(s0, peg$currPos);
+      } else {
+        s0 = s1;
       }
 
       return s0;
     }
 
     function peg$parseFullLineCommentStart() {
-      var s0, s1, s2, s3, s4;
+      var s0, s1, s2, s3, s4, s5;
 
       s0 = peg$currPos;
-      s1 = peg$parseLineTerminator();
-      if (s1 !== peg$FAILED) {
-        s2 = peg$currPos;
+      s1 = peg$currPos;
+      s2 = peg$parseLineTerminator();
+      if (s2 !== peg$FAILED) {
         s3 = peg$currPos;
+        s4 = peg$currPos;
         peg$silentFails++;
-        s4 = peg$parseCommentStart();
+        s5 = peg$parseCommentStart();
         peg$silentFails--;
-        if (s4 === peg$FAILED) {
-          s3 = void 0;
+        if (s5 === peg$FAILED) {
+          s4 = void 0;
+        } else {
+          peg$currPos = s4;
+          s4 = peg$FAILED;
+        }
+        if (s4 !== peg$FAILED) {
+          if (input.charCodeAt(peg$currPos) === 35) {
+            s5 = peg$c400;
+            peg$currPos++;
+          } else {
+            s5 = peg$FAILED;
+            if (peg$silentFails === 0) { peg$fail(peg$c401); }
+          }
+          if (s5 !== peg$FAILED) {
+            s4 = [s4, s5];
+            s3 = s4;
+          } else {
+            peg$currPos = s3;
+            s3 = peg$FAILED;
+          }
         } else {
           peg$currPos = s3;
           s3 = peg$FAILED;
         }
         if (s3 !== peg$FAILED) {
-          if (input.charCodeAt(peg$currPos) === 35) {
-            s4 = peg$c400;
-            peg$currPos++;
-          } else {
-            s4 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c401); }
-          }
-          if (s4 !== peg$FAILED) {
-            s3 = [s3, s4];
-            s2 = s3;
-          } else {
-            peg$currPos = s2;
-            s2 = peg$FAILED;
-          }
+          s2 = [s2, s3];
+          s1 = s2;
         } else {
-          peg$currPos = s2;
-          s2 = peg$FAILED;
-        }
-        if (s2 !== peg$FAILED) {
-          s1 = [s1, s2];
-          s0 = s1;
-        } else {
-          peg$currPos = s0;
-          s0 = peg$FAILED;
+          peg$currPos = s1;
+          s1 = peg$FAILED;
         }
       } else {
-        peg$currPos = s0;
-        s0 = peg$FAILED;
+        peg$currPos = s1;
+        s1 = peg$FAILED;
+      }
+      if (s1 !== peg$FAILED) {
+        s0 = input.substring(s0, peg$currPos);
+      } else {
+        s0 = s1;
       }
 
       return s0;
@@ -8552,56 +8572,68 @@ module.exports = (function() {
     }
 
     function peg$parsePerlExpressionStart() {
-      var s0, s1, s2;
+      var s0, s1, s2, s3;
 
       s0 = peg$currPos;
+      s1 = peg$currPos;
       if (input.substr(peg$currPos, 2) === peg$c419) {
-        s1 = peg$c419;
+        s2 = peg$c419;
         peg$currPos += 2;
       } else {
-        s1 = peg$FAILED;
+        s2 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c420); }
       }
-      if (s1 !== peg$FAILED) {
-        s2 = peg$parse__();
-        if (s2 !== peg$FAILED) {
-          s1 = [s1, s2];
-          s0 = s1;
+      if (s2 !== peg$FAILED) {
+        s3 = peg$parse__();
+        if (s3 !== peg$FAILED) {
+          s2 = [s2, s3];
+          s1 = s2;
         } else {
-          peg$currPos = s0;
-          s0 = peg$FAILED;
+          peg$currPos = s1;
+          s1 = peg$FAILED;
         }
       } else {
-        peg$currPos = s0;
-        s0 = peg$FAILED;
+        peg$currPos = s1;
+        s1 = peg$FAILED;
+      }
+      if (s1 !== peg$FAILED) {
+        s0 = input.substring(s0, peg$currPos);
+      } else {
+        s0 = s1;
       }
 
       return s0;
     }
 
     function peg$parsePerlExpressionEnd() {
-      var s0, s1, s2;
+      var s0, s1, s2, s3;
 
       s0 = peg$currPos;
-      s1 = peg$parse__();
-      if (s1 !== peg$FAILED) {
+      s1 = peg$currPos;
+      s2 = peg$parse__();
+      if (s2 !== peg$FAILED) {
         if (input.substr(peg$currPos, 2) === peg$c421) {
-          s2 = peg$c421;
+          s3 = peg$c421;
           peg$currPos += 2;
         } else {
-          s2 = peg$FAILED;
+          s3 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c422); }
         }
-        if (s2 !== peg$FAILED) {
-          s1 = [s1, s2];
-          s0 = s1;
+        if (s3 !== peg$FAILED) {
+          s2 = [s2, s3];
+          s1 = s2;
         } else {
-          peg$currPos = s0;
-          s0 = peg$FAILED;
+          peg$currPos = s1;
+          s1 = peg$FAILED;
         }
       } else {
-        peg$currPos = s0;
-        s0 = peg$FAILED;
+        peg$currPos = s1;
+        s1 = peg$FAILED;
+      }
+      if (s1 !== peg$FAILED) {
+        s0 = input.substring(s0, peg$currPos);
+      } else {
+        s0 = s1;
       }
 
       return s0;
@@ -8994,6 +9026,13 @@ module.exports = (function() {
         return name.indexOf('TMPL_') === 0;
       }
 
+      function withEntities(obj, stringEntities) {
+        if (options.collectStringEntities) {
+          obj.stringEntities = stringEntities;
+        }
+        return obj;
+      }
+
       function buildTree(first, rest, builder) {
         var result = first, i;
 
@@ -9006,12 +9045,15 @@ module.exports = (function() {
 
       function buildBinaryExpression(first, rest) {
         return buildTree(first, rest, function(result, element) {
-          return {
+          return withEntities({
             type: EXPRESSION_TYPES.BINARY,
             operator: element[1],
             left: result,
             right: element[3]
-          };
+          }, {
+            before: element[0],
+            after: element[2]
+          });
         });
       }
 

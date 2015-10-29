@@ -40,6 +40,13 @@
     return name.indexOf('TMPL_') === 0;
   }
 
+  function withEntities(obj, stringEntities) {
+    if (options.collectStringEntities) {
+      obj.stringEntities = stringEntities;
+    }
+    return obj;
+  }
+
   function buildTree(first, rest, builder) {
     var result = first, i;
 
@@ -52,12 +59,15 @@
 
   function buildBinaryExpression(first, rest) {
     return buildTree(first, rest, function(result, element) {
-      return {
+      return withEntities({
         type: EXPRESSION_TYPES.BINARY,
         operator: element[1],
         left: result,
         right: element[3]
-      };
+      }, {
+        before: element[0],
+        after: element[2]
+      });
     });
   }
 
@@ -306,18 +316,18 @@ ConditionEndTag = OpeningEndBracket name:ConditionalTagName ClosingBracket {
   return name;
 }
 
-SingleLineComment = CommentStart c:$(!LineTerminator SourceCharacter)* {
-  return token({
+SingleLineComment = char:CommentStart c:$(!LineTerminator SourceCharacter)* {
+  return token(withEntities({
     type: BLOCK_TYPES.COMMENT,
     content: c
-  }, location);
+  }, { char: char }), location);
 }
 
-FullLineComment = FullLineCommentStart c:$(!LineTerminator SourceCharacter)* {
-  return token({
+FullLineComment = char:FullLineCommentStart c:$(!LineTerminator SourceCharacter)* {
+  return token(withEntities({
     type: BLOCK_TYPES.COMMENT,
     content: c
-  }, location);
+  }, { char: char }), location);
 }
 
 CommentTag = CommentTagStart content:$(!CommentTagEnd SourceCharacter)* CommentTagEnd {
@@ -333,7 +343,7 @@ TMPLAttributes
   / __ expression:(PerlExpressionLiteral / InvalidPerlExpressionLiteral) { return expression; }
 
 PerlExpressionLiteral =
-  PerlExpressionStart
+  before:PerlExpressionStart
   e:(
     expression:PerlExpression {
       return {
@@ -342,13 +352,19 @@ PerlExpressionLiteral =
       };
     }
   )
-  PerlExpressionEnd
+  after:PerlExpressionEnd
   {
-    return token({
-      type: ATTRIBUTE_TYPES.EXPRESSION,
-      content: e.expression,
-      value: e.text
-    }, location);
+    return token(
+      withEntities({
+        type: ATTRIBUTE_TYPES.EXPRESSION,
+        content: e.expression,
+        value: e.text
+      }, {
+        before: before,
+        after: after
+      }),
+      location
+    );
   }
 
 InvalidPerlExpressionLiteral = PerlExpressionStart (!PerlExpressionEnd SourceCharacter)* PerlExpressionEnd {
@@ -577,13 +593,15 @@ LogicalStringAndExpression = first:UnaryStringNotExpression rest:(__ "and" __ Un
 }
 
 UnaryStringNotExpression
-  = operator:"not" __ argument:UnaryStringNotExpression {
-      return {
+  = operator:"not" whitespace:__ argument:UnaryStringNotExpression {
+      return withEntities({
         type: EXPRESSION_TYPES.UNARY,
         operator: operator,
         argument: argument,
         prefix: true
-      };
+      }, {
+        whitespace: whitespace
+      });
     }
   / LogicalSymbolicOrExpression
 
@@ -616,13 +634,15 @@ MatchExpression = first:UnarySymbolicExpression rest:(__ MatchOperator __ UnaryS
 }
 
 UnarySymbolicExpression
-  = operator:UnarySymbolicOperator __ argument:UnarySymbolicExpression {
-      return {
+  = operator:UnarySymbolicOperator whitespace:__ argument:UnarySymbolicExpression {
+      return withEntities({
         type: EXPRESSION_TYPES.UNARY,
         operator: operator,
         argument: argument,
         prefix: true
-      };
+      }, {
+        whitespace: whitespace
+      });
     }
   / ExponentiationExpression
 
@@ -1048,10 +1068,10 @@ WhiteSpace "whitespace"
   / [\u0020\u00A0\u1680\u2000-\u200A\u202F\u205F\u3000]
   / LineTerminator
 
-__ = WhiteSpace*
+__ = $(WhiteSpace*)
 
 FullLineCommentStart
-  = LineTerminator (!CommentStart "#")
+  = $(LineTerminator (!CommentStart "#"))
 
 CommentStart
   = "##"
@@ -1079,10 +1099,10 @@ ClosingBracket
   }
 
 PerlExpressionStart
-  = "[%" __
+  = $("[%" __)
 
 PerlExpressionEnd
-  = __ "%]"
+  = $(__ "%]")
 
 SingleStringCharacter
   = !("'" / "\\" / LineTerminator) SourceCharacter { return text(); }
