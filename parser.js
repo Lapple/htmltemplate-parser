@@ -627,14 +627,14 @@ module.exports = (function() {
         peg$c259 = { type: "literal", value: "h5", description: "\"h5\"" },
         peg$c260 = "h6",
         peg$c261 = { type: "literal", value: "h6", description: "\"h6\"" },
-        peg$c262 = "head",
-        peg$c263 = { type: "literal", value: "head", description: "\"head\"" },
-        peg$c264 = "header",
-        peg$c265 = { type: "literal", value: "header", description: "\"header\"" },
-        peg$c266 = "hgroup",
-        peg$c267 = { type: "literal", value: "hgroup", description: "\"hgroup\"" },
-        peg$c268 = "html",
-        peg$c269 = { type: "literal", value: "html", description: "\"html\"" },
+        peg$c262 = "header",
+        peg$c263 = { type: "literal", value: "header", description: "\"header\"" },
+        peg$c264 = "head",
+        peg$c265 = { type: "literal", value: "head", description: "\"head\"" },
+        peg$c266 = "html",
+        peg$c267 = { type: "literal", value: "html", description: "\"html\"" },
+        peg$c268 = "hgroup",
+        peg$c269 = { type: "literal", value: "hgroup", description: "\"hgroup\"" },
         peg$c270 = "i",
         peg$c271 = { type: "literal", value: "i", description: "\"i\"" },
         peg$c272 = "label",
@@ -6832,33 +6832,33 @@ module.exports = (function() {
                                                         if (peg$silentFails === 0) { peg$fail(peg$c261); }
                                                       }
                                                       if (s0 === peg$FAILED) {
-                                                        if (input.substr(peg$currPos, 4) === peg$c262) {
+                                                        if (input.substr(peg$currPos, 6) === peg$c262) {
                                                           s0 = peg$c262;
-                                                          peg$currPos += 4;
+                                                          peg$currPos += 6;
                                                         } else {
                                                           s0 = peg$FAILED;
                                                           if (peg$silentFails === 0) { peg$fail(peg$c263); }
                                                         }
                                                         if (s0 === peg$FAILED) {
-                                                          if (input.substr(peg$currPos, 6) === peg$c264) {
+                                                          if (input.substr(peg$currPos, 4) === peg$c264) {
                                                             s0 = peg$c264;
-                                                            peg$currPos += 6;
+                                                            peg$currPos += 4;
                                                           } else {
                                                             s0 = peg$FAILED;
                                                             if (peg$silentFails === 0) { peg$fail(peg$c265); }
                                                           }
                                                           if (s0 === peg$FAILED) {
-                                                            if (input.substr(peg$currPos, 6) === peg$c266) {
+                                                            if (input.substr(peg$currPos, 4) === peg$c266) {
                                                               s0 = peg$c266;
-                                                              peg$currPos += 6;
+                                                              peg$currPos += 4;
                                                             } else {
                                                               s0 = peg$FAILED;
                                                               if (peg$silentFails === 0) { peg$fail(peg$c267); }
                                                             }
                                                             if (s0 === peg$FAILED) {
-                                                              if (input.substr(peg$currPos, 4) === peg$c268) {
+                                                              if (input.substr(peg$currPos, 6) === peg$c268) {
                                                                 s0 = peg$c268;
-                                                                peg$currPos += 4;
+                                                                peg$currPos += 6;
                                                               } else {
                                                                 s0 = peg$FAILED;
                                                                 if (peg$silentFails === 0) { peg$fail(peg$c269); }
