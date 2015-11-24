@@ -865,6 +865,7 @@ BlockTMPLTagName
   / "TMPL_SETVAR"
   / "TMPL_WITH"
   / "TMPL_WS"
+  / "TMPL_TEXT"
 
 ConditionalTagName
   = "TMPL_IF"
