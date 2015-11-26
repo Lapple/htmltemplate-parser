@@ -389,27 +389,27 @@ PerlExpressionString
 AttributeWithValue =
   name:AttributeToken "="
   value:(
-      t:AttributeToken {
+    // See PR #6, need to support `<TMPL_VAR EXPR="...">` syntax.
+      e:PerlExpressionString & { return name === "EXPR"; } { return e; }
+    / PerlExpressionLiteral
+    / literal:(StringLiteral / NumericLiteral) {
+        return {
+          value: token({
+            type: EXPRESSION_TOKENS.LITERAL,
+            value: literal
+          }, location),
+          // NOTE: Returning non-quoted value to keep backwards compatibility,
+          // this will be removed on next major release.
+          text: literal
+        };
+      }
+    / t:AttributeToken {
         return {
           value: token({
             type: EXPRESSION_TOKENS.IDENTIFIER,
             name: t
           }, location),
           text: text()
-        };
-      }
-    // See PR #6, need to support `<TMPL_VAR EXPR="...">` syntax.
-    / e:PerlExpressionString & { return name === "EXPR"; } { return e; }
-    / PerlExpressionLiteral
-    / string:StringLiteral {
-        return {
-          value: token({
-            type: EXPRESSION_TOKENS.LITERAL,
-            value: string
-          }, location),
-          // NOTE: Returning non-quoted value to keep backwards compatibility,
-          // this will be removed on next major release.
-          text: string
         };
       }
   )

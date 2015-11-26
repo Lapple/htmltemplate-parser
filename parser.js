@@ -210,26 +210,26 @@ module.exports = (function() {
             },
         peg$c30 = "=",
         peg$c31 = { type: "literal", value: "=", description: "\"=\"" },
-        peg$c32 = function(name, t) {
+        peg$c32 = function(name, e) { return name === "EXPR"; },
+        peg$c33 = function(name, e) { return e; },
+        peg$c34 = function(name, literal) {
+                return {
+                  value: token({
+                    type: EXPRESSION_TOKENS.LITERAL,
+                    value: literal
+                  }, location),
+                  // NOTE: Returning non-quoted value to keep backwards compatibility,
+                  // this will be removed on next major release.
+                  text: literal
+                };
+              },
+        peg$c35 = function(name, t) {
                 return {
                   value: token({
                     type: EXPRESSION_TOKENS.IDENTIFIER,
                     name: t
                   }, location),
                   text: text()
-                };
-              },
-        peg$c33 = function(name, e) { return name === "EXPR"; },
-        peg$c34 = function(name, e) { return e; },
-        peg$c35 = function(name, string) {
-                return {
-                  value: token({
-                    type: EXPRESSION_TOKENS.LITERAL,
-                    value: string
-                  }, location),
-                  // NOTE: Returning non-quoted value to keep backwards compatibility,
-                  // this will be removed on next major release.
-                  text: string
                 };
               },
         peg$c36 = function(name, value) {
@@ -2559,40 +2559,43 @@ module.exports = (function() {
         }
         if (s2 !== peg$FAILED) {
           s3 = peg$currPos;
-          s4 = peg$parseAttributeToken();
+          s4 = peg$parsePerlExpressionString();
           if (s4 !== peg$FAILED) {
-            peg$savedPos = s3;
-            s4 = peg$c32(s1, s4);
-          }
-          s3 = s4;
-          if (s3 === peg$FAILED) {
-            s3 = peg$currPos;
-            s4 = peg$parsePerlExpressionString();
-            if (s4 !== peg$FAILED) {
-              peg$savedPos = peg$currPos;
-              s5 = peg$c33(s1, s4);
-              if (s5) {
-                s5 = void 0;
-              } else {
-                s5 = peg$FAILED;
-              }
-              if (s5 !== peg$FAILED) {
-                peg$savedPos = s3;
-                s4 = peg$c34(s1, s4);
-                s3 = s4;
-              } else {
-                peg$currPos = s3;
-                s3 = peg$FAILED;
-              }
+            peg$savedPos = peg$currPos;
+            s5 = peg$c32(s1, s4);
+            if (s5) {
+              s5 = void 0;
+            } else {
+              s5 = peg$FAILED;
+            }
+            if (s5 !== peg$FAILED) {
+              peg$savedPos = s3;
+              s4 = peg$c33(s1, s4);
+              s3 = s4;
             } else {
               peg$currPos = s3;
               s3 = peg$FAILED;
             }
+          } else {
+            peg$currPos = s3;
+            s3 = peg$FAILED;
+          }
+          if (s3 === peg$FAILED) {
+            s3 = peg$parsePerlExpressionLiteral();
             if (s3 === peg$FAILED) {
-              s3 = peg$parsePerlExpressionLiteral();
+              s3 = peg$currPos;
+              s4 = peg$parseStringLiteral();
+              if (s4 === peg$FAILED) {
+                s4 = peg$parseNumericLiteral();
+              }
+              if (s4 !== peg$FAILED) {
+                peg$savedPos = s3;
+                s4 = peg$c34(s1, s4);
+              }
+              s3 = s4;
               if (s3 === peg$FAILED) {
                 s3 = peg$currPos;
-                s4 = peg$parseStringLiteral();
+                s4 = peg$parseAttributeToken();
                 if (s4 !== peg$FAILED) {
                   peg$savedPos = s3;
                   s4 = peg$c35(s1, s4);
