@@ -218,16 +218,14 @@
             {
                 "type": "PairAttribute",
                 "name": "attribute",
-                "value": {
-                    "value": {
-                        "type": "Literal",
-                        "value": 1,
-                        "position": {
-                            "line": 6,
-                            "column": 27
-                        }
-                    },
-                    "text": 1
+                "value": "1",
+                "content": {
+                    "type": "Literal",
+                    "value": 1,
+                    "position": {
+                        "line": 6,
+                        "column": 27
+                    }
                 },
                 "position": {
                     "line": 6,

@@ -400,7 +400,7 @@ AttributeWithValue =
           }, location),
           // NOTE: Returning non-quoted value to keep backwards compatibility,
           // this will be removed on next major release.
-          text: literal
+          text: String(literal)
         };
       }
     / t:AttributeToken {
