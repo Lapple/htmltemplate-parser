@@ -177,8 +177,11 @@
 <div
     <TMPL_IF condition>
         class="<TMPL_VAR hidden_class>"
+        data-hidden="true"
     <TMPL_ELSIF [% $another_condition %]>
         class="hidden"
+        data-hidden="true"
+        data-auto=1
     <TMPL_ELSE>
         id="hide"
     </TMPL_IF>

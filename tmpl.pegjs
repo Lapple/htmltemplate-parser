@@ -145,7 +145,7 @@ SingleTag =
   OpeningBracket
   name:$((SingleTMPLTagName / SingleHTMLTagName ! { return options.ignoreHTMLTags; }) !TagNameCharacter+)
   // Matching either HTML attributes or TMPL attributes depending on tag name.
-  attributes:(a:HTMLAttributes* ! { return isTemplateTag(name); } { return a; } / TMPLAttributes*)
+  attributes:(a:HTMLAttribute* ! { return isTemplateTag(name); } { return a; } / TMPLAttributes*)
   ClosingBracket
   {
     return token({
@@ -278,7 +278,7 @@ StartTag =
   OpeningBracket
   name:$((BlockTMPLTagName / BlockHTMLTagName ! { return options.ignoreHTMLTags; }) !TagNameCharacter+)
   // Matching either HTML attributes or TMPL attributes depending on tag name.
-  attributes:(a:HTMLAttributes* ! { return isTemplateTag(name); } { return a; } / TMPLAttributes*)
+  attributes:(a:HTMLAttribute* ! { return isTemplateTag(name); } { return a; } / TMPLAttributes*)
   ClosingBracket
   {
     return {
@@ -292,7 +292,7 @@ EndTag =
   OpeningEndBracket
   name:$((BlockTMPLTagName / BlockHTMLTagName ! { return options.ignoreHTMLTags; }) !TagNameCharacter+)
   // Matching either HTML attributes or TMPL attributes depending on tag name.
-  (a:HTMLAttributes* ! { return isTemplateTag(name); } { return a; } / TMPLAttributes*)
+  (a:HTMLAttribute* ! { return isTemplateTag(name); } { return a; } / TMPLAttributes*)
   ClosingBracket
   {
     return name;
@@ -450,10 +450,20 @@ AttributeToken = n:$[a-zA-Z0-9\-_/:\.{}\$]+ {
   return n;
 }
 
-HTMLAttributes
-  = WhiteSpace+ attrs:(PlainHTMLAttributes / ConditionalHTMLAttributes) { return attrs; }
+WhitespaceSeparatedHTMLAttributes = first:PlainHTMLAttribute rest:(WhiteSpace+ PlainHTMLAttribute)* {
+  var attrs = [first];
 
-PlainHTMLAttributes
+  for (var i = 0, len = rest.length; i < len; i += 1) {
+    attrs.push(rest[i][1]);
+  }
+
+  return attrs;
+}
+
+HTMLAttribute
+  = WhiteSpace+ attrs:(PlainHTMLAttribute / ConditionalHTMLAttributes) { return attrs; }
+
+PlainHTMLAttribute
   = HTMLAttributeWithValue
   / HTMLAttributeWithoutValue
 
@@ -489,9 +499,9 @@ HTMLAttributeToken = n:$[a-zA-Z0-9-]+ {
 
 ConditionalHTMLAttributes =
   start:ConditionStartTag __
-  attrs:PlainHTMLAttributes*
+  attrs:WhitespaceSeparatedHTMLAttributes
   elsif:(
-    __ condition:ElsIfStartTag __ attrs:PlainHTMLAttributes* {
+    __ condition:ElsIfStartTag __ attrs:WhitespaceSeparatedHTMLAttributes {
       return token({
         type: BLOCK_TYPES.CONDITION_BRANCH,
         condition: condition,
@@ -500,7 +510,7 @@ ConditionalHTMLAttributes =
     }
   )*
   otherwise:(
-    __ ElseStartTag __ attrs:PlainHTMLAttributes* {
+    __ ElseStartTag __ attrs:WhitespaceSeparatedHTMLAttributes {
       return attrs;
     }
   )?

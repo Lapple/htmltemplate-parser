@@ -2699,6 +2699,15 @@
                                     "line": 179,
                                     "column": 9
                                 }
+                            },
+                            {
+                                "type": "PairAttribute",
+                                "name": "data-hidden",
+                                "value": "true",
+                                "position": {
+                                    "line": 180,
+                                    "column": 9
+                                }
                             }
                         ],
                         "position": {
@@ -2714,13 +2723,13 @@
                                 "type": "Identifier",
                                 "name": "$another_condition",
                                 "position": {
-                                    "line": 180,
+                                    "line": 181,
                                     "column": 20
                                 }
                             },
                             "value": "$another_condition",
                             "position": {
-                                "line": 180,
+                                "line": 181,
                                 "column": 17
                             }
                         },
@@ -2730,14 +2739,32 @@
                                 "name": "class",
                                 "value": "hidden",
                                 "position": {
-                                    "line": 181,
+                                    "line": 182,
+                                    "column": 9
+                                }
+                            },
+                            {
+                                "type": "PairAttribute",
+                                "name": "data-hidden",
+                                "value": "true",
+                                "position": {
+                                    "line": 183,
+                                    "column": 9
+                                }
+                            },
+                            {
+                                "type": "PairAttribute",
+                                "name": "data-auto",
+                                "value": "1",
+                                "position": {
+                                    "line": 184,
                                     "column": 9
                                 }
                             }
                         ],
                         "position": {
-                            "line": 179,
-                            "column": 40
+                            "line": 180,
+                            "column": 27
                         }
                     }
                 ],
@@ -2747,7 +2774,7 @@
                         "name": "id",
                         "value": "hide",
                         "position": {
-                            "line": 183,
+                            "line": 186,
                             "column": 9
                         }
                     }
@@ -2762,7 +2789,7 @@
                 "name": "style",
                 "value": "background: red;",
                 "position": {
-                    "line": 185,
+                    "line": 188,
                     "column": 5
                 }
             }
@@ -2772,7 +2799,7 @@
                 "type": "Text",
                 "content": "\n    Content\n    ",
                 "position": {
-                    "line": 185,
+                    "line": 188,
                     "column": 30
                 }
             },
@@ -2785,7 +2812,7 @@
                         "name": "type",
                         "value": "checkbox",
                         "position": {
-                            "line": 187,
+                            "line": 190,
                             "column": 12
                         }
                     },
@@ -2800,7 +2827,7 @@
                                     "name": "uncheck",
                                     "value": null,
                                     "position": {
-                                        "line": 187,
+                                        "line": 190,
                                         "column": 41
                                     }
                                 },
@@ -2810,26 +2837,26 @@
                                         "name": "checked",
                                         "value": null,
                                         "position": {
-                                            "line": 187,
+                                            "line": 190,
                                             "column": 49
                                         }
                                     }
                                 ],
                                 "position": {
-                                    "line": 187,
+                                    "line": 190,
                                     "column": 28
                                 }
                             }
                         ],
                         "otherwise": null,
                         "position": {
-                            "line": 187,
+                            "line": 190,
                             "column": 28
                         }
                     }
                 ],
                 "position": {
-                    "line": 187,
+                    "line": 190,
                     "column": 5
                 }
             },
@@ -2837,7 +2864,7 @@
                 "type": "Text",
                 "content": "\n",
                 "position": {
-                    "line": 187,
+                    "line": 190,
                     "column": 72
                 }
             }
@@ -2851,7 +2878,7 @@
         "type": "Text",
         "content": "\n",
         "position": {
-            "line": 188,
+            "line": 191,
             "column": 7
         }
     }
