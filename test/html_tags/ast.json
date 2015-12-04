@@ -2876,10 +2876,183 @@
     },
     {
         "type": "Text",
-        "content": "\n",
+        "content": "\n\n",
         "position": {
             "line": 191,
             "column": 7
+        }
+    },
+    {
+        "type": "HTMLTag",
+        "name": "form",
+        "attributes": [
+            {
+                "type": "PairAttribute",
+                "name": "action",
+                "value": "/login",
+                "position": {
+                    "line": 193,
+                    "column": 7
+                }
+            }
+        ],
+        "content": [
+            {
+                "type": "Text",
+                "content": "\n    ",
+                "position": {
+                    "line": 193,
+                    "column": 23
+                }
+            },
+            {
+                "type": "HTMLTag",
+                "name": "fieldset",
+                "attributes": [],
+                "content": [
+                    {
+                        "type": "Text",
+                        "content": "\n        ",
+                        "position": {
+                            "line": 194,
+                            "column": 15
+                        }
+                    },
+                    {
+                        "type": "HTMLTag",
+                        "name": "input",
+                        "attributes": [
+                            {
+                                "type": "PairAttribute",
+                                "name": "type",
+                                "value": "text",
+                                "position": {
+                                    "line": 195,
+                                    "column": 16
+                                }
+                            },
+                            {
+                                "type": "PairAttribute",
+                                "name": "name",
+                                "value": "login",
+                                "position": {
+                                    "line": 195,
+                                    "column": 28
+                                }
+                            }
+                        ],
+                        "position": {
+                            "line": 195,
+                            "column": 9
+                        }
+                    },
+                    {
+                        "type": "Text",
+                        "content": "\n        ",
+                        "position": {
+                            "line": 195,
+                            "column": 43
+                        }
+                    },
+                    {
+                        "type": "HTMLTag",
+                        "name": "input",
+                        "attributes": [
+                            {
+                                "type": "PairAttribute",
+                                "name": "type",
+                                "value": "password",
+                                "position": {
+                                    "line": 196,
+                                    "column": 16
+                                }
+                            },
+                            {
+                                "type": "PairAttribute",
+                                "name": "name",
+                                "value": "password",
+                                "position": {
+                                    "line": 196,
+                                    "column": 32
+                                }
+                            }
+                        ],
+                        "position": {
+                            "line": 196,
+                            "column": 9
+                        }
+                    },
+                    {
+                        "type": "Text",
+                        "content": "\n    ",
+                        "position": {
+                            "line": 196,
+                            "column": 50
+                        }
+                    }
+                ],
+                "position": {
+                    "line": 194,
+                    "column": 5
+                }
+            },
+            {
+                "type": "Text",
+                "content": "\n    ",
+                "position": {
+                    "line": 197,
+                    "column": 16
+                }
+            },
+            {
+                "type": "HTMLTag",
+                "name": "button",
+                "attributes": [
+                    {
+                        "type": "PairAttribute",
+                        "name": "type",
+                        "value": "submit",
+                        "position": {
+                            "line": 198,
+                            "column": 13
+                        }
+                    }
+                ],
+                "content": [
+                    {
+                        "type": "Text",
+                        "content": "\n        Login\n    ",
+                        "position": {
+                            "line": 198,
+                            "column": 27
+                        }
+                    }
+                ],
+                "position": {
+                    "line": 198,
+                    "column": 5
+                }
+            },
+            {
+                "type": "Text",
+                "content": "\n",
+                "position": {
+                    "line": 200,
+                    "column": 14
+                }
+            }
+        ],
+        "position": {
+            "line": 193,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 201,
+            "column": 8
         }
     }
 ]

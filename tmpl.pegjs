@@ -906,6 +906,7 @@ BlockHTMLTagName =
   / 'dd'
   / 'div'
   / 'em'
+  / 'fieldset'
   / 'figcaption'
   / 'figure'
   / 'footer'
