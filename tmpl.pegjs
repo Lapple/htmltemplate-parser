@@ -42,7 +42,12 @@
 
   function withEntities(obj, stringEntities) {
     if (options.collectStringEntities) {
-      obj.stringEntities = stringEntities;
+      obj.stringEntities = obj.stringEntities || {};
+
+      for (var key in stringEntities) {
+        obj.stringEntities[key] = stringEntities[key];
+      }
+
     }
     return obj;
   }
@@ -142,35 +147,35 @@ Comment
   / SingleLineComment
 
 SingleTag =
-  OpeningBracket
+  before:OpeningBracket
   name:$((SingleTMPLTagName / SingleHTMLTagName ! { return options.ignoreHTMLTags; }) !TagNameCharacter+)
   // Matching either HTML attributes or TMPL attributes depending on tag name.
   attributes:(a:HTMLAttribute* ! { return isTemplateTag(name); } { return a; } / TMPLAttributes*)
-  ClosingBracket
+  after:ClosingBracket
   {
-    return token({
+    return token(withEntities({
       type: isTemplateTag(name) ? BLOCK_TYPES.TAG : BLOCK_TYPES.HTML_TAG,
       name: name,
       attributes: attributes
-    }, location);
+    }, { before: before, after: after }), location);
   }
 
 BlockTag = start:StartTag content:Content end:EndTag {
-  if (start.name != end) {
-    throw new SyntaxError("Expected a </" + start.name + "> but </" + end + "> found.", location);
+  if (start.name != end.name) {
+    throw new SyntaxError("Expected a </" + start.name + "> but </" + end.name + "> found.", location);
   }
 
-  return token({
+  return token(withEntities({
     type: isTemplateTag(start.name) ? BLOCK_TYPES.TAG : BLOCK_TYPES.HTML_TAG,
     name: start.name,
     attributes: start.attributes,
     content: content
-  }, location);
+  }, { start: start, end: end }), location);
 }
 
 ConditionalTag = start:ConditionStartTag content:Content elsif:ElsIfTag* otherwise:ElseTag? end:ConditionEndTag {
-  if (start.name != end) {
-    throw new SyntaxError("Expected a </" + start.name + "> but </" + end + "> found.", location);
+  if (start.name != end.name) {
+    throw new SyntaxError("Expected a </" + start.name + "> but </" + end.name + "> found.", location);
   }
 
   var primaryCondition = token({
@@ -189,12 +194,12 @@ ConditionalTag = start:ConditionStartTag content:Content elsif:ElsIfTag* otherwi
   }, location);
 }
 
-InvalidTag = (OpeningEndBracket / OpeningBracket) name:UnknownTagName attributes:TMPLAttributes* ClosingBracket {
-  return token({
+InvalidTag = before:(OpeningEndBracket / OpeningBracket) name:UnknownTagName attributes:TMPLAttributes* after:ClosingBracket {
+  return token(withEntities({
     type: BLOCK_TYPES.INVALID_TAG,
     name: name,
     attributes: attributes
-  }, location);
+  }, { before: before, after: after }), location);
 }
 
 ElsIfTag = condition:ElsIfStartTag content:Content {
@@ -250,7 +255,7 @@ ConditionalWrapperTag =
       openCondition.condition.type === closeCondition.condition.type &&
       openCondition.condition.name === closeCondition.condition.name &&
       areConditionValuesEqual &&
-      openWrapper.name === closeWrapper
+      openWrapper.name === closeWrapper.name
     );
   }
   {
@@ -275,27 +280,27 @@ ConditionalWrapperTag =
   }
 
 StartTag =
-  OpeningBracket
+  before:OpeningBracket
   name:$((BlockTMPLTagName / BlockHTMLTagName ! { return options.ignoreHTMLTags; }) !TagNameCharacter+)
   // Matching either HTML attributes or TMPL attributes depending on tag name.
   attributes:(a:HTMLAttribute* ! { return isTemplateTag(name); } { return a; } / TMPLAttributes*)
-  ClosingBracket
+  after:ClosingBracket
   {
-    return {
+    return withEntities({
       name: name,
       attributes: attributes
-    };
+    }, { before: before, after: after });
   }
 
 // FIXME: Not capturing attributes on end tag for now.
 EndTag =
-  OpeningEndBracket
+  before:OpeningEndBracket
   name:$((BlockTMPLTagName / BlockHTMLTagName ! { return options.ignoreHTMLTags; }) !TagNameCharacter+)
   // Matching either HTML attributes or TMPL attributes depending on tag name.
   (a:HTMLAttribute* ! { return isTemplateTag(name); } { return a; } / TMPLAttributes*)
-  ClosingBracket
+  after:ClosingBracket
   {
-    return name;
+    return withEntities({ name: name }, { before: before, after: after });
   }
 
 ConditionStartTag = OpeningBracket name:ConditionalTagName condition:TMPLAttributes* ClosingBracket {
@@ -313,7 +318,7 @@ ElseStartTag
   = OpeningBracket ElseTagName ClosingBracket
 
 ConditionEndTag = OpeningEndBracket name:ConditionalTagName ClosingBracket {
-  return name;
+  return { name: name };
 }
 
 SingleLineComment = char:CommentStart c:$(!LineTerminator SourceCharacter)* {
@@ -392,44 +397,20 @@ AttributeWithValue =
     // See PR #6, need to support `<TMPL_VAR EXPR="...">` syntax.
       e:PerlExpressionString & { return name === "EXPR"; } { return e; }
     / PerlExpressionLiteral
-    / literal:(StringLiteral / NumericLiteral) {
-        return {
-          value: token({
-            type: EXPRESSION_TOKENS.LITERAL,
-            value: literal
-          }, location),
-          // NOTE: Returning non-quoted value to keep backwards compatibility,
-          // this will be removed on next major release.
-          text: String(literal)
-        };
-      }
+    / literal:(StringLiteral / NumericLiteral)
     / t:AttributeToken {
-        return {
-          value: token({
-            type: EXPRESSION_TOKENS.IDENTIFIER,
-            name: t
-          }, location),
-          text: text()
-        };
+        return token({
+          type: EXPRESSION_TOKENS.IDENTIFIER,
+          name: t
+        }, location);
       }
   )
   {
-    var node = {
+    return token({
       type: ATTRIBUTE_TYPES.PAIR,
       name: name,
       value: value
-    };
-
-    // FIXME (NEXT_MAJOR): Instead of returning plain text `value` here, remove
-    // `content` field and return object in `value`. This was done to keep
-    // backwards compatibility, however, needs to be batched with other AST
-    // improvements in next major release.
-    if (typeof value.text === 'string') {
-      node.value = value.text;
-      node.content = value.value;
-    }
-
-    return token(node, location);
+    }, location);
   }
 
 // Predicate takes care of not matching self closing bracket in single HTML tags,
@@ -516,8 +497,8 @@ ConditionalHTMLAttributes =
   )?
   __ end:ConditionEndTag
   {
-    if (start.name != end) {
-      throw new SyntaxError("Expected a </" + start.name + "> but </" + end + "> found.", location);
+    if (start.name != end.name) {
+      throw new SyntaxError("Expected a </" + start.name + "> but </" + end.name + "> found.", location);
     }
 
     var primaryCondition = token({
@@ -712,11 +693,11 @@ MemberExpression
             computed: true
           };
         }
-      / __ ("->" __)? "[" __ value:NumericLiteral __ "]" {
+      / __ ("->" __)? "[" __ literal:NumericLiteral __ "]" {
           return {
             property: token({
               type: EXPRESSION_TOKENS.LITERAL,
-              value: value
+              value: literal.value
             }, location),
             computed: true
           };
@@ -736,7 +717,9 @@ MemberExpression
 PrimaryExpression
   = PerlIdentifierWithComments
   / PerlLiteral
-  / "(" __ e:PerlExpression __ ")" { return e; }
+  / beforeOuter:$("(" __) e:PerlExpression afterOuter:$(__ ")") {
+    return withEntities(e, { beforeOuter: beforeOuter, afterOuter: afterOuter });
+  }
 
 // This is done to support single-line comments inside of an expression,
 // for now just stripping them away.
@@ -789,12 +772,7 @@ PerlLiteral
   / RegularExpressionLiteral
 
 PrimitivePerlLiteral
-  = literal:(StringLiteral / NumericLiteral) {
-    return token({
-      type: EXPRESSION_TOKENS.LITERAL,
-      value: literal
-    }, location);
-  }
+  = StringLiteral / NumericLiteral
 
 Arguments
   = single:CallExpression {
@@ -985,8 +963,20 @@ TagNameCharacter
   = [a-zA-Z_-]
 
 StringLiteral "string"
-  = SingleQuotedString
-  / DoubleQuotedString
+  = value:SingleQuotedString {
+      return token({
+        type: EXPRESSION_TOKENS.LITERAL,
+        value: value,
+        raw: "'" + value + "'"
+      }, location);
+    }
+  / value:DoubleQuotedString {
+      return token({
+        type: EXPRESSION_TOKENS.LITERAL,
+        value: value,
+        raw: '"' + value + '"'
+      }, location);
+    }
 
 SingleQuotedString = "'" chars:SingleStringCharacter* "'" {
   return join(chars);
@@ -998,13 +988,25 @@ DoubleQuotedString = "\"" chars:DoubleStringCharacter* "\"" {
 
 NumericLiteral "number"
   = DecimalIntegerLiteral "." DecimalDigit* ExponentPart? {
-    return parseFloat(text());
+    return token({
+      type: EXPRESSION_TOKENS.LITERAL,
+      raw: parseFloat(text()),
+      value: parseFloat(text())
+    }, location);
   }
   / "." DecimalDigit+ ExponentPart? {
-    return parseFloat(text());
+    return token({
+      type: EXPRESSION_TOKENS.LITERAL,
+      raw: parseFloat(text()),
+      value: parseFloat(text())
+    }, location);
   }
   / DecimalIntegerLiteral ExponentPart? {
-    return parseFloat(text());
+    return token({
+      type: EXPRESSION_TOKENS.LITERAL,
+      raw: parseFloat(text()),
+      value: parseFloat(text())
+    }, location);
   }
 
 DecimalIntegerLiteral
@@ -1099,13 +1101,13 @@ LineTerminator "end of line"
   / "\u2029"
 
 OpeningBracket
-  = "<" WhiteSpaceControlStart? __
+  = $("<" WhiteSpaceControlStart? __)
 
 OpeningEndBracket
-  = "<" WhiteSpaceControlStart? "/"
+  = $("<" WhiteSpaceControlStart? "/")
 
 ClosingBracket
-  = __ WhiteSpaceControlEnd? ("/>" / ">")
+  = $(__ WhiteSpaceControlEnd? ("/>" / ">"))
   / !">" SourceCharacter+ {
     throw new SyntaxError("Expected a closing bracket.", location);
   }
