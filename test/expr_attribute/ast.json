@@ -110,6 +110,7 @@
                             },
                             "right": {
                                 "type": "Literal",
+                                "raw": 0,
                                 "value": 0,
                                 "position": {
                                     "line": 2,
@@ -170,6 +171,7 @@
                         "alternate": {
                             "type": "Literal",
                             "value": "",
+                            "raw": "''",
                             "position": {
                                 "line": 2,
                                 "column": 60
@@ -226,6 +228,7 @@
                             },
                             "right": {
                                 "type": "Literal",
+                                "raw": 1,
                                 "value": 1,
                                 "position": {
                                     "line": 3,
@@ -236,6 +239,7 @@
                         "right": {
                             "type": "Literal",
                             "value": "x",
+                            "raw": "\"x\"",
                             "position": {
                                 "line": 3,
                                 "column": 30

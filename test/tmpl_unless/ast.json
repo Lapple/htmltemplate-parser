@@ -80,24 +80,25 @@
                 "condition": {
                     "type": "Expression",
                     "content": {
+                        "type": "BinaryExpression",
+                        "operator": "eq",
                         "left": {
+                            "type": "Identifier",
                             "name": "$b_condition",
                             "position": {
-                                "column": 17,
-                                "line": 5
-                            },
-                            "type": "Identifier"
+                                "line": 5,
+                                "column": 17
+                            }
                         },
-                        "operator": "eq",
                         "right": {
                             "type": "Literal",
                             "value": "ok",
+                            "raw": "'ok'",
                             "position": {
-                                "column": 33,
-                                "line": 5
+                                "line": 5,
+                                "column": 33
                             }
-                        },
-                        "type": "BinaryExpression"
+                        }
                     },
                     "value": "$b_condition eq 'ok'",
                     "position": {

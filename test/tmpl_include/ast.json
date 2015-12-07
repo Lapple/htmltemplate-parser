@@ -42,8 +42,7 @@
             {
                 "type": "PairAttribute",
                 "name": "b_attr",
-                "value": "b_attr_value",
-                "content": {
+                "value": {
                     "type": "Identifier",
                     "name": "b_attr_value",
                     "position": {

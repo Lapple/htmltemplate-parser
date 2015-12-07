@@ -42,8 +42,7 @@
             {
                 "type": "PairAttribute",
                 "name": "b_attr",
-                "value": "b_attr_value",
-                "content": {
+                "value": {
                     "type": "Identifier",
                     "name": "b_attr_value",
                     "position": {
@@ -241,10 +240,10 @@
             {
                 "type": "PairAttribute",
                 "name": "b_escaped_attribute",
-                "value": "Don't break",
-                "content": {
+                "value": {
                     "type": "Literal",
                     "value": "Don't break",
+                    "raw": "'Don't break'",
                     "position": {
                         "line": 18,
                         "column": 25
@@ -258,10 +257,10 @@
             {
                 "type": "PairAttribute",
                 "name": "b_another_escaped_attribute",
-                "value": "Don\"t break",
-                "content": {
+                "value": {
                     "type": "Literal",
                     "value": "Don\"t break",
+                    "raw": "\"Don\"t break\"",
                     "position": {
                         "line": 19,
                         "column": 33
@@ -275,10 +274,10 @@
             {
                 "type": "PairAttribute",
                 "name": "b_plain_string_attribute",
-                "value": "String",
-                "content": {
+                "value": {
                     "type": "Literal",
                     "value": "String",
+                    "raw": "\"String\"",
                     "position": {
                         "line": 20,
                         "column": 30

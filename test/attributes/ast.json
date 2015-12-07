@@ -42,8 +42,7 @@
             {
                 "type": "PairAttribute",
                 "name": "attribute",
-                "value": "identifier",
-                "content": {
+                "value": {
                     "type": "Identifier",
                     "name": "identifier",
                     "position": {
@@ -86,10 +85,10 @@
             {
                 "type": "PairAttribute",
                 "name": "attribute",
-                "value": "string",
-                "content": {
+                "value": {
                     "type": "Literal",
                     "value": "string",
+                    "raw": "\"string\"",
                     "position": {
                         "line": 3,
                         "column": 27
@@ -130,8 +129,7 @@
             {
                 "type": "PairAttribute",
                 "name": "attribute",
-                "value": "property.access",
-                "content": {
+                "value": {
                     "type": "Identifier",
                     "name": "property.access",
                     "position": {
@@ -174,10 +172,10 @@
             {
                 "type": "PairAttribute",
                 "name": "attribute",
-                "value": "dotted.string",
-                "content": {
+                "value": {
                     "type": "Literal",
                     "value": "dotted.string",
+                    "raw": "'dotted.string'",
                     "position": {
                         "line": 5,
                         "column": 27
@@ -218,9 +216,9 @@
             {
                 "type": "PairAttribute",
                 "name": "attribute",
-                "value": "1",
-                "content": {
+                "value": {
                     "type": "Literal",
+                    "raw": 1,
                     "value": 1,
                     "position": {
                         "line": 6,
