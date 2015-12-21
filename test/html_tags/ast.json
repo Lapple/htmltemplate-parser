@@ -2862,10 +2862,179 @@
             },
             {
                 "type": "Text",
-                "content": "\n",
+                "content": "\n    # No whitespace before conditional attribute is intended.\n    ",
                 "position": {
                     "line": 190,
                     "column": 72
+                }
+            },
+            {
+                "type": "HTMLTag",
+                "name": "input",
+                "attributes": [
+                    {
+                        "type": "PairAttribute",
+                        "name": "type",
+                        "value": "checkbox",
+                        "position": {
+                            "line": 192,
+                            "column": 12
+                        }
+                    },
+                    {
+                        "type": "ConditionalAttribute",
+                        "name": "TMPL_IF",
+                        "conditions": [
+                            {
+                                "type": "ConditionBranch",
+                                "condition": {
+                                    "type": "SingleAttribute",
+                                    "name": "check",
+                                    "value": null,
+                                    "position": {
+                                        "line": 192,
+                                        "column": 36
+                                    }
+                                },
+                                "content": [
+                                    {
+                                        "type": "PairAttribute",
+                                        "name": "checked",
+                                        "value": "checked",
+                                        "position": {
+                                            "line": 192,
+                                            "column": 43
+                                        }
+                                    }
+                                ],
+                                "position": {
+                                    "line": 192,
+                                    "column": 27
+                                }
+                            }
+                        ],
+                        "otherwise": null,
+                        "position": {
+                            "line": 192,
+                            "column": 27
+                        }
+                    }
+                ],
+                "position": {
+                    "line": 192,
+                    "column": 5
+                }
+            },
+            {
+                "type": "Text",
+                "content": "\n    ",
+                "position": {
+                    "line": 192,
+                    "column": 73
+                }
+            },
+            {
+                "type": "HTMLTag",
+                "name": "button",
+                "attributes": [
+                    {
+                        "type": "ConditionalAttribute",
+                        "name": "TMPL_IF",
+                        "conditions": [
+                            {
+                                "type": "ConditionBranch",
+                                "condition": {
+                                    "type": "SingleAttribute",
+                                    "name": "submit",
+                                    "value": null,
+                                    "position": {
+                                        "line": 193,
+                                        "column": 21
+                                    }
+                                },
+                                "content": [
+                                    {
+                                        "type": "PairAttribute",
+                                        "name": "type",
+                                        "value": "submit",
+                                        "position": {
+                                            "line": 193,
+                                            "column": 29
+                                        }
+                                    }
+                                ],
+                                "position": {
+                                    "line": 193,
+                                    "column": 12
+                                }
+                            }
+                        ],
+                        "otherwise": null,
+                        "position": {
+                            "line": 193,
+                            "column": 12
+                        }
+                    },
+                    {
+                        "type": "ConditionalAttribute",
+                        "name": "TMPL_IF",
+                        "conditions": [
+                            {
+                                "type": "ConditionBranch",
+                                "condition": {
+                                    "type": "SingleAttribute",
+                                    "name": "add_class",
+                                    "value": null,
+                                    "position": {
+                                        "line": 193,
+                                        "column": 61
+                                    }
+                                },
+                                "content": [
+                                    {
+                                        "type": "PairAttribute",
+                                        "name": "class",
+                                        "value": "button",
+                                        "position": {
+                                            "line": 193,
+                                            "column": 72
+                                        }
+                                    }
+                                ],
+                                "position": {
+                                    "line": 193,
+                                    "column": 52
+                                }
+                            }
+                        ],
+                        "otherwise": null,
+                        "position": {
+                            "line": 193,
+                            "column": 52
+                        }
+                    }
+                ],
+                "content": [
+                    {
+                        "type": "Text",
+                        "content": "Press!",
+                        "position": {
+                            "line": 193,
+                            "column": 97
+                        }
+                    }
+                ],
+                "position": {
+                    "line": 193,
+                    "column": 5
+                }
+            },
+            {
+                "type": "Text",
+                "content": "\n",
+                "position": {
+                    "line": 193,
+                    "column": 112
                 }
             }
         ],
@@ -2878,7 +3047,7 @@
         "type": "Text",
         "content": "\n\n",
         "position": {
-            "line": 191,
+            "line": 194,
             "column": 7
         }
     },
@@ -2891,7 +3060,7 @@
                 "name": "action",
                 "value": "/login",
                 "position": {
-                    "line": 193,
+                    "line": 196,
                     "column": 7
                 }
             }
@@ -2901,7 +3070,7 @@
                 "type": "Text",
                 "content": "\n    ",
                 "position": {
-                    "line": 193,
+                    "line": 196,
                     "column": 23
                 }
             },
@@ -2914,7 +3083,7 @@
                         "type": "Text",
                         "content": "\n        ",
                         "position": {
-                            "line": 194,
+                            "line": 197,
                             "column": 15
                         }
                     },
@@ -2927,7 +3096,7 @@
                                 "name": "type",
                                 "value": "text",
                                 "position": {
-                                    "line": 195,
+                                    "line": 198,
                                     "column": 16
                                 }
                             },
@@ -2936,13 +3105,13 @@
                                 "name": "name",
                                 "value": "login",
                                 "position": {
-                                    "line": 195,
+                                    "line": 198,
                                     "column": 28
                                 }
                             }
                         ],
                         "position": {
-                            "line": 195,
+                            "line": 198,
                             "column": 9
                         }
                     },
@@ -2950,7 +3119,7 @@
                         "type": "Text",
                         "content": "\n        ",
                         "position": {
-                            "line": 195,
+                            "line": 198,
                             "column": 43
                         }
                     },
@@ -2963,7 +3132,7 @@
                                 "name": "type",
                                 "value": "password",
                                 "position": {
-                                    "line": 196,
+                                    "line": 199,
                                     "column": 16
                                 }
                             },
@@ -2972,13 +3141,13 @@
                                 "name": "name",
                                 "value": "password",
                                 "position": {
-                                    "line": 196,
+                                    "line": 199,
                                     "column": 32
                                 }
                             }
                         ],
                         "position": {
-                            "line": 196,
+                            "line": 199,
                             "column": 9
                         }
                     },
@@ -2986,13 +3155,13 @@
                         "type": "Text",
                         "content": "\n    ",
                         "position": {
-                            "line": 196,
+                            "line": 199,
                             "column": 50
                         }
                     }
                 ],
                 "position": {
-                    "line": 194,
+                    "line": 197,
                     "column": 5
                 }
             },
@@ -3000,7 +3169,7 @@
                 "type": "Text",
                 "content": "\n    ",
                 "position": {
-                    "line": 197,
+                    "line": 200,
                     "column": 16
                 }
             },
@@ -3013,7 +3182,7 @@
                         "name": "type",
                         "value": "submit",
                         "position": {
-                            "line": 198,
+                            "line": 201,
                             "column": 13
                         }
                     }
@@ -3023,13 +3192,13 @@
                         "type": "Text",
                         "content": "\n        Login\n    ",
                         "position": {
-                            "line": 198,
+                            "line": 201,
                             "column": 27
                         }
                     }
                 ],
                 "position": {
-                    "line": 198,
+                    "line": 201,
                     "column": 5
                 }
             },
@@ -3037,13 +3206,13 @@
                 "type": "Text",
                 "content": "\n",
                 "position": {
-                    "line": 200,
+                    "line": 203,
                     "column": 14
                 }
             }
         ],
         "position": {
-            "line": 193,
+            "line": 196,
             "column": 1
         }
     },
@@ -3051,7 +3220,7 @@
         "type": "Text",
         "content": "\n",
         "position": {
-            "line": 201,
+            "line": 204,
             "column": 8
         }
     }

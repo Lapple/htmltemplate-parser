@@ -188,6 +188,9 @@
     style="background: red;">
     Content
     <input type="checkbox" <TMPL_UNLESS uncheck>checked</TMPL_UNLESS>/>
+    # No whitespace before conditional attribute is intended.
+    <input type="checkbox"<TMPL_IF check> checked="checked"</TMPL_IF> />
+    <button<TMPL_IF submit> type="submit"</TMPL_IF><TMPL_IF add_class> class="button"</TMPL_IF>>Press!</button>
 </div>
 
 <form action="/login">

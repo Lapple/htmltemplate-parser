@@ -442,7 +442,12 @@ WhitespaceSeparatedHTMLAttributes = first:PlainHTMLAttribute rest:(WhiteSpace+ P
 }
 
 HTMLAttribute
-  = WhiteSpace+ attrs:(PlainHTMLAttribute / ConditionalHTMLAttributes) { return attrs; }
+  = WhiteSpace+ attr:PlainHTMLAttribute {
+      return attr;
+    }
+  / __ attr:ConditionalHTMLAttributes {
+      return attr;
+    }
 
 PlainHTMLAttribute
   = HTMLAttributeWithValue
