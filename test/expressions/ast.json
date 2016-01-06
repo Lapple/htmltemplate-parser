@@ -2403,6 +2403,85 @@
         }
     },
     {
+        "type": "Condition",
+        "name": "TMPL_IF",
+        "conditions": [
+            {
+                "type": "ConditionBranch",
+                "condition": {
+                    "type": "Expression",
+                    "content": {
+                        "type": "BinaryExpression",
+                        "operator": "&&",
+                        "left": {
+                            "type": "BinaryExpression",
+                            "operator": "||",
+                            "left": {
+                                "type": "Identifier",
+                                "name": "$a",
+                                "position": {
+                                    "line": 42,
+                                    "column": 6
+                                }
+                            },
+                            "right": {
+                                "type": "Identifier",
+                                "name": "$b",
+                                "position": {
+                                    "line": 42,
+                                    "column": 12
+                                }
+                            }
+                        },
+                        "right": {
+                            "type": "BinaryExpression",
+                            "operator": "||",
+                            "left": {
+                                "type": "Identifier",
+                                "name": "$b",
+                                "position": {
+                                    "line": 43,
+                                    "column": 9
+                                }
+                            },
+                            "right": {
+                                "type": "Identifier",
+                                "name": "$c",
+                                "position": {
+                                    "line": 43,
+                                    "column": 15
+                                }
+                            }
+                        }
+                    },
+                    "value": "## 1\n    ($a || $b) ## 2\n    && ($b || $c) ## 3\n",
+                    "position": {
+                        "line": 40,
+                        "column": 10
+                    }
+                },
+                "content": [],
+                "position": {
+                    "line": 40,
+                    "column": 1
+                }
+            }
+        ],
+        "otherwise": null,
+        "position": {
+            "line": 40,
+            "column": 1
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "position": {
+            "line": 44,
+            "column": 14
+        }
+    },
+    {
         "type": "Tag",
         "name": "TMPL_VAR",
         "attributes": [
@@ -2416,7 +2495,7 @@
                         "raw": 2,
                         "value": 2,
                         "position": {
-                            "line": 40,
+                            "line": 45,
                             "column": 14
                         }
                     },
@@ -2428,7 +2507,7 @@
                             "raw": 3,
                             "value": 3,
                             "position": {
-                                "line": 40,
+                                "line": 45,
                                 "column": 19
                             }
                         },
@@ -2436,7 +2515,7 @@
                             "type": "Identifier",
                             "name": "$a",
                             "position": {
-                                "line": 40,
+                                "line": 45,
                                 "column": 24
                             }
                         }
@@ -2444,13 +2523,13 @@
                 },
                 "value": "2 ** 3 ** $a",
                 "position": {
-                    "line": 40,
+                    "line": 45,
                     "column": 11
                 }
             }
         ],
         "position": {
-            "line": 40,
+            "line": 45,
             "column": 1
         }
     },
@@ -2458,7 +2537,7 @@
         "type": "Text",
         "content": "\n",
         "position": {
-            "line": 40,
+            "line": 45,
             "column": 30
         }
     }

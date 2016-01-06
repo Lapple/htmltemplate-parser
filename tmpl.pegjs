@@ -664,7 +664,7 @@ CallExpression
   / MemberExpression
 
 MemberExpression
-  = first:PrimaryExpression
+  = first:PrimaryExpressionWithComments
     rest:(
         __ ("->" __)? "{" __ property:(!NumericLiteral PerlExpression) __ "}" {
           return {
@@ -719,22 +719,22 @@ MemberExpression
       });
     }
 
-PrimaryExpression
-  = PerlIdentifierWithComments
-  / PerlLiteral
-  / beforeOuter:$("(" __) e:PerlExpression afterOuter:$(__ ")") {
-    return withEntities(e, { beforeOuter: beforeOuter, afterOuter: afterOuter });
-  }
-
-// This is done to support single-line comments inside of an expression,
+// This is will add support for single-line comments inside of an expression,
 // for now just stripping them away.
-PerlIdentifierWithComments
+PrimaryExpressionWithComments
   = (__ SingleLineComment LineTerminator __)*
-    e:PerlIdentifier
+    e:PrimaryExpression
     (__ SingleLineComment LineTerminator __)*
     {
       return e;
     }
+
+PrimaryExpression
+  = PerlIdentifier
+  / PerlLiteral
+  / beforeOuter:$("(" __) e:PerlExpression afterOuter:$(__ ")") {
+    return withEntities(e, { beforeOuter: beforeOuter, afterOuter: afterOuter });
+  }
 
 PerlIdentifier
   = name:$(
