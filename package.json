@@ -5,7 +5,7 @@
   "main": "parser.js",
   "bin": "bin/parse",
   "scripts": {
-    "generate": "pegjs --extra-options-file generator-options.json tmpl.pegjs parser.js",
+    "generate": "pegjs --extra-options-file generator-options.json --output parser.js tmpl.pegjs",
     "test": "mocha test/test.js",
     "benchmark": "mocha test/test.js --benchmark"
   },
@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "mocha": "2.2.5",
-    "pegjs": "0.9.0"
+    "pegjs": "0.10.0"
   },
   "dependencies": {
     "yargs": "^3.23.0"

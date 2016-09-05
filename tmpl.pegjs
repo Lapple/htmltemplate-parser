@@ -480,17 +480,17 @@ ConditionalHTMLAttributes =
   start:ConditionStartTag __
   attrs:WhitespaceSeparatedHTMLAttributes
   elsif:(
-    __ condition:ElsIfStartTag __ attrs:WhitespaceSeparatedHTMLAttributes {
+    __ condition:ElsIfStartTag __ alternateAttrs:WhitespaceSeparatedHTMLAttributes {
       return token({
         type: BLOCK_TYPES.CONDITION_BRANCH,
         condition: condition,
-        content: attrs
+        content: alternateAttrs
       }, location);
     }
   )*
   otherwise:(
-    __ ElseStartTag __ attrs:WhitespaceSeparatedHTMLAttributes {
-      return attrs;
+    __ ElseStartTag __ alternateAttrs:WhitespaceSeparatedHTMLAttributes {
+      return alternateAttrs;
     }
   )?
   __ end:ConditionEndTag
