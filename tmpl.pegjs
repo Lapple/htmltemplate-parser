@@ -143,14 +143,17 @@ Content = (Comment / ConditionalWrapperTag / ConditionalTag / BlockTag / SingleT
 
 Comment
   = CommentTag
-  / FullLineComment
+  / LineComment
+
+LineComment
+  = FullLineComment
   / SingleLineComment
 
 SingleTag =
   before:OpeningBracket
   name:$((SingleTMPLTagName / SingleHTMLTagName ! { return options.ignoreHTMLTags; }) !TagNameCharacter+)
   // Matching either HTML attributes or TMPL attributes depending on tag name.
-  attributes:(a:HTMLAttribute* ! { return isTemplateTag(name); } { return a; } / TMPLAttributes*)
+  attributes:(a:HTMLAttribute* ! { return isTemplateTag(name); } { return a; } / TMPLAttribute*)
   after:ClosingBracket
   {
     return token(withEntities({
@@ -194,7 +197,7 @@ ConditionalTag = start:ConditionStartTag content:Content elsif:ElsIfTag* otherwi
   }, location);
 }
 
-InvalidTag = before:(OpeningEndBracket / OpeningBracket) name:UnknownTagName attributes:TMPLAttributes* after:ClosingBracket {
+InvalidTag = before:(OpeningEndBracket / OpeningBracket) name:UnknownTagName attributes:TMPLAttribute* after:ClosingBracket {
   return token(withEntities({
     type: BLOCK_TYPES.INVALID_TAG,
     name: name,
@@ -283,7 +286,7 @@ StartTag =
   before:OpeningBracket
   name:$((BlockTMPLTagName / BlockHTMLTagName ! { return options.ignoreHTMLTags; }) !TagNameCharacter+)
   // Matching either HTML attributes or TMPL attributes depending on tag name.
-  attributes:(a:HTMLAttribute* ! { return isTemplateTag(name); } { return a; } / TMPLAttributes*)
+  attributes:(a:HTMLAttribute* ! { return isTemplateTag(name); } { return a; } / TMPLAttribute*)
   after:ClosingBracket
   {
     return withEntities({
@@ -297,20 +300,20 @@ EndTag =
   before:OpeningEndBracket
   name:$((BlockTMPLTagName / BlockHTMLTagName ! { return options.ignoreHTMLTags; }) !TagNameCharacter+)
   // Matching either HTML attributes or TMPL attributes depending on tag name.
-  (a:HTMLAttribute* ! { return isTemplateTag(name); } { return a; } / TMPLAttributes*)
+  (a:HTMLAttribute* ! { return isTemplateTag(name); } { return a; } / TMPLAttribute*)
   after:ClosingBracket
   {
     return withEntities({ name: name }, { before: before, after: after });
   }
 
-ConditionStartTag = OpeningBracket name:ConditionalTagName condition:TMPLAttributes* ClosingBracket {
+ConditionStartTag = OpeningBracket name:ConditionalTagName condition:TMPLAttribute* ClosingBracket {
   return {
     name: name,
     condition: condition[0] || null
   };
 }
 
-ElsIfStartTag = OpeningBracket ElsIfTagName condition:TMPLAttributes* ClosingBracket {
+ElsIfStartTag = OpeningBracket ElsIfTagName condition:TMPLAttribute* ClosingBracket {
   return condition[0] || null;
 }
 
@@ -342,10 +345,11 @@ CommentTag = CommentTagStart content:$(!CommentTagEnd SourceCharacter)* CommentT
   }, location);
 }
 
-TMPLAttributes
+TMPLAttribute
   = WhiteSpace+ attrs:(AttributeWithValue / AttributeWithoutValue) { return attrs; }
   // Expressions don't require whitespace to be separated from tag names.
   / __ expression:(PerlExpressionLiteral / InvalidPerlExpressionLiteral) { return expression; }
+  / __ comment:LineComment { return comment; }
 
 PerlExpressionLiteral =
   before:PerlExpressionStart
