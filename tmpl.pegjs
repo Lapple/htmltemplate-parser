@@ -143,10 +143,6 @@ Content = (Comment / ConditionalWrapperTag / ConditionalTag / BlockTag / SingleT
 
 Comment
   = CommentTag
-  / LineComment
-
-LineComment
-  = FullLineComment
   / SingleLineComment
 
 SingleTag =
@@ -331,13 +327,6 @@ SingleLineComment = char:CommentStart c:$(!LineTerminator SourceCharacter)* {
   }, { char: char }), location);
 }
 
-FullLineComment = char:FullLineCommentStart c:$(!LineTerminator SourceCharacter)* {
-  return token(withEntities({
-    type: BLOCK_TYPES.COMMENT,
-    content: c
-  }, { char: char }), location);
-}
-
 CommentTag = CommentTagStart content:$(!CommentTagEnd SourceCharacter)* CommentTagEnd {
   return token({
     type: BLOCK_TYPES.COMMENT,
@@ -349,7 +338,7 @@ TMPLAttribute
   = WhiteSpace+ attrs:(AttributeWithValue / AttributeWithoutValue) { return attrs; }
   // Expressions don't require whitespace to be separated from tag names.
   / __ expression:(PerlExpressionLiteral / InvalidPerlExpressionLiteral) { return expression; }
-  / __ comment:LineComment { return comment; }
+  / __ comment:SingleLineComment { return comment; }
 
 PerlExpressionLiteral =
   before:PerlExpressionStart
@@ -1132,9 +1121,6 @@ WhiteSpace "whitespace"
   / LineTerminator
 
 __ = $(WhiteSpace*)
-
-FullLineCommentStart
-  = $(LineTerminator (!CommentStart "#"))
 
 CommentStart
   = "##"

@@ -52,18 +52,29 @@
     },
     {
         "type": "Text",
-        "content": "\n",
+        "content": "\n\n# Line starts with hash ",
         "position": {
             "line": 6,
             "column": 37
         }
     },
     {
-        "type": "Comment",
-        "content": " Beginning of line comment <TMPL_VAR b_value>",
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "b_value",
+                "value": null,
+                "position": {
+                    "line": 8,
+                    "column": 35
+                }
+            }
+        ],
         "position": {
-            "line": 7,
-            "column": 1
+            "line": 8,
+            "column": 25
         }
     },
     {
@@ -71,7 +82,7 @@
         "content": "\nJust a # symbol ",
         "position": {
             "line": 8,
-            "column": 47
+            "column": 43
         }
     },
     {
@@ -143,34 +154,10 @@
     },
     {
         "type": "Text",
-        "content": "\n",
+        "content": "\n\n",
         "position": {
             "line": 13,
             "column": 7
-        }
-    },
-    {
-        "type": "Comment",
-        "content": " First line comment, issue #29",
-        "position": {
-            "line": 14,
-            "column": 1
-        }
-    },
-    {
-        "type": "Comment",
-        "content": " <TMPL_VAR b_text>",
-        "position": {
-            "line": 15,
-            "column": 32
-        }
-    },
-    {
-        "type": "Text",
-        "content": "\n\n",
-        "position": {
-            "line": 16,
-            "column": 20
         }
     },
     {
@@ -182,7 +169,7 @@
                 "name": "b_text",
                 "value": null,
                 "position": {
-                    "line": 18,
+                    "line": 15,
                     "column": 11
                 }
             },
@@ -190,7 +177,7 @@
                 "type": "Comment",
                 "content": " Attribute comment",
                 "position": {
-                    "line": 19,
+                    "line": 16,
                     "column": 5
                 }
             },
@@ -204,24 +191,24 @@
                         "raw": 1,
                         "value": 1,
                         "position": {
-                            "line": 20,
+                            "line": 17,
                             "column": 11
                         }
                     },
                     "value": "1",
                     "position": {
-                        "line": 20,
+                        "line": 17,
                         "column": 8
                     }
                 },
                 "position": {
-                    "line": 20,
+                    "line": 17,
                     "column": 5
                 }
             }
         ],
         "position": {
-            "line": 18,
+            "line": 15,
             "column": 1
         }
     },
@@ -229,7 +216,7 @@
         "type": "Text",
         "content": "\n",
         "position": {
-            "line": 20,
+            "line": 17,
             "column": 16
         }
     }
