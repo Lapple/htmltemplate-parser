@@ -25,12 +25,16 @@
     );
 
     if (!preventPositionCalculation) {
-      var l = location().start;
+      var loc = location();
 
-      object.position = {
-        line: l.line,
-        column: l.column
-      };
+      if (options.esprimaStyleLocationInfo) {
+        object.loc = loc;
+      } else {
+        object.position = {
+          line: loc.start.line,
+          column: loc.start.column
+        };
+      }
     }
 
     return object;

@@ -1,0 +1,471 @@
+[
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "value",
+                "value": null,
+                "loc": {
+                    "start": {
+                        "offset": 10,
+                        "line": 1,
+                        "column": 11
+                    },
+                    "end": {
+                        "offset": 15,
+                        "line": 1,
+                        "column": 16
+                    }
+                }
+            }
+        ],
+        "loc": {
+            "start": {
+                "offset": 0,
+                "line": 1,
+                "column": 1
+            },
+            "end": {
+                "offset": 16,
+                "line": 1,
+                "column": 17
+            }
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "loc": {
+            "start": {
+                "offset": 16,
+                "line": 1,
+                "column": 17
+            },
+            "end": {
+                "offset": 17,
+                "line": 2,
+                "column": 1
+            }
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "value",
+                "value": null,
+                "loc": {
+                    "start": {
+                        "offset": 27,
+                        "line": 2,
+                        "column": 11
+                    },
+                    "end": {
+                        "offset": 32,
+                        "line": 2,
+                        "column": 16
+                    }
+                }
+            },
+            {
+                "type": "PairAttribute",
+                "name": "attribute",
+                "value": {
+                    "type": "Identifier",
+                    "name": "identifier",
+                    "loc": {
+                        "start": {
+                            "offset": 43,
+                            "line": 2,
+                            "column": 27
+                        },
+                        "end": {
+                            "offset": 53,
+                            "line": 2,
+                            "column": 37
+                        }
+                    }
+                },
+                "loc": {
+                    "start": {
+                        "offset": 33,
+                        "line": 2,
+                        "column": 17
+                    },
+                    "end": {
+                        "offset": 53,
+                        "line": 2,
+                        "column": 37
+                    }
+                }
+            }
+        ],
+        "loc": {
+            "start": {
+                "offset": 17,
+                "line": 2,
+                "column": 1
+            },
+            "end": {
+                "offset": 54,
+                "line": 2,
+                "column": 38
+            }
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "loc": {
+            "start": {
+                "offset": 54,
+                "line": 2,
+                "column": 38
+            },
+            "end": {
+                "offset": 55,
+                "line": 3,
+                "column": 1
+            }
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "value",
+                "value": null,
+                "loc": {
+                    "start": {
+                        "offset": 65,
+                        "line": 3,
+                        "column": 11
+                    },
+                    "end": {
+                        "offset": 70,
+                        "line": 3,
+                        "column": 16
+                    }
+                }
+            },
+            {
+                "type": "PairAttribute",
+                "name": "attribute",
+                "value": {
+                    "type": "Literal",
+                    "value": "string",
+                    "raw": "\"string\"",
+                    "loc": {
+                        "start": {
+                            "offset": 81,
+                            "line": 3,
+                            "column": 27
+                        },
+                        "end": {
+                            "offset": 89,
+                            "line": 3,
+                            "column": 35
+                        }
+                    }
+                },
+                "loc": {
+                    "start": {
+                        "offset": 71,
+                        "line": 3,
+                        "column": 17
+                    },
+                    "end": {
+                        "offset": 89,
+                        "line": 3,
+                        "column": 35
+                    }
+                }
+            }
+        ],
+        "loc": {
+            "start": {
+                "offset": 55,
+                "line": 3,
+                "column": 1
+            },
+            "end": {
+                "offset": 90,
+                "line": 3,
+                "column": 36
+            }
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "loc": {
+            "start": {
+                "offset": 90,
+                "line": 3,
+                "column": 36
+            },
+            "end": {
+                "offset": 91,
+                "line": 4,
+                "column": 1
+            }
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "value",
+                "value": null,
+                "loc": {
+                    "start": {
+                        "offset": 101,
+                        "line": 4,
+                        "column": 11
+                    },
+                    "end": {
+                        "offset": 106,
+                        "line": 4,
+                        "column": 16
+                    }
+                }
+            },
+            {
+                "type": "PairAttribute",
+                "name": "attribute",
+                "value": {
+                    "type": "Identifier",
+                    "name": "property.access",
+                    "loc": {
+                        "start": {
+                            "offset": 117,
+                            "line": 4,
+                            "column": 27
+                        },
+                        "end": {
+                            "offset": 132,
+                            "line": 4,
+                            "column": 42
+                        }
+                    }
+                },
+                "loc": {
+                    "start": {
+                        "offset": 107,
+                        "line": 4,
+                        "column": 17
+                    },
+                    "end": {
+                        "offset": 132,
+                        "line": 4,
+                        "column": 42
+                    }
+                }
+            }
+        ],
+        "loc": {
+            "start": {
+                "offset": 91,
+                "line": 4,
+                "column": 1
+            },
+            "end": {
+                "offset": 133,
+                "line": 4,
+                "column": 43
+            }
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "loc": {
+            "start": {
+                "offset": 133,
+                "line": 4,
+                "column": 43
+            },
+            "end": {
+                "offset": 134,
+                "line": 5,
+                "column": 1
+            }
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "value",
+                "value": null,
+                "loc": {
+                    "start": {
+                        "offset": 144,
+                        "line": 5,
+                        "column": 11
+                    },
+                    "end": {
+                        "offset": 149,
+                        "line": 5,
+                        "column": 16
+                    }
+                }
+            },
+            {
+                "type": "PairAttribute",
+                "name": "attribute",
+                "value": {
+                    "type": "Literal",
+                    "value": "dotted.string",
+                    "raw": "'dotted.string'",
+                    "loc": {
+                        "start": {
+                            "offset": 160,
+                            "line": 5,
+                            "column": 27
+                        },
+                        "end": {
+                            "offset": 175,
+                            "line": 5,
+                            "column": 42
+                        }
+                    }
+                },
+                "loc": {
+                    "start": {
+                        "offset": 150,
+                        "line": 5,
+                        "column": 17
+                    },
+                    "end": {
+                        "offset": 175,
+                        "line": 5,
+                        "column": 42
+                    }
+                }
+            }
+        ],
+        "loc": {
+            "start": {
+                "offset": 134,
+                "line": 5,
+                "column": 1
+            },
+            "end": {
+                "offset": 176,
+                "line": 5,
+                "column": 43
+            }
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "loc": {
+            "start": {
+                "offset": 176,
+                "line": 5,
+                "column": 43
+            },
+            "end": {
+                "offset": 177,
+                "line": 6,
+                "column": 1
+            }
+        }
+    },
+    {
+        "type": "Tag",
+        "name": "TMPL_VAR",
+        "attributes": [
+            {
+                "type": "SingleAttribute",
+                "name": "value",
+                "value": null,
+                "loc": {
+                    "start": {
+                        "offset": 187,
+                        "line": 6,
+                        "column": 11
+                    },
+                    "end": {
+                        "offset": 192,
+                        "line": 6,
+                        "column": 16
+                    }
+                }
+            },
+            {
+                "type": "PairAttribute",
+                "name": "attribute",
+                "value": {
+                    "type": "Literal",
+                    "raw": 1,
+                    "value": 1,
+                    "loc": {
+                        "start": {
+                            "offset": 203,
+                            "line": 6,
+                            "column": 27
+                        },
+                        "end": {
+                            "offset": 204,
+                            "line": 6,
+                            "column": 28
+                        }
+                    }
+                },
+                "loc": {
+                    "start": {
+                        "offset": 193,
+                        "line": 6,
+                        "column": 17
+                    },
+                    "end": {
+                        "offset": 204,
+                        "line": 6,
+                        "column": 28
+                    }
+                }
+            }
+        ],
+        "loc": {
+            "start": {
+                "offset": 177,
+                "line": 6,
+                "column": 1
+            },
+            "end": {
+                "offset": 205,
+                "line": 6,
+                "column": 29
+            }
+        }
+    },
+    {
+        "type": "Text",
+        "content": "\n",
+        "loc": {
+            "start": {
+                "offset": 205,
+                "line": 6,
+                "column": 29
+            },
+            "end": {
+                "offset": 206,
+                "line": 7,
+                "column": 1
+            }
+        }
+    }
+]

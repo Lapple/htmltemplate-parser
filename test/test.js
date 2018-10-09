@@ -24,6 +24,7 @@ describe('parse: (String) => Object', function() {
             return (
                 name !== 'errors' &&
                 name !== 'ignore_html_tags' &&
+                name !== 'esprima_style_location_info' &&
                 name !== 'benchmark' &&
                 name.indexOf('.') === -1
             );
@@ -104,6 +105,23 @@ describe('options', function() {
                 'utf8'));
 
         var actual = parser.parse(tmpl, { ignoreHTMLTags: true });
+
+        assert.deepEqual(actual, expected);
+
+    });
+
+    it('esprimaStyleLocationInfo', function() {
+
+        var tmpl = fs.readFileSync(
+            path.join(__dirname, 'esprima_style_location_info', 'template.tmpl'),
+            'utf8');
+
+        var expected = JSON.parse(
+            fs.readFileSync(
+                path.join(__dirname, 'esprima_style_location_info', 'ast.json'),
+                'utf8'));
+
+        var actual = parser.parse(tmpl, { esprimaStyleLocationInfo: true });
 
         assert.deepEqual(actual, expected);
 
